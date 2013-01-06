@@ -1,0 +1,77 @@
+open System
+open System.Collections.Generic
+
+let graph = [
+    ( ('A', 'B'), 4.0)
+    ( ('A', 'H'), 3.0)
+    ( ('A', 'G'), 15.0)
+    ( ('B', 'C'), 5.0)
+    ( ('B', 'D'), 7.0)
+    ( ('B', 'H'), 5.0)
+    ( ('C', 'D'), 3.0)
+    ( ('D', 'F'), 6.0)
+    ( ('D', 'E'), 10.0)
+    ( ('E', 'G'), 13.0)
+    ( ('F', 'G'), 1.0)
+    ( ('F', 'H'), 2.0)
+    ( ('G', 'H'), 4.0)
+]
+
+let distance g e = 
+    g
+    |> List.tryFind (fun (xe, _) -> e = xe || e = (snd xe, fst xe))
+    |> function | Some(xe, xd) -> xd
+                | None -> Double.MaxValue
+
+let vertices g =
+    g
+    |> Seq.collect (fun (xe, _) -> [fst xe; snd xe])
+    |> Seq.distinct
+
+let edges g =
+    g
+    |> List.map (fun (xe, _) -> xe)    
+
+let neighbors g x =
+    g    
+    |> List.choose(fun (xe, _) ->
+        match xe with
+        | (xs, xt) when xs = x -> Some(xt)
+        | (xs, xt) when xt = x -> Some(xs)
+        | _ -> None)
+
+let dijkstra s =
+    let unprocessed = new List<char>(vertices graph)
+    let distances = new Dictionary<char, float> (dict (seq { 
+        for v in (vertices graph) -> (v, System.Double.MaxValue) 
+    }))
+    distances.[s] <- 0.0
+
+    while (unprocessed.Count <> 0) do
+        
+        // Vertex with smallest distance
+        let cv = unprocessed 
+                 |> Seq.map(fun v -> (v, distances.[v]))    
+                 |> Seq.sortBy(fun (v,d) -> d)
+                 |> Seq.map(fun (v,d) -> v)    
+                 |> Seq.head
+
+        let cDistance = distances.[cv]
+        printfn "Vertex %A widh distance %A" cv cDistance
+
+        let nn = neighbors graph cv    
+        for n in nn do        
+            let nDistance = cDistance + (distance graph (cv,n))
+            if (nDistance < distances.[n]) then
+                distances.[n] <- nDistance
+                printfn "\tNeighbor %A new distance %A, previous %A" n nDistance distances.[n]
+
+        printfn "\tRemove vertex %A" cv
+        unprocessed.Remove(cv) |> ignore
+
+    distances
+
+let distances = dijkstra 'A'
+
+printfn "%A" distances
+printfn "Distance to E %A" distances.['E']
