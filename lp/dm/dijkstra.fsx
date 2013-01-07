@@ -21,7 +21,7 @@ let distance g e =
     g
     |> List.tryFind (fun (xe, _) -> e = xe || e = (snd xe, fst xe))
     |> function | Some(xe, xd) -> xd
-                | None -> Double.MaxValue
+                | None -> Double.PositiveInfinity
 
 let vertices g =
     g
@@ -43,9 +43,12 @@ let neighbors g x =
 let dijkstra s =
     let unprocessed = new List<char>(vertices graph)
     let distances = new Dictionary<char, float> (dict (seq { 
-        for v in (vertices graph) -> (v, System.Double.MaxValue) 
+        for v in (vertices graph) -> (v, Double.PositiveInfinity) 
     }))
     distances.[s] <- 0.0
+    let previous = new Dictionary<char, char option> (dict (seq { 
+        for v in (vertices graph) -> (v, None) 
+    }))
 
     while (unprocessed.Count <> 0) do
         
@@ -63,15 +66,26 @@ let dijkstra s =
         for n in nn do        
             let nDistance = cDistance + (distance graph (cv,n))
             if (nDistance < distances.[n]) then
+                printfn "\tNeighbor %A new distance %A, previous %A" n nDistance (distances.[n])
                 distances.[n] <- nDistance
-                printfn "\tNeighbor %A new distance %A, previous %A" n nDistance distances.[n]
+                previous.[n] <- Some(cv)
 
         printfn "\tRemove vertex %A" cv
         unprocessed.Remove(cv) |> ignore
 
-    distances
+    (distances, previous)
 
-let distances = dijkstra 'A'
+let getPath (pp:IDictionary<char, char option>) tv =    
 
-printfn "%A" distances
+    let rec nextItem ii =
+        match pp.[ii |> List.head] with
+        | Some (nv) -> 
+            nextItem (ii |> List.append([nv]))
+        | None -> ii
+
+    nextItem [tv]
+        
+let distances, previous = dijkstra 'A'
+
 printfn "Distance to E %A" distances.['E']
+printfn "Path %A" (getPath previous 'E')
