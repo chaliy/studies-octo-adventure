@@ -41,15 +41,15 @@ let neighbors g x =
         | _ -> None)
 
 let dijkstra s =
-    let unprocessed = new List<char>(vertices graph)
-    let distances = new Dictionary<char, float> (dict (seq { 
+    let unprocessed = List<char>(vertices graph)
+    let distances = Dictionary<char, float> (dict (seq { 
         for v in (vertices graph) -> (v, Double.PositiveInfinity) 
     }))
-    distances.[s] <- 0.0
-    let previous = new Dictionary<char, char option> (dict (seq { 
+    let previous = Dictionary<char, char option> (dict (seq { 
         for v in (vertices graph) -> (v, None) 
     }))
 
+    distances.[s] <- 0.0 // Start
     while (unprocessed.Count <> 0) do
         
         // Vertex with smallest distance
