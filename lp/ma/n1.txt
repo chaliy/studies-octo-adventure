@@ -1,0 +1,2 @@
+#2 lim( (n^(2/5) - sqrt(n^2 + 5))/(n^(7/5) + sqrt(n + 1)), n->infinity)
+#3 lim( sqrt(n^2-3n+2)-n, n->infinity)
