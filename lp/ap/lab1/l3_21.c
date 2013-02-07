@@ -48,6 +48,7 @@ void test(double x){
 }
 
 int main(void){    
+    // TODO Why function does not have meaning for any x?
     test(2.345);
     test(-4.914);
     test(0.219);
