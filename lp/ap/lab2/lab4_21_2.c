@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.14159265
-
 double factorial(double n){
   if (n <= 1)
     return 1;
