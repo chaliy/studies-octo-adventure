@@ -22,10 +22,10 @@ void tabulate(double xs, double xe, double xd, double (*f)(double)){
     x = xs;
     while(x <= xe){
         y = (*f)(x);
-        if (isinf(y)){
-            printf("%lf; N/A\n", x);
+        if (!isinf(y)){
+            printf("%f %lf\n", x, y);
         } else {
-            printf("%lf; %lf\n", x, y);
+            printf("\n");
         }
         x += xd;
     }
@@ -33,5 +33,5 @@ void tabulate(double xs, double xe, double xd, double (*f)(double)){
 }
 
 int main(void){
-    tabulate(-1.1, 1.0, 0.05, f);
+    tabulate(-1.1, 0.0, 0.05, f);
 }
