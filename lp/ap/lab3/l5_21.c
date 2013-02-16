@@ -4,13 +4,13 @@
 int main(void){
     FILE *ifp;
     char *mode = "r";
-    const int is = 5;
-    const int js = 6;
-    int A[5][6];    
-    double B [5 * 6]; 
+    const int n = 5; // Row count
+    const int m = 6; // Column count
+    int A[5][6];  // Working matrix       
     int t; // Counter
-    int i,j;
-    
+    int i,j; // Column and row counters
+    double av; // Average aggregate
+
     ifp = fopen("l5_21.dat", mode);
 
     if (ifp == NULL) {
@@ -20,7 +20,7 @@ int main(void){
 
     // Read file
     t = 0;
-    while (fscanf(ifp, "%d", &A[t / js][t % js]) == 1) {
+    while (fscanf(ifp, "%d", &A[t / m][t % m]) == 1) {
         t++;
     }
 
@@ -29,46 +29,37 @@ int main(void){
     // Print matrix
     // i index of row
     // j index of column
-    for (i = 0; i < is; ++i)
+    printf("Input matrix\n");
+    for (i = 0; i < n; ++i)
     {
         printf("|");
-        for (j = 0; j < js; ++j)
+        for (j = 0; j < m; ++j)
         {
             printf("%4d |", A[i][j]);
         }
         printf("\n");
     }
 
+    printf("Results:\n");
     // Averages of colums    
-    for (j = 0; j < js; ++j)
+    for (j = 0; j < m; ++j)
     {
-        B[j] = 0;
-        for (i = 0; i < is; ++i)
+        av = 0;
+        for (i = 0; i < n; ++i)
         {
-            B[j] += A[i][j];
+            av += A[i][j];            
         }
-        B[j] = B[j] / is;
+        printf("Average of column %d is %f\n", j + 1, av / n);
     }
 
-    // Averages of colums
-    for (i = 0; i < is; ++i)
+    // Averages of rows
+    for (i = 0; i < n; ++i)
     {
-        B[i + js] = 0;
-        for (j = 0; j < js; ++j)
+        av = 0;
+        for (j = 0; j < m; ++j)
         {
-            B[i + js] += A[i][j];                          
+            av += A[i][j];                          
         }
-        B[i + js] = B[i + js] / js;
+        printf("Average of row %d is %f\n", i + 1, av / m);        
     }
-
-    // Print averages
-    for (j = 0; j < js; ++j)
-    {
-        printf("Average of column %d is %f\n", j + 1, B[j]);
-    }
-    for (i = 0; i < is; ++i)
-    {
-        printf("Average of row %d is %f\n", i + 1, B[i + js]);
-    }
-    
 }
