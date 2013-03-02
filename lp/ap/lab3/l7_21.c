@@ -45,6 +45,8 @@ int main(void){
     int A[14][10];  // Working matrix           
     int i,j; // Counter    
 
+    // HACK: I use transpoded matrix to simplify inplace sort
+
     ifp = fopen("l7_21_f.dat", mode);
 
     if (ifp == NULL) {
