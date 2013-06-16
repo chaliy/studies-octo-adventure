@@ -37,7 +37,7 @@ int main(void){
             outIfLong (fout, pch);
 
             pch = strtok (NULL, separator);
-        }   
+        }
     }
 
     fclose(fin);
