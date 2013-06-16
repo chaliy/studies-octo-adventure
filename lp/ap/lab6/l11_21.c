@@ -19,15 +19,7 @@ FILE *openFile(const char *name, const char *m){
 }
 
 int readStudent(FILE *fin, Student *st){
-    // char* name = "";
-    // char* birthday = "";
-    // // TODO: Why st->Name does not work instead of name (st->Name is uninitialized?)    
-    // if (fscanf(fin, "%[^,],%d,%[^,]\n", name, &st->Score, birthday) == 3){
-    //     st->Name = name;
-    //     st->Birthday = birthday;
-    //     return 1;
-    // }
-    
+
     const char SPL[] = ",\n";
     char *line = "";
     char *token = "";
@@ -37,12 +29,7 @@ int readStudent(FILE *fin, Student *st){
         st->Name = strtok (line, SPL);
         st->Score = atoi(strtok (NULL, SPL));
         st->Birthday = strtok (NULL, SPL);
-        // while (token != NULL)
-        // {
-        //     printf ("%s\n", token);
-        //     token = strtok (NULL, SPL);
-        // }
-
+    
         return 1;
     }
 
@@ -85,11 +72,12 @@ int main(void){
     for (i = 0; i < count; ++i)
     {
         if (students[i].Score <= scoreAverage){
-            printf("Student %s\n\tScore: %d\n\tBirthday: %s\n\tGroup: CSr-11, 2012", 
+            printf("Student %s\n\tScore: %d\n\tBirthday: %s\n\tGroup: CSr-11, 2012\n", 
                 students[i].Name, students[i].Score, students[i].Birthday
                 );
         }
     }
 
+    free(students);
     fclose(fin);    
 }
