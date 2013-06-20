@@ -30,8 +30,7 @@ Node *createLinkedList(char *text){
     // Create linked list of symbols    
     head = createNode(NULL, text[0]);
     current = head;
-    for (i = 1; i <= size; i++)
-    {
+    for (i = 1; i <= size; i++){
         current = createNode(current, text[i]);
     }
 
