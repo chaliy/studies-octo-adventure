@@ -1,5 +1,7 @@
 // lexicographical permutation
 
+// NOTE: this is play ground, not real implementation!
+
 let next (ss : int array) =
 
     let mutable d = false 
