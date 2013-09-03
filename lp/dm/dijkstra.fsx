@@ -59,15 +59,15 @@ let dijkstra s =
                  |> Seq.map(fun (v,d) -> v)    
                  |> Seq.head
 
-        let cDistance = distances.[cv]
-        printfn "Vertex %A widh distance %A" cv cDistance
+        let cd = distances.[cv] // Current distance
+        printfn "Vertex %A with distance %A" cv cd
 
         let nn = neighbors graph cv    
         for n in nn do        
-            let nDistance = cDistance + (distance graph (cv,n))
-            if (nDistance < distances.[n]) then
-                printfn "\tNeighbor %A new distance %A, previous %A" n nDistance (distances.[n])
-                distances.[n] <- nDistance
+            let nd = cd + (distance graph (cv,n)) // New distance
+            if (nd < distances.[n]) then
+                printfn "\tNeighbor %A new distance %A, previous %A" n nd (distances.[n])
+                distances.[n] <- nd
                 previous.[n] <- Some(cv)
 
         printfn "\tRemove vertex %A" cv
