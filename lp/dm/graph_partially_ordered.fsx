@@ -50,5 +50,4 @@ RR
     printfn "is anti-symmetric %b" (r |> isAntisimmetric)
     printfn "is transitive %b" (r |> isTransitive)
 )
-
     
