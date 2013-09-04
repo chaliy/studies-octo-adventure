@@ -5,6 +5,7 @@ open Gru
 
 let R1 = [
     (1, 1)
+    (2, 2)
     (1, 2)
     (2, 1)
     (3, 3)
@@ -15,7 +16,8 @@ let R2 = [
     (1, 1)
     (2, 2)
     (1, 3)
-    (3, 1)
+    (1, 2)
+    (3, 4)
     (3, 4)
     (4, 3)
     (3, 3)
@@ -26,11 +28,10 @@ let R3 = [
     (1, 1)
     (2, 2)
     (1, 3)
-    (3, 1)
+    (1, 2)
+    (2, 4)
     (3, 4)
-    (1, 4)
-    (4, 3)
-    (4, 1)
+    (1, 4)        
     (3, 3)
     (4, 4)
 ]
@@ -46,7 +47,8 @@ RR
 |> Seq.iter(fun (n, r) ->
     printfn "%s" n
     printfn "is reflexive %b" (r |> isReflexive)
-    printfn "is symmetric %b" (r |> isSimmetric)
+    printfn "is anti-symmetric %b" (r |> isAntisimmetric)
     printfn "is transitive %b" (r |> isTransitive)
 )
 
+    
