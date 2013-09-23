@@ -1,0 +1,4 @@
+cinst gnuplot
+gnuplot
+
+load "l1_21.plt"
