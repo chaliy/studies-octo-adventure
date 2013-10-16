@@ -6,76 +6,133 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Student {
     string _name;
     vector<int> _scores;
+public:
+    Student (string name, int s1, int s2, int s3, int s4){
+    	_name = name;  
+		_scores.push_back(s1);
+		_scores.push_back(s2);
+		_scores.push_back(s3);
+		_scores.push_back(s4);  
+    }
 
-    public:
-	    Student (string,int, int, int, int);
-	    string get_name(){
-	    	return _name;
-	    }
+    string get_name(){
+    	return _name;
+    }
 
-	    string to_s(){
-	    	ostringstream buff;
-  			buff << _name << " - ";
-  			for (auto iter = _scores.begin(); iter != _scores.end(); iter++){
-  				buff << *iter << ", ";      			
-      		}
+    string to_s(){
+    	ostringstream buff;
+			buff << _name << " - ";
 
-			return buff.str();
-	    }
+  		for (auto &x : _scores) {
+		    buff << x << ", ";
+		}
+
+		buff << "average: " << average_score();
+
+		return buff.str();
+    }
+
+    int get_weight(){
+    	return _scores.at(0);
+    }
+
+    double average_score(){    	
+    	double a = 0.0;
+		for (auto &x : _scores) {
+		    a += x;		    
+		}
+		return a / _scores.size();	
+    }
 };
 
-Student::Student (string name, int s1, int s2, int s3, int s4) {
-  _name = name;  
-  _scores.push_back(s1);
-  _scores.push_back(s2);
-  _scores.push_back(s3);
-  _scores.push_back(s4);  
-}
+class Group{
+	vector<Student> _students;
 
-void printAll(Student * students[]){
-	int i,j;
+	bool static compareStudentScore (Student x, Student y) { 
+    	return (x.average_score() > y.average_score()); 
+   	}
 
-	for (i = 0; i < 23; ++i)
-	{
-		cout << students[i]->to_s() << endl;		
+public:
+
+	void add_student(Student student){
+		_students.push_back(student);
 	}
-}
+
+	void add_student(string name, int s1, int s2, int s3, int s4){
+		add_student(* new Student(name, s1, s2, s3, s4));
+	}
+
+
+	void printAll(){
+		cout << "** All students **" << endl;
+		for (auto &x : _students){
+			cout << x.to_s() << endl;		
+		}
+	}
+
+	void printPerfomers(){
+		cout << "** Top 5 Perfomers **" << endl;
+
+		vector<Student> tmp(_students);
+
+		sort(tmp.begin(), tmp.end(), compareStudentScore);		
+
+		for (auto it = tmp.begin(); it != tmp.begin() + 5; ++it){
+			cout << (*it).to_s() << endl;
+		}
+	}
+
+	void printAverage(){
+		double a = 0.0;
+		for (auto &x : _students) {
+		    a += x.average_score();		    
+		}
+		a = a / _students.size();	
+		cout << "** Group average score is " << a << " **" << endl;
+	}
+};
 
 int main(void){
 
-	Student  * students[23];
-	
-	students[0] = new Student("Балагурак Ростислав", 65, 71, 61, 59 );
-	students[1] = new Student("Бодак Марія", 67, 59, 59, 61);
-	students[2] = new Student("Веклич Назарій", 57, 64, 73, 69);
-	students[3] = new Student("Вонс Петро", 80, 59, 73, 59);
-	students[4] = new Student("Гаврушенко Юрій", 84, 99, 82, 96);
-	students[5] = new Student("Гайдаш Андрій", 57, 92, 73, 90);
-	students[6] = new Student("Денис Юрій", 91, 65, 77, 67);
-	students[7] = new Student("Зарбєєв Микита", 90, 85, 98, 77);
-	students[8] = new Student("Іванів Юрій", 82, 73, 75, 71);
-	students[9] = new Student("Каркач Руслан", 56, 94, 78, 92);
-	students[10] = new Student("Карпа Юрій", 71, 70, 73, 86);
-	students[11] = new Student("Коберник Михайло", 77, 76, 85, 66);
-	students[12] = new Student("Кобрій Василь", 72, 73, 84, 86);
-	students[13] = new Student("Ловас Андрій", 81, 88, 70, 80);
-	students[14] = new Student("Прашко Володимир", 60, 90, 94, 84);
-	students[15] = new Student("Рубаненко Олександр", 76, 80, 86, 61);
-	students[16] = new Student("Труш Василь", 79, 75, 58, 81);
-	students[17] = new Student("Фаринник Микола", 77, 61, 96, 82);
-	students[18] = new Student("Цюркало Микола", 68, 84, 99, 73);
-	students[19] = new Student("Чалий Михайло", 58, 74, 58, 70);
-	students[20] = new Student("Чеховський Павло", 71, 99, 65, 71);
-	students[21] = new Student("Чишейко Владислав", 98, 86, 65, 65);
-	students[22] = new Student("Яковлєва Світлана", 62, 91, 89, 89);
+	Group * group = new Group();
 
-	printAll(students);
+	group->add_student("Балагурак Ростислав", 65, 71, 61, 59 );
+	group->add_student("Бодак Марія", 67, 59, 59, 61);
+	group->add_student("Веклич Назарій", 57, 64, 73, 69);
+	group->add_student("Вонс Петро", 80, 59, 73, 59);
+	group->add_student("Гаврушенко Юрій", 84, 99, 82, 96);
+	group->add_student("Гайдаш Андрій", 57, 92, 73, 90);
+	group->add_student("Денис Юрій", 91, 65, 77, 67);
+	group->add_student("Зарбєєв Микита", 90, 85, 98, 77);
+	group->add_student("Іванів Юрій", 82, 73, 75, 71);
+	group->add_student("Каркач Руслан", 56, 94, 78, 92);
+	group->add_student("Карпа Юрій", 71, 70, 73, 86);
+	group->add_student("Коберник Михайло", 77, 76, 85, 66);
+	group->add_student("Кобрій Василь", 72, 73, 84, 86);
+	group->add_student("Ловас Андрій", 81, 88, 70, 80);
+	group->add_student("Прашко Володимир", 60, 90, 94, 84);
+	group->add_student("Рубаненко Олександр", 76, 80, 86, 61);
+	group->add_student("Труш Василь", 79, 75, 58, 81);
+	group->add_student("Фаринник Микола", 77, 61, 96, 82);
+	group->add_student("Цюркало Микола", 68, 84, 99, 73);
+	group->add_student("Чалий Михайло", 58, 74, 58, 70);
+	group->add_student("Чеховський Павло", 71, 99, 65, 71);
+	group->add_student("Чишейко Владислав", 98, 86, 65, 65);
+	group->add_student("Яковлєва Світлана", 62, 91, 89, 89);
+
+	group->printPerfomers();
+	group->printAverage();
+	group->printAll();
+
+	// Cleanup
+	delete group;
 
 	return 0;
 }
