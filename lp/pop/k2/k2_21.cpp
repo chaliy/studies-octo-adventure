@@ -8,6 +8,8 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <numeric>
+#include <functional>
 
 using namespace std;
 
@@ -16,6 +18,8 @@ using namespace std;
 class Student {
     string _name;
     vector<int> _scores;
+
+    Student(const Student&);
 
 public:
     Student (const string name, int s1, int s2, int s3, int s4){
@@ -57,22 +61,24 @@ public:
     }
 
     double average_score(){        
-        double a = 0.0;
-        for (auto &x : _scores) {
-            a += x;            
-        }
-        return a / _scores.size();    
+
+        int a = std::accumulate(
+            _scores.begin(), 
+            _scores.end(), int());
+        
+        return double(a) / _scores.size();    
     }
 };
 
 class Group{
     vector<Student *> _students;
 
-    bool static compareStudentScore (Student * x, Student * y) { 
-        return (x->average_score() > y->average_score()); 
-    }
+    Group(const Group&);
 
 public:
+
+    Group(){        
+    }
 
     void add_student(Student * student){
         _students.push_back(student);
@@ -95,7 +101,9 @@ public:
 
         vector<Student *> tmp(_students);
 
-        sort(tmp.begin(), tmp.end(), compareStudentScore);        
+        sort(tmp.begin(), tmp.end(), [](Student * x, Student * y) { 
+            return (x->average_score() > y->average_score()); 
+        });        
 
         for (auto it = tmp.begin(); it != tmp.begin() + 5; ++it){
             cout << (*it)->to_s() << endl;
@@ -103,10 +111,19 @@ public:
     }
 
     void print_average(){
-        double a = 0.0;
-        for (auto &x : _students) {
-            a += x->average_score();
-        }
+
+        double a = std::accumulate(
+            _students.begin(), 
+            _students.end(), 
+            double(), 
+            [](double agr, Student * x){
+                return agr + x->average_score();
+            });
+
+        // double a(0.0);        
+        // for (auto &x : _students) {
+        //     a += x->average_score();
+        // }
         a = a / _students.size();    
         cout << "** Group average score is " << a << " **" << endl;
     }
