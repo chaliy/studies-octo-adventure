@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <memory>
 #include <vector>
 #include <algorithm>
 
@@ -54,49 +55,57 @@ public:
 };
 
 class Group{
-    vector<Student> _students;
+    vector<Student *> _students;
 
-    bool static compareStudentScore (Student x, Student y) { 
-        return (x.average_score() > y.average_score()); 
+    bool static compareStudentScore (Student * x, Student * y) { 
+        return (x->average_score() > y->average_score()); 
     }
 
 public:
 
-    void add_student(Student student){
+    void add_student(Student * student){
         _students.push_back(student);
     }
 
     void add_student(string name, int s1, int s2, int s3, int s4){
-        add_student(* new Student(name, s1, s2, s3, s4));
+        add_student(new Student(name, s1, s2, s3, s4));
     }
 
 
     void printAll(){
         cout << "** All students **" << endl;
         for (auto &x : _students){
-            cout << x.to_s() << endl;        
+            cout << x->to_s() << endl;        
         }
     }
 
     void printPerfomers(){
         cout << "** Top 5 Perfomers **" << endl;
 
-        vector<Student> tmp(_students);
+        vector<Student *> tmp(_students);
 
         sort(tmp.begin(), tmp.end(), compareStudentScore);        
 
         for (auto it = tmp.begin(); it != tmp.begin() + 5; ++it){
-            cout << (*it).to_s() << endl;
+            cout << (*it)->to_s() << endl;
         }
     }
 
     void printAverage(){
         double a = 0.0;
         for (auto &x : _students) {
-            a += x.average_score();            
+            a += x->average_score();
         }
         a = a / _students.size();    
         cout << "** Group average score is " << a << " **" << endl;
+    }
+
+    ~Group(){
+        // Clean students..
+        while(!_students.empty()){            
+            delete _students.back();
+            _students.pop_back();
+        }
     }
 };
 
