@@ -16,7 +16,7 @@ class Student {
     vector<int> _scores;
 
 public:
-    Student (string name, int s1, int s2, int s3, int s4){
+    Student (const string name, int s1, int s2, int s3, int s4){
         _name = name;  
         _scores.push_back(s1);
         _scores.push_back(s2);
@@ -24,7 +24,7 @@ public:
         _scores.push_back(s4);  
     }
 
-    string get_name(){
+    string get_name() const {
         return _name;
     }
 
@@ -67,19 +67,19 @@ public:
         _students.push_back(student);
     }
 
-    void add_student(string name, int s1, int s2, int s3, int s4){
+    void add_student(const string name, int s1, int s2, int s3, int s4){
         add_student(new Student(name, s1, s2, s3, s4));
     }
 
 
-    void printAll(){
+    void print_all(){
         cout << "** All students **" << endl;
         for (auto &x : _students){
             cout << x->to_s() << endl;        
         }
     }
 
-    void printPerfomers(){
+    void print_perfomers(){
         cout << "** Top 5 Perfomers **" << endl;
 
         vector<Student *> tmp(_students);
@@ -91,7 +91,7 @@ public:
         }
     }
 
-    void printAverage(){
+    void print_average(){
         double a = 0.0;
         for (auto &x : _students) {
             a += x->average_score();
@@ -137,9 +137,9 @@ int main(void){
     group->add_student("Чишейко Владислав", 98, 86, 65, 65);
     group->add_student("Яковлєва Світлана", 62, 91, 89, 89);
 
-    group->printPerfomers();
-    group->printAverage();
-    group->printAll();
+    group->print_perfomers();
+    group->print_average();
+    group->print_all();
 
     // Cleanup
     delete group;
