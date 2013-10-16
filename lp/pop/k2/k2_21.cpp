@@ -11,7 +11,11 @@
 #include <numeric>
 #include <functional>
 
-using namespace std;
+using std::vector;
+using std::string;
+using std::cout;
+using std::endl;
+using std::ostringstream;
 
 //#define TRACE
 
@@ -33,11 +37,11 @@ public:
 #endif
     }
 
-    ~Student(){
 #ifdef TRACE
+    ~Student(){
         cout << "Trace: Clean student " << name_ << endl;
+    }
 #endif
-    }    
 
     string to_s() const{
         ostringstream buff;
