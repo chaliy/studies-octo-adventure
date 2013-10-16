@@ -11,6 +11,8 @@
 
 using namespace std;
 
+//#define TRACE
+
 class Student {
     string _name;
     vector<int> _scores;
@@ -22,6 +24,15 @@ public:
         _scores.push_back(s2);
         _scores.push_back(s3);
         _scores.push_back(s4);  
+#ifdef TRACE
+        cout << "Trace: New student " << name << endl;
+#endif
+    }
+
+    ~Student(){
+#ifdef TRACE
+        cout << "Trace: Clean student " << _name << endl;
+#endif
     }
     
     string get_name() const {
@@ -101,7 +112,9 @@ public:
     }
 
     ~Group(){
-        // Clean students..        
+#ifdef TRACE
+        cout << "Trace: Clean students..." << endl;
+#endif
         while(!_students.empty()){            
             delete _students.back();
             _students.pop_back();
