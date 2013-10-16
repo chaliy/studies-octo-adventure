@@ -16,18 +16,18 @@ using namespace std;
 //#define TRACE
 
 class Student {
-    string _name;
-    vector<int> _scores;
+    string name_;
+    vector<int> scores_;
 
     Student(const Student&);
 
 public:
-    Student (const string name, int s1, int s2, int s3, int s4){
-        _name = name;  
-        _scores.push_back(s1);
-        _scores.push_back(s2);
-        _scores.push_back(s3);
-        _scores.push_back(s4);  
+    Student (const string& name, int s1, int s2, int s3, int s4){
+        name_ = name;  
+        scores_.push_back(s1);
+        scores_.push_back(s2);
+        scores_.push_back(s3);
+        scores_.push_back(s4);  
 #ifdef TRACE
         cout << "Trace: New student " << name << endl;
 #endif
@@ -35,19 +35,15 @@ public:
 
     ~Student(){
 #ifdef TRACE
-        cout << "Trace: Clean student " << _name << endl;
+        cout << "Trace: Clean student " << name_ << endl;
 #endif
-    }
-    
-    string get_name() const {
-        return _name;
-    }
+    }    
 
-    string to_s(){
+    string to_s() const{
         ostringstream buff;
-        buff << _name << " - ";
+        buff << name_ << " - ";
 
-        for (auto &x : _scores) {
+        for (auto x : scores_) {
             buff << x << ", ";
         }
 
@@ -56,42 +52,34 @@ public:
         return buff.str();
     }
 
-    int get_weight(){
-        return _scores.at(0);
-    }
-
-    double average_score(){        
+    double average_score() const{        
 
         int a = std::accumulate(
-            _scores.begin(), 
-            _scores.end(), int());
+            scores_.begin(), 
+            scores_.end(), int());
         
-        return double(a) / _scores.size();    
+        return double(a) / scores_.size();    
     }
 };
 
 class Group{
-    vector<Student *> _students;
+    vector<Student *> students_;
 
     Group(const Group&);
 
 public:
 
     Group(){        
-    }
+    }    
 
-    void add_student(Student * student){
-        _students.push_back(student);
-    }
-
-    void add_student(const string name, int s1, int s2, int s3, int s4){
-        add_student(new Student(name, s1, s2, s3, s4));
+    void add_student(const string& name, int s1, int s2, int s3, int s4){
+        students_.push_back(new Student(name, s1, s2, s3, s4));
     }
 
 
     void print_all(){
         cout << "** All students **" << endl;
-        for (auto &x : _students){
+        for (auto &x : students_){
             cout << x->to_s() << endl;        
         }
     }
@@ -99,7 +87,7 @@ public:
     void print_perfomers(){
         cout << "** Top 5 Perfomers **" << endl;
 
-        vector<Student *> tmp(_students);
+        vector<Student *> tmp(students_);
 
         sort(tmp.begin(), tmp.end(), [](Student * x, Student * y) { 
             return (x->average_score() > y->average_score()); 
@@ -113,18 +101,18 @@ public:
     void print_average(){
 
         double a = std::accumulate(
-            _students.begin(), 
-            _students.end(), 
+            students_.begin(), 
+            students_.end(), 
             double(), 
             [](double agr, Student * x){
                 return agr + x->average_score();
             });
 
         // double a(0.0);        
-        // for (auto &x : _students) {
+        // for (auto &x : students_) {
         //     a += x->average_score();
         // }
-        a = a / _students.size();    
+        a = a / students_.size();    
         cout << "** Group average score is " << a << " **" << endl;
     }
 
@@ -132,9 +120,9 @@ public:
 #ifdef TRACE
         cout << "Trace: Clean students..." << endl;
 #endif
-        while(!_students.empty()){            
-            delete _students.back();
-            _students.pop_back();
+        while(!students_.empty()){            
+            delete students_.back();
+            students_.pop_back();
         }
     }
 };
