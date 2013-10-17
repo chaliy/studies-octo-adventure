@@ -17,7 +17,7 @@ using std::cout;
 using std::endl;
 using std::ostringstream;
 
-//#define TRACE
+#define TRACE
 
 class Student {
     string name_;
@@ -33,7 +33,7 @@ public:
         scores_.push_back(s3);
         scores_.push_back(s4);  
 #ifdef TRACE
-        cout << "Trace: New student " << name << endl;
+        cout << __PRETTY_FUNCTION__  << "Trace: New student " << name << endl;
 #endif
     }
 
@@ -58,7 +58,7 @@ public:
 
     double average_score() const{        
 
-        int a = std::accumulate(
+        int a = accumulate(
             scores_.begin(), 
             scores_.end(), int());
         
@@ -104,7 +104,7 @@ public:
 
     void print_average(){
 
-        double a = std::accumulate(
+        double a = accumulate(
             students_.begin(), 
             students_.end(), 
             double(), 
