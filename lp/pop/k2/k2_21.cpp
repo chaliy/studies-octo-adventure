@@ -17,7 +17,7 @@ using std::cout;
 using std::endl;
 using std::ostringstream;
 
-#define TRACE
+//#define TRACE
 
 class Student {
     string name_;
@@ -33,7 +33,7 @@ public:
         scores_.push_back(s3);
         scores_.push_back(s4);  
 #ifdef TRACE
-        cout << __PRETTY_FUNCTION__  << "Trace: New student " << name << endl;
+        cout << "Trace: New student " << name << endl;
 #endif
     }
 
@@ -58,7 +58,7 @@ public:
 
     double average_score() const{        
 
-        int a = accumulate(
+        int a = std::accumulate(
             scores_.begin(), 
             scores_.end(), int());
         
@@ -93,18 +93,18 @@ public:
 
         vector<Student *> tmp(students_);
 
-        sort(tmp.begin(), tmp.end(), [](Student * x, Student * y) { 
+        std::sort(tmp.begin(), tmp.end(), [](Student * x, Student * y) { 
             return (x->average_score() > y->average_score()); 
         });        
 
-        for (auto it = tmp.begin(); it != tmp.begin() + 5; ++it){
+        for (auto it = tmp.begin(); it != tmp.begin() + 5 && it != tmp.end(); ++it){
             cout << (*it)->to_s() << endl;
         }
     }
 
     void print_average(){
 
-        double a = accumulate(
+        double a = std::accumulate(
             students_.begin(), 
             students_.end(), 
             double(), 
@@ -112,10 +112,6 @@ public:
                 return agr + x->average_score();
             });
 
-        // double a(0.0);        
-        // for (auto &x : students_) {
-        //     a += x->average_score();
-        // }
         a = a / students_.size();    
         cout << "** Group average score is " << a << " **" << endl;
     }
