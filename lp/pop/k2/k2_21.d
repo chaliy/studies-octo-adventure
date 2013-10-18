@@ -4,8 +4,10 @@
 
 import std.stdio;
 import std.container;
+import std.array;
 import std.conv;
 import std.algorithm;
+import std.range;
 
 extern(Windows) int SetConsoleOutputCP(uint);
 
@@ -19,16 +21,13 @@ class Student {
     }
 
     override string toString(){
-        auto output = name;
-        output ~= " - ";        
+        auto output = name ~ " - ";
         
         foreach (s; scores){
-            output ~= text(s);
-            output ~= ", ";
+            output ~= text(s) ~ ", ";
         }
 
-        output ~= "average: ";
-        output ~= text(averageScore());
+        output ~= "average: " ~ text(averageScore());
 
         return output;
     }
@@ -52,23 +51,19 @@ class Group{
         }
     }
 
-    //void print_perfomers(){
-    //    cout << "** Top 5 Perfomers **" << endl;
+    void printPerfomers(){
+        writeln("** Top 5 Perfomers **");
 
-    //    vector<Student *> tmp(students_);
-
-    //    sort(tmp.begin(), tmp.end(), [](Student * x, Student * y) { 
-    //        return (x->average_score() > y->average_score()); 
-    //    });        
-
-    //    for (auto it = tmp.begin(); it != tmp.begin() + 5; ++it){
-    //        cout << (*it)->to_s() << endl;
-    //    }
-    //}
+        auto copied = array(students);
+        auto sorted = (copied[]).sort!((a,b) => a.averageScore() > b.averageScore());
+        foreach (s; sorted.take(5)){
+            writeln(s);
+        }
+    }
 
     void printAverage(){
 
-        auto scores = map!(s => s.averageScore())(students[]);
+        auto scores = (students[]).map!(s => s.averageScore());
         auto average = reduce!((a,b) => a + b)(0.0, scores) / students.length();
   
         writeln("** Group average score is ", average, " **");
@@ -106,7 +101,7 @@ int main(){
     group.addStudent("Чишейко Владислав", 98, 86, 65, 65);
     group.addStudent("Яковлєва Світлана", 62, 91, 89, 89);
 
-    //group.printPerfomers();
+    group.printPerfomers();
     group.printAverage();
     group.printAll();
 
