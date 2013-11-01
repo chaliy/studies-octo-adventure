@@ -2,11 +2,19 @@
 /* [ Created with wxMaxima version 13.04.2 ] */
 
 /* [wxMaxima: input   start ] */
-integrate(1/(5 * sin(y)^4 - 3), y);
+eq1: diff(y(x),x,2)= 50 * sin(y(x))^3 * cos(y(x));
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-diff(50 * sin(y)^3 * cos(y), y, 2);
+atvalue(diff(y(x),x), x=1, 5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+atvalue(y(x), x=1,pi/2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+desolve (eq1, y(x));
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
