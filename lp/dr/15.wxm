@@ -1,0 +1,25 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+y0: (%e^(2*x))* (a * sin(4*x) + b * cos(4*x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y1: diff(y0, x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y2: diff(y0, x, 2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+yy: y2 + 4 * y1 + 4 * y0 = (%e^(2*x)) * sin(4 * x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve (yy, [a, b]);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
