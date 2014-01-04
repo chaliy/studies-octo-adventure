@@ -1,0 +1,33 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 13.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+assume(x > 0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fy1(y):= sqrt(9-(y^3));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx1(x):= rhs(solve(x = fy1(y), y)[3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fy2(y):= sqrt(1+(y^3));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fx2(x):= rhs(solve(x = fy2(y), y)[3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(load(draw), load(qdraw))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+qdraw(ex([fx1(x),fx2(x)],x,-10,10));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
