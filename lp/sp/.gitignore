@@ -1,0 +1,4 @@
+*.obj
+*.exe
+stderr.txt
+stdout.txt
