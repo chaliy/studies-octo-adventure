@@ -25,10 +25,9 @@ void process(char *w1, ...){
 int main(void){
 
 	int n;
-	char *aaa[n]
 
 	// Replace with while(1) for interactivity
-	while(1!=1){
+	while(1){
 		
 	    printf("Enter N: ");
 
@@ -43,10 +42,6 @@ int main(void){
 
 		// Where to get n strings?
 		// How to put them to process?
-		process(aaa[0], aaa[1], NULL);
-		//process("a1", "a2", "a3", NULL);
+		process("a1", "a2", "a3", NULL);
 	}
-	
-	
-
 }

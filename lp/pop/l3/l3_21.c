@@ -34,11 +34,11 @@ int main(void){
 	srand (time(NULL));	
 
 	// Uncomment for interactivity
-	// printf("Enter M: ");
-	// if (scanf("%i", &m) != 1){
-	// 	printf("Invalid input, try another time...\n");
-	// 	exit(1);
-	// }
+	printf("Enter M: ");
+	if (scanf("%i", &m) != 1){
+		printf("Invalid input, try another time...\n");
+		exit(1);
+	}
 
 	p = malloc(n * sizeof(float*));
 
