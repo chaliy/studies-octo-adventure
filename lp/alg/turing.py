@@ -27,7 +27,7 @@ class Taperecorder(object):
 	def move(self, direction):
 		if direction == "R":
 			self._move_right()			 
-		elif transfer.direction == "L":
+		elif direction == "L":
 			self._move_left()		
 
 	def __str__(self):
