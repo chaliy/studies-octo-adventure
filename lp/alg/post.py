@@ -29,7 +29,13 @@ class Taperecorder(object):
 		self._head_position = new_position
 
 	def __str__(self):
-		return "Tape at " + str(self._head_position) + " of " + str(self._data)
+		descr = "Tape ["
+		for i in range(len(self._data)):
+			if i == self._head_position:
+				descr += ">" + str(self._data[i]) + "<"
+			else:
+				descr += str(self._data[i])
+		return descr + "]"
 
 
 class Machine(object):
@@ -37,9 +43,6 @@ class Machine(object):
 		self._current_command_index = 1
 		self._tape = Taperecorder(initial_tape)
 		self._program = program	
-
-	def _trace_state(self):
-	 	print("" + str(self._current_command_index) + ": " + str(self._tape))	
 
 	def step(self):
 		current_control = self._program[self._current_command_index]
@@ -68,6 +71,8 @@ class Machine(object):
 		else:
 			raise Exception("Have no idea what command " + current_command + " means")
 
+		print(str(self._current_command_index) + " -> " + str(self._tape))	
+
 		self._current_command_index = next_command_index
 
 		return True
@@ -77,13 +82,15 @@ class Machine(object):
 		machine = Machine(initial_tape, 			
 			program
 		)
+		
+		print("Start:" + str(machine._tape))
 
-		machine._trace_state()
+		stepCount = 0
 
-		while machine.step(): 	
-			machine._trace_state()
+		while machine.step() & (stepCount < 100):
+			stepCount += 1			
 
-		machine._trace_state()
+		print("End:" + str(machine._tape))
 
 
 # Machine.run(
@@ -110,19 +117,19 @@ class Machine(object):
 # )
 
 # 5
-Machine.run(
-	[0,1,1,1],	
-	{
-		1: control('?2', 3),
-		2: control('R', 1),
-		3: control('R', 4),
-		4: control('?5', 3),
-		5: control('V', 6),
-		6: control('R', 7),
-		7: control('V', 8),
-		8: control('!', 0)
-	}
-)
+# Machine.run(
+# 	[0,1,1,1],	
+# 	{
+# 		1: control('?2', 3),
+# 		2: control('R', 1),
+# 		3: control('R', 4),
+# 		4: control('?5', 3),
+# 		5: control('V', 6),
+# 		6: control('R', 7),
+# 		7: control('V', 8),
+# 		8: control('!', 0)
+# 	}
+# )
 
 # 6
 # Machine.run(
