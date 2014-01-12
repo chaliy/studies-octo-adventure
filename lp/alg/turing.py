@@ -54,7 +54,7 @@ class Machine(object):
 			self._tape.move(transfer.direction)
 
 			self._current_state = transfer.new_state
-			return self._current_state != 'q0'
+			return self._current_state != self._final_state
 
 		return False
 
