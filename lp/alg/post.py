@@ -3,8 +3,8 @@ from collections import namedtuple
 control = namedtuple('c', ['command', 'next_command_index'])
 
 class Taperecorder(object):
-	def __init__(self, initial=[]): 
-		self._head_position = 0
+	def __init__(self, initial = [], head_position = 0): 
+		self._head_position = head_position
 		self._data = initial
 
 	def read_current(self):		
@@ -39,9 +39,9 @@ class Taperecorder(object):
 
 
 class Machine(object):
-	def __init__(self, initial_tape, program):
+	def __init__(self, initial_tape, program, head_position = 0):
 		self._current_command_index = 1
-		self._tape = Taperecorder(initial_tape)
+		self._tape = Taperecorder(initial_tape, head_position)
 		self._program = program	
 
 	def step(self):
@@ -78,10 +78,9 @@ class Machine(object):
 		return True
 
 
-	def run(initial_tape, program):
+	def run(initial_tape, program, head_position = 0):
 		machine = Machine(initial_tape, 			
-			program
-		)
+			program, head_position)
 		
 		print("Start:" + str(machine._tape))
 
@@ -116,6 +115,27 @@ class Machine(object):
 # 	}
 # )
 
+# 3
+# Machine.run(
+# 	[1,0,1,1,1,1],	
+# 	{
+# 		1: control('?2', 3),
+# 		2: control('!', 0),
+# 		3: control('R', 4),
+# 		4: control('?7', 5),
+# 		5: control('X', 6),
+# 		6: control('R', 9),
+# 		7: control('V', 8),
+# 		8: control('L', 2),
+# 		9: control('?12', 10),
+# 		10: control('X', 11),
+# 		11: control('R', 1),
+# 		12: control('V', 13),
+# 		13: control('L', 1),
+# 	},
+# 	head_position = 2
+# )
+
 # 5
 # Machine.run(
 # 	[0,1,1,1],	
@@ -147,3 +167,26 @@ class Machine(object):
 # 		10: control('R', 1),
 # 	}
 # )
+
+Machine.run(
+ 	[1,1,0,0,0,1,1,1,1,0,0,0,1,1,0,0,0,1,1,1,0,0,0,1,1],	
+ 	{
+ 		# 1
+ 		1: control('?3', 2),
+ 		2: control('R', 1),
+ 		# 0		
+		3: control('R', 4),
+		4: control('R', 5),
+		5: control('R', 6),
+		6: control('?14', 7), 	
+ 		# 1 -> 0
+ 		7: control('?10', 8),
+ 		8: control('X', 9),
+ 		9: control('R', 7),
+ 		# 0
+ 		10: control('R', 11),
+ 		11: control('R', 12),
+ 		12: control('R', 13),
+ 		13: control('?14', 1), 		
+ 		14: control('!', 0),
+	})

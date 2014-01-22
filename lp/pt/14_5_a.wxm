@@ -2,12 +2,21 @@
 /* [ Created with wxMaxima version 13.04.2 ] */
 
 /* [wxMaxima: input   start ] */
-f1: x^2 + y^2 + (z^2)/4;
+load(functs)$
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-integrate((1-x^2)*sqrt(1-x^2), x);
+(6 * 0.625)-0.375;
 /* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+(6 * 0.625)+0.625;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+15 * (.625^4)*(.375^2);
+/* [wxMaxima: input   end   ] */
+
 
 /* Maxima can't load/batch files which end with a comment! */
 "Created with wxMaxima"$
