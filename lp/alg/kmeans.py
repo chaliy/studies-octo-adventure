@@ -1,5 +1,6 @@
 import sys, math, random
 from pylab import *
+from matplotlib.markers import MarkerStyle
 from point import *
 
 INT_MAX = 100000
@@ -26,10 +27,11 @@ class KMeans(object):
 		clusters = Points.array_of(self._clusters)
 
 		colors = ['r','b','g','y','m']
+		markers = MarkerStyle.filled_markers
 
 		for cluster_index in range(len(clusters)):
 			cluster = clusters[cluster_index]
-			scatter(cluster.x(),cluster.y(), c=colors[cluster_index], label="#" + str(cluster_index))
+			scatter(cluster.x(),cluster.y(), c=colors[cluster_index], marker=markers[cluster_index], label="#" + str(cluster_index))
 
 		legend()
 
