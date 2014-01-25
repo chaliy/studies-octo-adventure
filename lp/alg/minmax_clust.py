@@ -1,42 +1,50 @@
 import sys, math, random
+from point import *
+from pylab import *
 
-class Point(object):
-	
-	def __init__(self, x, y):
-		self._x = x
-		self._y = y
-
-	def distanceTo(self, other):
-		return math.sqrt(math.pow(self._x - other._x, 2) + math.pow(self._y - other._y, 2))
-
-	def __repr__(self):
-		return "(" + str(self._x) + "; " + str(self._y) + ")"
-
-class Clusterizable(object):
+class MinMax(object):
 	def __init__(self, points):
-		self._points = points
-		self._z_points = []		
+		self._points = [ Point(p[0], p[1]) for p in points ]
+		self._centers = []		
 
 	def dump_points(self):
 		print(self._points)
 
 	def dump_cluster(self):		
 		print("Cluster centers with 0.5 thresold:")
-		print(self._z_points)
+		print(self._centers)
+
+	def plot_cluster(self, file_name):
+
+		points = Points(self._points)
+		scatter(points.x(),points.y(), c='b', label="Source")
+
+		centers = Points(self._centers)
+		scatter(centers.x(),centers.y(), c='r', label="Centers")
+
+		
+		legend()
+
+		xlabel('x')
+		ylabel('y')
+		title('Minmax clustering')
+		grid(True)
+		axis('equal')
+		savefig(file_name)
 
 	def cluster(self):		
 
-		self._z_points = [self._points[0]]
+		self._centers = [self._points[0]]
 		max_distances = []
 
 		while True:
 
-			other_points = filter(lambda x: x not in self._z_points, self._points)
+			other_points = filter(lambda x: x not in self._centers, self._points)
 
 			def row_min_distance(other_point):
 				min_distance = 10000 # Should be max int
 				min_point = None
-				for z_point in self._z_points:
+				for z_point in self._centers:
 					item_distance = other_point.distanceTo(z_point)
 					if item_distance < min_distance:
 						min_distance = item_distance
@@ -67,6 +75,6 @@ class Clusterizable(object):
 
 			if len(max_distances) == 0 or (max_distance > min(max_distances) / 2):
 				max_distances.append(max_distance)
-				self._z_points.append(max_point)
+				self._centers.append(max_point)
 			else:
 				return

@@ -30,6 +30,7 @@ class Machine(object):
 		print("End with: " + self._word)
 		return self._word
 
+	@staticmethod
 	def run(word, program):
 		machine = Machine(word, program)
 		return machine._run()

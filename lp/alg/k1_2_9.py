@@ -1,21 +1,22 @@
-from minmax import *
+from minmax_clust import *
 
-s = Clusterizable([		
-		Point(5,5), 
-		Point(6,6), 
-		Point(7,7), 
-		Point(8,8), 
-		Point(7,15), 
-		Point(8,15), 
-		Point(9,15), 
-		Point(10,15), 
-		Point(11,15),
-		Point(14,2), 
-		Point(15,3), 
-		Point(16,4)
+s = MinMax([		
+		(5,5), 
+		(6,6), 
+		(7,7), 
+		(8,8), 
+		(7,15), 
+		(8,15), 
+		(9,15), 
+		(10,15), 
+		(11,15),
+		(14,2), 
+		(15,3), 
+		(16,4)
 	])
 
 s.dump_points()
 	
 s.cluster()
 s.dump_cluster()
+s.plot_cluster('k1_2_9');

@@ -4,8 +4,8 @@ predicate = namedtuple('P', ['state', 'value'])
 transfer = namedtuple('T', ['new_state', 'new_value', 'direction'])
 
 class Taperecorder(object):
-	def __init__(self, initial=[]): 
-		self._head_position = 0
+	def __init__(self, initial=[], head_position = 0): 
+		self._head_position = head_position
 		self._data = initial
 
 	def read_current(self):		
@@ -37,7 +37,7 @@ class Machine(object):
 	def __init__(self, initial_tape, initial_state, final_state, program):
 		self._current_state = initial_state
 		self._final_state = final_state
-		self._tape = Taperecorder(initial_tape)
+		self._tape = initial_tape
 		self._program = program	
 
 	def _trace_state(self):
@@ -58,6 +58,7 @@ class Machine(object):
 
 		return False
 
+	@staticmethod
 	def run(initial_tape, initial_state, final_state, program):
 		machine = Machine(initial_tape, 
 			initial_state, final_state, 
@@ -70,21 +71,3 @@ class Machine(object):
 			machine._trace_state()
 
 		machine._trace_state()
-
-
-Machine.run(
-	['a','b','b'],
-	'q1', 'q0',
-	{
-		predicate('q1','a'): transfer('q2', None, 'R'),
-		predicate('q1','b'): transfer('q3', None, 'R'),
-
-		predicate('q2','a'): transfer('q2', 'a', 'R'),
-		predicate('q2','b'): transfer('q2', 'b', 'R'),
-		predicate('q2', None): transfer('q0', 'a', 'L'),
-
-		predicate('q3','a'): transfer('q3', 'a', 'R'),
-		predicate('q3','b'): transfer('q3', 'b', 'R'),
-		predicate('q3', None): transfer('q0', 'b', 'L'),
-	}
-)

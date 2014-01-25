@@ -1,6 +1,7 @@
 from kmeans import *
+from point import *
 
-s = Clusterizable([		
+s = KMeans([		
 		Point(1,2), 
 		Point(1,3), 
 		Point(1,4), 
@@ -15,5 +16,7 @@ s = Clusterizable([
 
 s.dump_points()
 	
-s.cluster(4)
+s.cluster(3)
 s.dump_cluster()
+s.plot_cluster('k2_1_14');
+
