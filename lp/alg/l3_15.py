@@ -1,6 +1,6 @@
 from markov import *
 
-Machine.run('acbacccabbc', [
+Markov.execute('acbacccabbc', [
 	# sort
 	f('ca', False, 'ac'),
 	f('ba', False, 'ab'),	

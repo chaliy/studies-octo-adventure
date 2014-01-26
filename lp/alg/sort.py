@@ -8,7 +8,7 @@ def insertion_sort(data):
             data[j],data[j - 1] = data[j - 1], data[j]
             j -= 1
 
-        print "".join(data[0:i] + list("|") + data[i:len(data)])
+        print(str(data[0:i]) + "|" + str(data[i:len(data)]))
     
     return data
 

@@ -6,7 +6,7 @@ import re
 
 f = namedtuple('f', ['match', 'final', 'replace'])
 
-class Machine(object):
+class Markov(object):
 	def __init__(self, word, program):
 		self._word = word
 		self._program = program
@@ -20,7 +20,7 @@ class Machine(object):
 		return False
 
 
-	def _run(self):
+	def run(self):
 		c = 0;
 		print("Start from: " + self._word)
 		while self._apply():
@@ -30,12 +30,13 @@ class Machine(object):
 		print("End with: " + self._word)
 		return self._word
 
+	def print_program(self):
+		for f in self._program:
+			print(f.match + " " + ['','|'][f.final] + "-> " + f.replace)	
+
 	@staticmethod
-	def run(word, program):
-		machine = Machine(word, program)
-		return machine._run()
+	def execute(word, program):
+		machine = Markov(word, program)
+		return machine.run()
 
 
-# Machine.run('abaabb', [
-# 	f('ba', False, 'ab')
-# ])
