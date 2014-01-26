@@ -1,18 +1,18 @@
 from turing import *
 
-Machine.run(
+Turing.run(
 	Taperecorder(['a','b','b']),
 	'q1', 'q0',
-	{
-		predicate('q1','a'): transfer('q2', None, 'R'),
-		predicate('q1','b'): transfer('q3', None, 'R'),
+	[
+		control('q1','a', 'R', None, 'q2'),
+		control('q1','b', 'R', None, 'q3'),
 
-		predicate('q2','a'): transfer('q2', 'a', 'R'),
-		predicate('q2','b'): transfer('q2', 'b', 'R'),
-		predicate('q2', None): transfer('q0', 'a', 'L'),
+		control('q2','a', 'R', 'a', 'q2'),
+		control('q2','b', 'R', 'b', 'q2'),
+		control('q2', None, 'L', 'a', 'q0'),
 
-		predicate('q3','a'): transfer('q3', 'a', 'R'),
-		predicate('q3','b'): transfer('q3', 'b', 'R'),
-		predicate('q3', None): transfer('q0', 'b', 'L'),
-	}
+		control('q3','a', 'R', 'a', 'q3'),
+		control('q3','b', 'R', 'b', 'q3'),
+		control('q3', None, 'L', 'b', 'q0')
+	]
 )

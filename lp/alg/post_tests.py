@@ -1,6 +1,6 @@
 from post import *
 
-Machine.run(
+Post.run(
 	[0,0,0,1,0,0,0,0],	
 	{
 		1: control('R', 2),
@@ -13,7 +13,7 @@ Machine.run(
 
 
 #2.4
-Machine.run(
+Post.run(
 	[0,0,0,1,1,1,1,1],	
 	{
 		1: control('R', 2),
@@ -24,7 +24,7 @@ Machine.run(
 )
 
 #3
-Machine.run(
+Post.run(
 	[1,0,1,1,1,1],	
 	{
 		1: control('?2', 3),
@@ -45,7 +45,7 @@ Machine.run(
 )
 
 #5
-Machine.run(
+Post.run(
 	[0,1,1,1],	
 	{
 		1: control('?2', 3),
@@ -60,7 +60,7 @@ Machine.run(
 )
 
 #6
-Machine.run(
+Post.run(
 	[1,1,1,0,0,0,1,1],	
 	{
 		1: control('X', 2),
@@ -76,7 +76,7 @@ Machine.run(
 	}
 )
 
-Machine.run(
+Post.run(
  	[1,1,0,0,0,1,1,1,1,0,0,0,1,1,0,0,0,1,1,1,0,0,0,1,1],	
  	{
  		# 1

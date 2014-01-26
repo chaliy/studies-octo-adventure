@@ -6,62 +6,73 @@
 
 from turing import *
 
-Machine.run(
+machine = Turing(
 	Taperecorder([None, '1','4'], 1),
 	'movetoend', 'exit',
-	{
-		predicate('movetoend','0'): transfer('movetoend', '0', 'R'),
-		predicate('movetoend','1'): transfer('movetoend', '1', 'R'),
-		predicate('movetoend','2'): transfer('movetoend', '2', 'R'),
-		predicate('movetoend','3'): transfer('movetoend', '3', 'R'),
-		predicate('movetoend','4'): transfer('movetoend', '4', 'R'),
-		predicate('movetoend','5'): transfer('movetoend', '5', 'R'),
-		predicate('movetoend','6'): transfer('movetoend', '6', 'R'),
-		predicate('movetoend','7'): transfer('movetoend', '7', 'R'),
-		predicate('movetoend','8'): transfer('movetoend', '8', 'R'),
-		predicate('movetoend','9'): transfer('movetoend', '9', 'R'),
-		predicate('movetoend', None): transfer('moveprev', '0', '-'),
+	[
+		control('movetoend','0', 'R', '0', 'movetoend'),
+		control('movetoend','1', 'R', '1', 'movetoend'),
+		control('movetoend','2', 'R', '2', 'movetoend'),
+		control('movetoend','3', 'R', '3', 'movetoend'),
+		control('movetoend','4', 'R', '4', 'movetoend'),
+		control('movetoend','5', 'R', '5', 'movetoend'),
+		control('movetoend','6', 'R', '6', 'movetoend'),
+		control('movetoend','7', 'R', '7', 'movetoend'),
+		control('movetoend','8', 'R', '8', 'movetoend'),
+		control('movetoend','9', 'R', '9', 'movetoend'),
+		control('movetoend', None, '-', '0', 'moveprev'),
 
-		predicate('moveprev',None): transfer('exit', None, '-'),
-		predicate('moveprev','0'): transfer('getprev', '0', 'L'),
-		predicate('moveprev','1'): transfer('getprev', '1', 'L'),
-		predicate('moveprev','2'): transfer('getprev', '3', 'L'),
-		predicate('moveprev','3'): transfer('getprev', '4', 'L'),
-		predicate('moveprev','4'): transfer('getprev', '4', 'L'),
-		predicate('moveprev','5'): transfer('getprev', '5', 'L'),
-		predicate('moveprev','6'): transfer('getprev', '6', 'L'),
-		predicate('moveprev','7'): transfer('getprev', '7', 'L'),
-		predicate('moveprev','8'): transfer('getprev', '8', 'L'),
-		predicate('moveprev','9'): transfer('getprev', '9', 'L'),
+		control('moveprev',None, '-', None, 'exit'),
+		control('moveprev','0', 'L', '0', 'getprev'),
+		control('moveprev','1', 'L', '1', 'getprev'),
+		control('moveprev','2', 'L', '3', 'getprev'),
+		control('moveprev','3', 'L', '4', 'getprev'),
+		control('moveprev','4', 'L', '4', 'getprev'),
+		control('moveprev','5', 'L', '5', 'getprev'),
+		control('moveprev','6', 'L', '6', 'getprev'),
+		control('moveprev','7', 'L', '7', 'getprev'),
+		control('moveprev','8', 'L', '8', 'getprev'),
+		control('moveprev','9', 'L', '9', 'getprev'),
 
-		predicate('getprev', '0'): transfer('add0', '0', 'R'), 
-		predicate('getprev', '1'): transfer('add1', '1', 'R'), 
-		predicate('getprev', '2'): transfer('add2', '2', 'R'), 
-		predicate('getprev', '3'): transfer('add3', '3', 'R'), 
-		predicate('getprev', '4'): transfer('add4', '4', 'R'), 
-		predicate('getprev', '5'): transfer('add5', '5', 'R'), 
-		predicate('getprev', '6'): transfer('add6', '6', 'R'), 
-		predicate('getprev', '7'): transfer('add7', '7', 'R'), 
-		predicate('getprev', '8'): transfer('add8', '8', 'R'), 
-		predicate('getprev', '9'): transfer('add9', '9', 'R'), 
+		control('getprev', '0', 'R', '0', 'add0'), 
+		control('getprev', '1', 'R', '1', 'add1'), 
+		control('getprev', '2', 'R', '2', 'add2'), 
+		control('getprev', '3', 'R', '3', 'add3'), 
+		control('getprev', '4', 'R', '4', 'add4'), 
+		control('getprev', '5', 'R', '5', 'add5'), 
+		control('getprev', '6', 'R', '6', 'add6'), 
+		control('getprev', '7', 'R', '7', 'add7'), 
+		control('getprev', '8', 'R', '8', 'add8'), 
+		control('getprev', '9', 'R', '9', 'add9'), 
+
+		control('add1', None, 'L', '1', 'moveprev'),
+		control('add1', '0', 'L', '1', 'moveprev'),
+		control('add1', '1', 'L', '2', 'moveprev'),
+		control('add1', '2', 'L', '3', 'moveprev'),
+		control('add1', '3', 'L', '4', 'moveprev'),
+		control('add1', '4', 'L', '5', 'moveprev'),
+		control('add1', '5', 'L', '6', 'moveprev'),
+		control('add1', '6', 'L', '7', 'moveprev'),
+		control('add1', '7', 'L', '8', 'moveprev'),
+		control('add1', '8', 'L', '9', 'moveprev'),
+		control('add1', '9', 'L', '0', 'moveprev'),	#c	
 		
-		predicate('add4', None): transfer('moveprev', '4', 'L'),
-		predicate('add4', '0'): transfer('moveprev', '4', 'L'),
-		predicate('add4', '1'): transfer('moveprev', '5', 'L'),
-		predicate('add4', '2'): transfer('moveprev', '6', 'L'),
-		predicate('add4', '3'): transfer('moveprev', '7', 'L'),
-		predicate('add4', '4'): transfer('moveprev', '8', 'L'),
-		predicate('add4', '5'): transfer('moveprev', '9', 'L'),
-		# predicate('add4', '6'): transfer('moveprev', '8', 'L'),
-		# predicate('add4', '7'): transfer('moveprev', '8', 'L'),
-		# predicate('add4', '8'): transfer('moveprev', '8', 'L'),
-		# predicate('add4', '9'): transfer('moveprev', '8', 'L'),
+		control('add4', None, 'L', '4', 'moveprev'),
+		control('add4', '0', 'L', '4', 'moveprev'),
+		control('add4', '1', 'L', '5', 'moveprev'),
+		control('add4', '2', 'L', '6', 'moveprev'),
+		control('add4', '3', 'L', '7', 'moveprev'),
+		control('add4', '4', 'L', '8', 'moveprev'),
+		control('add4', '5', 'L', '9', 'moveprev'),
+		control('add4', '6', 'L', '0', 'moveprev'), #c
+		control('add4', '7', 'L', '1', 'moveprev'), #c
+		control('add4', '8', 'L', '2', 'moveprev'), #c
+		control('add4', '9', 'L', '3', 'moveprev'), #c
 
-		predicate('add1', None): transfer('moveprev', '1', 'L'),
-		predicate('add1', '0'): transfer('moveprev', '1', 'L'),
-		predicate('add1', '1'): transfer('moveprev', '2', 'L'),
-		predicate('add1', '4'): transfer('moveprev', '5', 'L'),
-	}
+		# add1 - add9
+	]
 )
 
- 
+machine.print_program()
+
+machine.run_steps()

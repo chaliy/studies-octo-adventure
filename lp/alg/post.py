@@ -1,3 +1,5 @@
+# coding=utf8
+
 from array import array
 from collections import namedtuple
 control = namedtuple('c', ['command', 'next_command_index'])
@@ -38,7 +40,7 @@ class Taperecorder(object):
 		return descr + "]"
 
 
-class Machine(object):
+class Post(object):
 	def __init__(self, initial_tape, program, head_position = 0):
 		self._current_command_index = 1
 		self._tape = Taperecorder(initial_tape, head_position)
@@ -77,16 +79,37 @@ class Machine(object):
 
 		return True
 
-	@staticmethod
-	def run(initial_tape, program, head_position = 0):
-		machine = Machine(initial_tape, 			
-			program, head_position)
-		
-		print("Start:" + str(machine._tape))
+	def print_program(self):
+		for key in self._program.keys():
+			control = self._program[key]
+			command = control.command			
+			if command == 'L':
+				command_disp = "←"
+			elif command == 'R':
+				command_disp = "→"
+			elif command.startswith('?'):
+				command_disp = command.replace("?", "? ") + " :"
+			else:
+				command_disp = command
+
+			if command == "!":
+				print(str(key) + ". " + command_disp)			
+			else:
+				print(str(key) + ". " + command_disp + " " + str(control.next_command_index))			
+
+	def run_steps(self):
+		print("Start:" + str(self._tape))
 
 		stepCount = 0
 
-		while machine.step() & (stepCount < 100):
+		while self.step() & (stepCount < 100):
 			stepCount += 1			
 
-		print("End:" + str(machine._tape))
+		print("End:" + str(self._tape))
+
+	@staticmethod
+	def run(initial_tape, program, head_position = 0):
+		machine = Post(initial_tape, 			
+			program, head_position)
+		
+		machine.run_steps()

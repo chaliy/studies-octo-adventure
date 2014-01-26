@@ -1,7 +1,10 @@
+# coding=utf8
+
 from array import array
 from collections import namedtuple
-predicate = namedtuple('P', ['state', 'value'])
-transfer = namedtuple('T', ['new_state', 'new_value', 'direction'])
+from utils import *
+
+control = namedtuple('C', ['state', 'value', 'direction', 'new_value', 'new_state'])
 
 class Taperecorder(object):
 	def __init__(self, initial=[], head_position = 0): 
@@ -33,41 +36,64 @@ class Taperecorder(object):
 	def __str__(self):
 		return "Tape at " + str(self._head_position) + " of " + str(self._data)
 
-class Machine(object):
+class Turing(object):
 	def __init__(self, initial_tape, initial_state, final_state, program):
 		self._current_state = initial_state
 		self._final_state = final_state
 		self._tape = initial_tape
-		self._program = program	
+		self._program = program
 
 	def _trace_state(self):
 		print("State " + str(self._current_state) + "; " + str(self._tape))	
 
 	def step(self):		
 		current_char = self._tape.read_current()	
-		current_predicate = predicate(self._current_state, current_char)
-		if current_predicate in self._program:		
+		
+		current_control = find(lambda x: x.state == self._current_state and x.value == current_char, self._program)
 
-			transfer = self._program[current_predicate]
+		if current_control:		
 
-			self._tape.write(transfer.new_value)
-			self._tape.move(transfer.direction)
+			self._tape.write(current_control.new_value)
+			self._tape.move(current_control.direction)
 
-			self._current_state = transfer.new_state
+			self._current_state = current_control.new_state
 			return self._current_state != self._final_state
 
 		return False
 
+	def run_steps(self):
+		self._trace_state()
+
+		while self.step(): 	
+			self._trace_state()
+
+		self._trace_state()
+
+	def print_program(self):
+		for control in self._program:
+			
+			if control.direction  == 'L':
+				direction_disp = "←"
+			elif control.direction  == 'R':
+				direction_disp = "→"
+			else:
+				direction_disp = control.direction 
+
+			def fix_falue(s):				
+				if s == None:
+					return "λ"
+				return str(s)
+
+			print("<" 
+				+ control.state + ", \"" + fix_falue(control.value) + "\", " 
+				+ direction_disp + ", \"" + fix_falue(control.new_value) + "\", " + str(control.new_state) 
+				+ ">")	
+
 	@staticmethod
 	def run(initial_tape, initial_state, final_state, program):
-		machine = Machine(initial_tape, 
+		machine = Turing(initial_tape, 
 			initial_state, final_state, 
 			program
 		)
 
-		machine._trace_state()
-
-		while machine.step(): 	
-			machine._trace_state()
-
-		machine._trace_state()
+		machine.run_steps()
