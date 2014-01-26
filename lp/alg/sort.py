@@ -47,8 +47,6 @@ def merge_sort(data):
     else:
         sorted_data.extend(data2[data2_index:])
 
-
-    
     return sorted_data
 
 
