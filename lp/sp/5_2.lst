@@ -1,0 +1,100 @@
+JWasm v2.11, Oct 20 2013
+.\5_2.asm
+00000000                        sseg         segment stack
+00000000  000000000000000000                  DB       256     DUP(?)
+00000100                        sseg         ends
+
+00000000                        dseg     segment
+00000000  6572726F7224          error      db      'error$'
+00000006  000000                mas       db      3 DUP (?)
+00000009                        dseg     ends
+
+00000000                        cseg     segment
+                                            assume           cs:cseg,ds:dseg,ss:sseg
+
+00000000  EB00                  start:    jmp              main
+00000002  1E                    main:    push             ds
+00000003  B80000                            mov              ax,0
+00000006  50                                push             ax
+00000007  B80000                            mov              ax,dseg
+0000000A  8ED8                              mov              ds,ax
+0000000C  BE0000                            mov             si,0
+0000000F  B90300                            mov             cx,3
+
+00000012  B400                              mov             ah,0
+00000014  BA0000                            mov             dx,0                       ;³í³ö³àë³çàö³ÿ ïîñë³äîâíîãî ïîðòó
+00000017  B0FF                              mov             al,11111111B
+00000019  CD14                              int              14h
+
+0000001B  B403                  C1:       mov             ah,3
+0000001D  CD14                              int              14h
+0000001F  F6C401                            test             ah,1B                     ;ïåðåâ³ðêà ñòàòóñó ïîñë³äîâíîãî ïîðòó
+00000022  74F7                              jz                C1
+
+00000024  B402                              mov            ah,2
+00000026  CD14                              int              14h
+00000028  F6C41E                            test            ah,11110B
+0000002B  750C                              jnz             err
+
+0000002D  88840000                          mov            mas[si],al
+00000031  46                                inc              si
+00000032  E2E7                              loop            C1                          ;pruimau
+                                            
+
+00000034  B8004C                exit:     mov              ax,4c00h
+00000037  CD21                              int                21h
+00000039  BA0000                err:      mov              dx,offset error
+0000003C  B409                              mov              ah,9
+0000003E  CD21                              int                21h                        ;âèâ³ä ïîâ³äîìëåííÿ ïðî ïîìèëêó
+00000040  EBF2                              jmp              exit
+
+
+00000042                        cseg     ends
+                                            end              start
+
+
+Binary Map:
+
+Segment                  Pos(file)     RVA  Size(fil) Size(mem)
+---------------------------------------------------------------
+<header>                        0        0        30         0
+sseg                           30        0       100       100
+dseg                          130      100         9         9
+cseg                          140      110        42        42
+---------------------------------------------------------------
+                                                 182       152
+
+
+Macros:
+
+                N a m e                 Type
+
+@CatStr  . . . . . . . . . . . .        Func
+@Environ . . . . . . . . . . . .        Func
+@InStr . . . . . . . . . . . . .        Func
+@SizeStr . . . . . . . . . . . .        Func
+@SubStr  . . . . . . . . . . . .        Func
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+cseg . . . . . . . . . . . . . .        16 Bit   0042     Para    Private ''
+dseg . . . . . . . . . . . . . .        16 Bit   0009     Para    Private ''
+sseg . . . . . . . . . . . . . .        16 Bit   0100     Para    Stack   ''
+
+
+Symbols:
+
+                N a m e                 Type       Value     Attr
+
+C1 . . . . . . . . . . . . . . .        L Near            1Bh cseg 
+err  . . . . . . . . . . . . . .        L Near            39h cseg 
+error  . . . . . . . . . . . . .        Byte[6]            0h dseg 
+exit . . . . . . . . . . . . . .        L Near            34h cseg 
+main . . . . . . . . . . . . . .        L Near             2h cseg 
+mas  . . . . . . . . . . . . . .        Byte[3]            6h dseg 
+start  . . . . . . . . . . . . .        L Near             0h cseg Public 
+
+.\5_2.asm: 51 lines, 2 passes, 0 ms, 0 warnings, 0 errors
