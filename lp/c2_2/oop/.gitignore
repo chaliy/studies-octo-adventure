@@ -1,0 +1,6 @@
+/bin/*
+/javadocs/*
+*~
+.metadata
+gen-src/
+*.class
