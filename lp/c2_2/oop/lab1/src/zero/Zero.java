@@ -48,13 +48,11 @@ public class Zero {
 		
 		System.out.println("2.7.4");
 		
-		byte b1 = 50, b2 = -99, b«; 
+		byte b1 = 50, b2 = -99; 
 		short det = 0, ind = 1; 
-		int i = -100, j = 100; 
-		long big = 50, veryBig = 2147483648L; 
-		char c1 = 'A', c2 = '?', newLine = '\n';
 		
-		System.out.printf("b1: %d, b2: %dv", b1, b2);
+		System.out.printf("b1: %d, b2: %d%n", b1, b2);
+		System.out.printf("det: %d, ind: %d%n", det, ind);
 		
 		System.out.println("2.7.5.1");
 		
@@ -84,7 +82,7 @@ public class Zero {
 		float y = -34.789f;
 		double xy = -16.2305; 
 
-		System.out.printf("x: %f, y: %f%n", x, y);
+		System.out.printf("x: %f, y: %f, xy: %f%n", x, y, xy);
 		
 		System.out.println("2.7.7");
 		
