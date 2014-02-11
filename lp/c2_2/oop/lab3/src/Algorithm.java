@@ -5,11 +5,7 @@ import java.util.Random;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		
-		// Задано натуральне число n і масив дійсних чисел a[1..n]. 
-		// Визначити добуток непарних елементів, розташованих 
-		// після останнього від’ємного елемента.
-		
+
 		int n = 20;
 		int[] a = new int[n];
 		

@@ -62,13 +62,13 @@ public class Editor {
 		frame.setBounds(100, 100, 574, 375);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JLabel captionLabel = new JLabel("Введення тексту у файл");
+		JLabel captionLabel = new JLabel("Р’РІРµРґРµРЅРЅСЏ С‚РµРєСЃС‚Сѓ Сѓ С„Р°Р№Р»");
 		frame.getContentPane().add(captionLabel, BorderLayout.NORTH);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
-		JLabel fileNameLabel = new JLabel("Введіть ім'я файлу:");
+		JLabel fileNameLabel = new JLabel("Р’РІРµРґС–С‚СЊ С–Рј'СЏ С„Р°Р№Р»Сѓ:");
 		panel.add(fileNameLabel);
 		fileNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		
@@ -77,7 +77,7 @@ public class Editor {
 		panel.add(fileNameField);
 		fileNameField.setColumns(20);
 		
-		JButton saveButton = new JButton("Зберегти");
+		JButton saveButton = new JButton("Р—Р±РµСЂРµРіС‚Рё");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				saveFile();
@@ -96,7 +96,7 @@ public class Editor {
 		String fileName = this.fileNameField.getText();
 		
 		if (fileName == null || fileName.length() == 0){
-			JOptionPane.showMessageDialog(frame,"Будьте ласкаві, введіть ім'я файлу");
+			JOptionPane.showMessageDialog(frame,"Р‘СѓРґСЊС‚Рµ Р»Р°СЃРєР°РІС–, РІРІРµРґС–С‚СЊ С–Рј'СЏ С„Р°Р№Р»Сѓ");
 			return;
 		}
 		
@@ -109,12 +109,11 @@ public class Editor {
 			
 			fw.close();
 			
-			JOptionPane.showMessageDialog(frame,"Файл збережено");
+			JOptionPane.showMessageDialog(frame,"Р¤Р°Р№Р» Р·Р±РµСЂРµР¶РµРЅРѕ");
 			
 		} catch (IOException e) {			
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(frame, "Помилка запису файла\n" + e.getMessage());
+			JOptionPane.showMessageDialog(frame, "РџРѕРјРёР»РєР° Р·Р°РїРёСЃСѓ С„Р°Р№Р»Р°\n" + e.getMessage());
 		} 
 	}
-
 }

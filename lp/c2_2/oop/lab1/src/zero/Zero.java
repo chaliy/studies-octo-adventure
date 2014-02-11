@@ -22,8 +22,8 @@ public class Zero {
 		
 		System.out.println("2.5.4");
 		
-		String s1 = "Цей рядок\nз переносом";
-		String s2 = "\"Карпати\" — Чемпіон!";
+		String s1 = "Р¦РµР№ СЂСЏРґРѕРє\nР· РїРµСЂРµРЅРѕСЃРѕРј";
+		String s2 = "\"РљР°СЂРїР°С‚Рё\" вЂ” Р§РµРјРїС–РѕРЅ!";
 
 		System.out.printf("%s%n%s%n", s1, s2);
 						
