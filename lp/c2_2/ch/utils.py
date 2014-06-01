@@ -1,4 +1,5 @@
 from IPython.display import display
+from numpy import *
 
 class Table(object):
     def __init__(self, headers = [], rows = []):
@@ -74,3 +75,15 @@ class BwMatrix(object):
 
 import pandas as pd
 pd.DataFrame._repr_html_ = lambda self: self.to_html(classes='table table-striped')
+
+import matplotlib as mpl
+mpl.rcParams['font.family'] = 'fantasy'
+mpl.rcParams['font.fantasy'] = 'Arial, Ubuntu'
+
+## Errors
+
+def abs_error(actual, exepcted):
+    return list(abs(subtract(exepcted, actual)))
+
+def rel_error(actual, exepcted):
+    return list(abs(divide(exepcted, actual)))
