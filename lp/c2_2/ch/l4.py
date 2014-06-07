@@ -9,9 +9,9 @@ def iterative(A, B, e):
     # DgZ = abs((eye(numcols) - 1))
     # Aa = matrix([(-A[i]/A[i,i]).getA1() for i in range(numcols)] * DgZ)
     # or use fill_diagonal
-    Aa = matrix([[(0 if i==j else (-A[i, j]/A[i, i])) for j in range(numcols)] 
+    Aa = matrix([[(0 if i==j else (-A[i, j]/A[i, i])) for j in range(numcols)]
                         for i in range(numrows)])
-    
+
     if not (Ad.T >= [sum(l) for l in array(Aa.tolist())]).all():
         raise Exception(u'Ітеративний метод не сходиться')
 
@@ -33,7 +33,7 @@ def gaussseidel(A, B, e):
     U = triu(A)
     L = tril(A)
     D = A.diagonal()
-    M = D + L    
+    M = D + L
     N = -U
 
     X = B[:]
@@ -114,4 +114,3 @@ if __name__ == '__main__':
     print(linalg.solve(A,B))
     # print(gaussseidel(A, B, 0.00001))
     print(gaussseidel2(A, B, B[:], 0.00001))
-
