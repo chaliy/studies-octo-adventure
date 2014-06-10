@@ -1,6 +1,15 @@
 from numpy import *
 
-def proove(F, R):
+def proove(p, F, C):
+
+    def build_r():    
+        def row(r, ri, C):
+            return [ ("A%d" % (ci + 1)) if (c in r) else ("B%d%d" % ((ri + 1), (ci + 1))) for ci, c in enumerate(C)]
+
+        return [row(r, ri, C) for ri, r in enumerate(p)]
+
+    R = build_r()
+    print("Initial", R)
 
     I = {
             "A": 0,
@@ -31,30 +40,28 @@ def proove(F, R):
 
     return any([all([v.startswith("A") for v in r]) for r in R])
 
+C = ["A", "B", "C", "D", "E"]
 
+# True test
+p = [["A", "D"], ["A", "E"], ["B", "C"], ["B", "D", "E"]]
 F = [(["A"], ["B"]),
-    (["A","B"], ["D","E"]),
-    (["C"], ["E"]),
-    (["D"], ["B"])]
+    (["A"], ["C"]),
+    (["E"], ["A"]),
+    (["B"], ["C"])]
 
-
-R = [
-    ["A1", "B12", "A3", "B14", "B15"],
-    ["B21", "A2", "A3", "B24", "B25"],
-    ["A1", "B32", "B42", "A4", "A5"],
-    ["B41", "B42", "A3", "A4", "B45"]]
-
-
+# Mike
+# p = [["A","B"], ["A", "D"], ["D","E"], ["A","B","E"]]
 # F = [(["A"], ["B"]),
-#     (["A"], ["C"]),
-#     (["E"], ["A"]),
-#     (["B"], ["C"])]
+#     (["A","B"], ["D","E"]),
+#     (["C"], ["E"]),
+#     (["D"], ["B"])]
 
-# R = [
-#     ["A1", "B12", "B13", "A4", "B15"],
-#     ["A1", "B22", "B23", "B24", "A5"],
-#     ["B31", "A2", "A3", "B34", "B35"],
-#     ["B41", "A2", "B43", "A4", "A5"]]
+# Павлік
+# p = [["A", "B"], ["A", "D"], ["D","E"], ["A","B","E"]]
+# F = [(["A"], ["C","D"]),
+#     (["C"], ["A","D"]),
+#     (["A"], ["E"]),    
+#     (["C"], ["D","E"])]
 
 
-print("Proove no looss:", proove(F, R))
+print("Proove no looss:", proove(p, F, C))
