@@ -1,7 +1,6 @@
 # coding=utf8
 import operator
 from utils import *
-from collections import namedtuple
 
 class ClothesSet(object):
 	def __init__(self, name, temp_min, temp_max, clothes, weight):		

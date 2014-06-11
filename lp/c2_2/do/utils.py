@@ -1,3 +1,5 @@
+from IPython.display import display
+
 class Table(object):
     def __init__(self, headers = [], rows = []):
         self.headers = list(headers)
@@ -10,7 +12,7 @@ class Table(object):
         self.headers = headers
 
     def to_html(self):
-        html = []
+        html = ""
         html += "<table class='table table-striped'>"
         html += "<tr>"
         for header in self.headers:
@@ -32,10 +34,34 @@ class Table(object):
 
         html += "</table>"
 
-        return "".join(html)
+        return html
 
     def _repr_html_(self):
         return self.to_html();
+
+def display_table(headers = [], rows = []):
+    display(Table(headers, rows))
+
+
+def display_code(file_name):
+    from pygments import highlight
+    from pygments.lexers import PythonLexer
+    from pygments.formatters import HtmlFormatter
+    import IPython
+
+    with open(file_name, 'rb') as f:
+        code = f.read().decode('utf-8')
+
+    formatter = HtmlFormatter(cssclass="well highlight")
+
+    html = ""
+    html += "<style type='text/css'>"
+    html += formatter.get_style_defs('.highlight')
+    html += "</style>"
+    html += "<h3>File: " + file_name + "</h3>"    
+    html += highlight(code, PythonLexer(), formatter)     
+
+    display(IPython.display.HTML(html))
 
 
 class BwMatrix(object):
@@ -43,7 +69,7 @@ class BwMatrix(object):
         self.matrix = matrix
 
     def to_html(self):
-        html = []
+        html = ""
         html += "<table>"
         
         for row in self.matrix:
@@ -59,7 +85,7 @@ class BwMatrix(object):
 
         html += "</table>"
 
-        return "".join(html)    
+        return html   
 
     def _repr_html_(self):
         return self.to_html();
@@ -69,3 +95,7 @@ class BwMatrix(object):
 
 import pandas as pd
 pd.DataFrame._repr_html_ = lambda self: self.to_html(classes='table table-striped')
+
+import matplotlib as mpl
+mpl.rcParams['font.family'] = 'fantasy'
+mpl.rcParams['font.fantasy'] = 'Arial, Ubuntu'
