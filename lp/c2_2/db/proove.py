@@ -9,7 +9,8 @@ def proove(p, F, C):
         return [row(r, ri, C) for ri, r in enumerate(p)]
 
     R = build_r()
-    print("Initial", R)
+    print("Initial")
+    print(matrix(R))
 
     I = {
             "A": 0,
@@ -36,7 +37,8 @@ def proove(p, F, C):
                     for yi in y:
                         ri[I[yi]] = r[I[yi]]            
 
-        print(f, R)
+        print(f)
+        print(matrix(R))
 
     return any([all([v.startswith("A") for v in r]) for r in R])
 
