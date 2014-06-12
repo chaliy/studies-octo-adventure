@@ -16,4 +16,4 @@ echo Tar content of the temp folder
 tar --directory tmp_archive -cz -f result.tar.gz .
 
 echo Remove temp folder
-# rm tmp_archive -fr
+rm tmp_archive -fr
