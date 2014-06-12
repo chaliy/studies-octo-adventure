@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-from l2_4 import *
+from l2_4_images import *
+from l2_4_algs import *
 
 class TestL2_4(unittest.TestCase):
 

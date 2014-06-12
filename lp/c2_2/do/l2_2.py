@@ -53,7 +53,7 @@ class Containers(list):
 
 	def _repr_html_(self):
 
-		table = IPyTable(["Weights"] + self._weights)
+		table = Table(["Weights"] + self._weights)
 
 		for container_index, container in enumerate(self):			
 
@@ -120,7 +120,7 @@ def wfa(c, weights):
 		o += 1
 		if (not containers.last.add_if_can_fit(i, weight)):
 			o += _sort_complexity(containers)
-			filled_containers = sorted(containers, Container.compare_by_filled)
+			filled_containers = sorted(containers, key=Container.filled)
 			
 			potential_conatiner = filled_containers[0]
 			o += 1
@@ -142,7 +142,7 @@ def bfa(c, weights):
 		o += 1
 		if (not containers.last.add_if_can_fit(i, weight)):
 			o += _sort_complexity(containers)
-			filled_containers = sorted(containers, Container.compare_by_filled)
+			filled_containers = sorted(containers, key=Container.filled)
 			
 			filled_containers_queue = deque(filled_containers)
 			while filled_containers_queue:

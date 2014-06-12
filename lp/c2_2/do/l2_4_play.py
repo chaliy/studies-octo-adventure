@@ -1,5 +1,6 @@
 # coding=utf8
-from l2_4 import *
+from l2_4_images import *
+from l2_4_algs import *
 
 letters = "VGYJM≡Б457"
 
@@ -45,31 +46,31 @@ test_images = x1_4 + x5_8 + x9_11 + x12_15 + x16
 
 comparision_result = calc_image_comparision(base_image_qalifiers, test_images[0], qualifier_masks)
 
-# print(comparision_result)
+print(comparision_result)
 # #print(minimax_scores(comparision_result, ["S1", "S2", "S3", "S4", "S5"]))
 # print(decide_with_minimax(comparision_result, ["S1", "S2", "S3", "S4", "S5"], use_minimum=True))
 # print(decide_with_lexicographical_optiomization(comparision_result, ["S1", "S2", "S3", "S4", "S5"], use_minimum=True))
 
 
-def pareto(data):
-    def more_or_equal(x,y):
-        return (x[0] >= y[0] and x[1] >= y[1])
+# def pareto(data):
+#     def more_or_equal(x,y):
+#         return (x[0] >= y[0] and x[1] >= y[1])
 
-    less = data 
-    for item in data.iterrows():   
-        #print(item)
-        less = less[less >= item]
+#     less = data 
+#     for item in data.iterrows():   
+#         #print(item)
+#         less = less[less >= item]
 
-        #next = [x for x in next if (not (more_or_equal(f, x)) or x == f)]
+#         #next = [x for x in next if (not (more_or_equal(f, x)) or x == f)]
 
-    return less
+#     return less
 
 
-data = pd.DataFrame({
-    "Q1": [7, 9, 0, 3, 9, 9, 1, 5, 7, 1],
-    "Q2": [9, 5, 4, 7, 2, 5, 2, 2, 0, 4]
-    }, index=list('ABCDEFGHJI'))
+# data = pd.DataFrame({
+#     "Q1": [7, 9, 0, 3, 9, 9, 1, 5, 7, 1],
+#     "Q2": [9, 5, 4, 7, 2, 5, 2, 2, 0, 4]
+#     }, index=list('ABCDEFGHJI'))
 
-#print(data.loc[:,["Q1", "Q2"]])
+# #print(data.loc[:,["Q1", "Q2"]])
 
-print(pareto(data.loc[:,["Q1", "Q2"]]))
+# print(pareto(data.loc[:,["Q1", "Q2"]]))

@@ -1703,7 +1703,7 @@ In&nbsp;[2]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">display_code</span><span class="p">(</span><span class="s">&quot;l2_3.py&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">display_code</span><span class="p">(</span><span class="s">&quot;l2_1.py&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1778,87 +1778,147 @@ In&nbsp;[2]:
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style><h3>File: l2_3.py</h3><div class="well highlight"><pre><span class="c"># coding=utf8</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style><h3>File: l2_1.py</h3><div class="well highlight"><pre><span class="k">def</span> <span class="nf">pareto</span><span class="p">(</span><span class="n">alternatives</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">more_or_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="k">class</span> <span class="nc">ClothesSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">,</span> <span class="n">clothes</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>		
-		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">temp_min</span> <span class="o">=</span> <span class="n">temp_min</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">temp_max</span> <span class="o">=</span> <span class="n">temp_max</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">clothes</span> <span class="o">=</span> <span class="n">clothes</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
+    <span class="nb">next</span> <span class="o">=</span> <span class="n">alternatives</span>	
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">alternatives</span><span class="p">:</span>	
+        <span class="nb">next</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">next</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">more_or_equal</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="n">f</span><span class="p">)]</span>
 
-	<span class="k">def</span> <span class="nf">get_price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">next</span>
 
-	<span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_min</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;..&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp_max</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;: &#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clothes</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">slater</span><span class="p">(</span><span class="n">alternatives</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">more</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="k">class</span> <span class="nc">ClothesItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+    <span class="nb">next</span> <span class="o">=</span> <span class="n">alternatives</span>	
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">alternatives</span><span class="p">:</span>	
+        <span class="nb">next</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">next</span> <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">more</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="n">f</span><span class="p">)]</span>		
 
+    <span class="k">return</span> <span class="nb">next</span>
+</pre></div>
 
-<span class="k">class</span> <span class="nc">MonthCalculation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">clothes_set</span><span class="p">,</span> <span class="n">clothes_diff</span><span class="p">,</span> <span class="n">added_price</span><span class="p">,</span> <span class="n">full_price</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">clothes_set</span> <span class="o">=</span> <span class="n">clothes_set</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">clothes_diff</span> <span class="o">=</span> <span class="n">clothes_diff</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">added_price</span> <span class="o">=</span> <span class="n">added_price</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">full_price</span> <span class="o">=</span> <span class="n">full_price</span>
+</div>
 
-	<span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-		<span class="k">return</span> <span class="s">&quot;(Diff: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clothes_diff</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;; Added price: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">added_price</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
+</div>
 
+</div>
+</div>
 
-<span class="k">class</span> <span class="nc">ClothesSolver</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_clothes_sets</span><span class="p">,</span> <span class="n">all_clothes</span><span class="p">,</span> <span class="n">temps</span><span class="p">):</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">all_clothes_sets</span> <span class="o">=</span> <span class="n">all_clothes_sets</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">all_clothes</span> <span class="o">=</span> <span class="n">all_clothes</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">temps</span> <span class="o">=</span> <span class="n">temps</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">display_code</span><span class="p">(</span><span class="s">&quot;l2_1_tests.py&quot;</span><span class="p">)</span>
+</pre></div>
 
-	<span class="k">def</span> <span class="nf">_calculate_clothes_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clothes_set</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>		
-		<span class="n">applicable_set</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_clothes_sets</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">temp_min</span> <span class="o">&lt;</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="o">.</span><span class="n">temp_max</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+</div>
+</div>
 
-		<span class="k">return</span> <span class="p">[</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">applicable_set</span><span class="o">.</span><span class="n">clothes</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">clothes_set</span><span class="o">.</span><span class="n">clothes</span> <span class="p">]</span>
-
-	<span class="k">def</span> <span class="nf">_calculate_added_price_of_clothes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clothes</span><span class="p">):</span>		
-		<span class="k">def</span> <span class="nf">get_price_for_item</span><span class="p">(</span><span class="n">clothes_item</span><span class="p">):</span>
-			<span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_clothes</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">clothes_item</span><span class="p">)</span><span class="o">.</span><span class="n">price</span>
-		<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">get_price_for_item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">clothes</span><span class="p">)</span>
+<div class="output_wrapper">
+<div class="output">
 
 
-	<span class="k">def</span> <span class="nf">calculate_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monthes</span><span class="p">):</span>
+<div class="output_area"><div class="prompt"></div>
 
-		<span class="k">def</span> <span class="nf">calulate_monthes</span><span class="p">(</span><span class="n">clothes_set</span><span class="p">):</span>
-			<span class="k">def</span> <span class="nf">calulate_month</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-				<span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">temps</span><span class="p">[</span><span class="n">m</span><span class="p">]</span>
-				<span class="n">clothes_diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_clothes_diff</span><span class="p">(</span><span class="n">clothes_set</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
-				<span class="n">added_price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_added_price_of_clothes</span><span class="p">(</span><span class="n">clothes_diff</span><span class="p">)</span>
-				<span class="n">full_price</span> <span class="o">=</span> <span class="n">clothes_set</span><span class="o">.</span><span class="n">get_price</span><span class="p">()</span> <span class="o">+</span> <span class="n">added_price</span>
-				<span class="k">return</span> <span class="n">MonthCalculation</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">clothes_set</span><span class="p">,</span> <span class="n">clothes_diff</span><span class="p">,</span> <span class="n">added_price</span><span class="p">,</span> <span class="n">full_price</span><span class="p">)</span>
+<div class="output_html rendered_html output_subarea ">
+<style type='text/css'>.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style><h3>File: l2_1_tests.py</h3><div class="well highlight"><pre><span class="c"># coding=utf-8</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
 
-			<span class="k">return</span> <span class="p">[</span><span class="n">calulate_month</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">monthes</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">numpy.testing</span> <span class="kn">as</span> <span class="nn">nt</span>
 
-		<span class="k">return</span> <span class="p">[</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calulate_monthes</span><span class="p">(</span><span class="n">cs</span><span class="p">))</span> <span class="k">for</span> <span class="n">cs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_clothes_sets</span> <span class="p">]</span>
+<span class="kn">from</span> <span class="nn">l2_1</span> <span class="kn">import</span> <span class="o">*</span>
 
-	<span class="k">def</span> <span class="nf">find_best_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monthes</span><span class="p">):</span>	
+<span class="k">class</span> <span class="nc">TestL2_5</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>      
 
-		<span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">monthes</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">test_pareto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">source</span> <span class="o">=</span> <span class="p">[</span><span class="mi">79</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+        <span class="n">alternatives</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">),</span><span class="n">x</span><span class="o">%</span><span class="mi">10</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">source</span><span class="p">]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">pareto</span><span class="p">(</span><span class="n">alternatives</span><span class="p">)</span>
+     
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
 
-		<span class="k">def</span> <span class="nf">expected_favor</span><span class="p">(</span><span class="n">calculations</span><span class="p">):</span>
-			<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="o">-</span><span class="n">calculation</span><span class="o">.</span><span class="n">full_price</span> <span class="o">*</span> <span class="n">probabilities</span><span class="p">[</span><span class="n">calculation_index</span><span class="p">]</span> 
-				<span class="k">for</span> <span class="n">calculation_index</span><span class="p">,</span> <span class="n">calculation</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">calculations</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">test_slater</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">source</span> <span class="o">=</span> <span class="p">[</span><span class="mi">79</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+        <span class="n">alternatives</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">),</span><span class="n">x</span><span class="o">%</span><span class="mi">10</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">source</span><span class="p">]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">slater</span><span class="p">(</span><span class="n">alternatives</span><span class="p">)</span>
+     
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+  
 
-		<span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">monthes</span><span class="p">)</span>
-		<span class="n">expected_favors</span> <span class="o">=</span> <span class="p">[(</span><span class="n">clothes_set</span><span class="p">,</span> <span class="n">expected_favor</span><span class="p">(</span><span class="n">calculations</span><span class="p">))</span> 
-							<span class="k">for</span> <span class="p">(</span><span class="n">clothes_set</span><span class="p">,</span> <span class="n">calculations</span><span class="p">)</span> <span class="ow">in</span> <span class="n">options</span><span class="p">]</span>
-
-		<span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">expected_favors</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -1881,58 +1941,15 @@ In&nbsp;[2]:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[3]:
+In&nbsp;[4]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
 <div class="highlight"><pre><span class="o">%</span><span class="k">matplotlib</span> <span class="n">inline</span>
 <span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">l2_3</span> <span class="kn">import</span> <span class="o">*</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="n">all_clothes_sets</span> <span class="o">=</span> <span class="p">[</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Shapka&#39;</span><span class="p">,</span> <span class="s">&#39;Bushalt&#39;</span><span class="p">,</span> <span class="s">&#39;Rukavichki&#39;</span><span class="p">,</span> <span class="s">&#39;Vatni shtani&#39;</span><span class="p">,</span> <span class="s">&#39;Choboti&#39;</span><span class="p">],</span> <span class="mf">9.5</span><span class="p">),</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;2&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Shapka&#39;</span><span class="p">,</span> <span class="s">&#39;Palto&#39;</span><span class="p">,</span> <span class="s">&#39;Rukavichki&#39;</span><span class="p">,</span> <span class="s">&#39;Jeans&#39;</span><span class="p">,</span> <span class="s">&#39;Choboti&#39;</span><span class="p">],</span> <span class="mf">7.5</span><span class="p">),</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;3&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Kepcka&#39;</span><span class="p">,</span> <span class="s">&#39;Curtcka&#39;</span><span class="p">,</span> <span class="s">&#39;Jeans&#39;</span><span class="p">,</span> <span class="s">&#39;Cherviki&#39;</span><span class="p">],</span> <span class="mi">5</span><span class="p">),</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;4&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Sventr&#39;</span><span class="p">,</span> <span class="s">&#39;Jeans&#39;</span><span class="p">,</span> <span class="s">&#39;Krosivki&#39;</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Blayzer&#39;</span><span class="p">,</span> <span class="s">&#39;Sorochka&#39;</span><span class="p">,</span> <span class="s">&#39;Jeans&#39;</span><span class="p">,</span> <span class="s">&#39;Krosivki&#39;</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesSet</span><span class="p">(</span><span class="s">&quot;6&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;Blayzer&#39;</span><span class="p">,</span> <span class="s">&#39;Footbolka&#39;</span><span class="p">,</span> <span class="s">&#39;Shorti&#39;</span><span class="p">,</span> <span class="s">&#39;Vyetnamki&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
-<span class="p">]</span>
-
-<span class="n">all_clothes</span> <span class="o">=</span> <span class="p">[</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Blayzer&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Bushalt&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Vatni shtani&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Vyetnamki&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Jeans&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Kepcka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Krosivki&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Curtcka&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Palto&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">36</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Rukavichki&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Sventr&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Sorochka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Footbolka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Cherviki&quot;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Choboti&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Shapka&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Shorti&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="p">]</span>
-
-<span class="n">temps</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">13</span><span class="p">,</span> <span class="o">-</span><span class="mi">11</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">+</span><span class="mi">11</span><span class="p">,</span> <span class="o">+</span><span class="mi">18</span><span class="p">,</span> <span class="o">+</span><span class="mi">23</span><span class="p">,</span> <span class="o">+</span><span class="mi">25</span><span class="p">,</span> <span class="o">+</span><span class="mi">24</span><span class="p">,</span> <span class="o">+</span><span class="mi">18</span><span class="p">,</span> <span class="o">+</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">]</span>
-<span class="n">default_solver</span> <span class="o">=</span> <span class="n">ClothesSolver</span><span class="p">(</span><span class="n">all_clothes_sets</span><span class="p">,</span> <span class="n">all_clothes</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">matplotlib.path</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">l2_1</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 
 </div>
@@ -1947,32 +1964,34 @@ In&nbsp;[5]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.5</span>
-<span class="n">all_monthes_equal_probability</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">)]</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">plot_pareto_slater</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">plot_result</span><span class="p">(</span><span class="n">all_items</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">scatter</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_items</span><span class="p">],</span>
+                <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_items</span><span class="p">])</span>
 
-<span class="n">options</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">all_monthes_equal_probability</span><span class="p">)</span> 
+        <span class="n">plot</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">],</span>
+             <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">])</span>
+        
+        <span class="n">title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        
+    <span class="n">alternatives</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">),</span><span class="n">x</span><span class="o">%</span><span class="k">10</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">source</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Source: &quot;</span><span class="p">)</span>    
+    <span class="n">display_table</span><span class="p">([],</span> <span class="n">transpose</span><span class="p">([[</span><span class="s">&quot;Q1&quot;</span><span class="p">,</span> <span class="s">&quot;Q2&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">alternatives</span><span class="p">))</span>
 
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">all_monthes_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">options</span> <span class="p">])</span>
+    <span class="n">pareto_results</span> <span class="o">=</span> <span class="n">pareto</span><span class="p">(</span><span class="n">alternatives</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Pareto: &quot;</span><span class="p">)</span>
+    <span class="n">display_table</span><span class="p">([],</span> <span class="n">transpose</span><span class="p">([[</span><span class="s">&quot;Q1&quot;</span><span class="p">,</span> <span class="s">&quot;Q2&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">pareto_results</span><span class="p">))</span>
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plot_result</span><span class="p">(</span><span class="n">alternatives</span><span class="p">,</span> <span class="n">pareto_results</span><span class="p">,</span> <span class="s">&quot;Pareto&quot;</span><span class="p">)</span>
+
+    <span class="n">slater_results</span> <span class="o">=</span> <span class="n">slater</span><span class="p">(</span><span class="n">alternatives</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Slater: &quot;</span><span class="p">)</span>
+    <span class="n">display_table</span><span class="p">([],</span> <span class="n">transpose</span><span class="p">([[</span><span class="s">&quot;Q1&quot;</span><span class="p">,</span> <span class="s">&quot;Q2&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">slater_results</span><span class="p">))</span>
+    <span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plot_result</span><span class="p">(</span><span class="n">alternatives</span><span class="p">,</span> <span class="n">slater_results</span><span class="p">,</span> <span class="s">&quot;Slater&quot;</span><span class="p">)</span>    
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[5]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Palto', 'Jeans']; Added price: 52.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Palto', 'Jeans']; Added price: 52.0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 100.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 100.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr></table>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -1984,33 +2003,24 @@ In&nbsp;[6]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.6</span>
-<span class="n">best_strategies_monthes_equal_probabiltiy</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">all_monthes_equal_probability</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_monthes_equal_probabiltiy</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_monthes_equal_probabiltiy</span> <span class="p">]])</span>
+<div class="highlight"><pre><span class="n">s1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">47</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">72</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">97</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">39</span><span class="p">]</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[6]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>5</th><th>4</th><th>6</th><th>3</th><th>2</th><th>1</th><tr><tr><td>Favor</td><td>-83.33</td><td>-83.83</td><td>-92.83</td><td>-109.83</td><td>-113.00</td><td>-130.83</td></tr></table>
 </div>
-
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="4-1">4.1</h4>
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -2019,14 +2029,7 @@ In&nbsp;[7]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.7</span>
-<span class="c"># Winter</span>
-<span class="n">winter_equal_probability</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">]]</span>
-
-<span class="n">winter_equal_probability_options</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">winter_equal_probability</span><span class="p">)</span> 
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">winter_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">winter_equal_probability_options</span> <span class="p">])</span>
+<div class="highlight"><pre><span class="n">plot_pareto_slater</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2037,11 +2040,255 @@ In&nbsp;[7]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[7]:</div>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Source: 
 
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>0</th><th>1</th><th>11</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 76.0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 124.0)</td></tr></table>
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>4</td><td>2</td><td>8</td><td>3</td><td>3</td><td>0</td><td>5</td><td>4</td><td>9</td><td>8</td><td>4</td><td>7</td><td>5</td><td>6</td><td>6</td><td>8</td><td>4</td><td>4</td><td>2</td><td>2</td></tr><tr><td>Q2</td><td>7</td><td>4</td><td>2</td><td>5</td><td>2</td><td>4</td><td>4</td><td>3</td><td>8</td><td>6</td><td>0</td><td>8</td><td>9</td><td>2</td><td>2</td><td>3</td><td>1</td><td>8</td><td>3</td><td>4</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Pareto: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>5</td></tr><tr><td>Q2</td><td>8</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Slater: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>7</td><td>5</td></tr><tr><td>Q2</td><td>8</td><td>8</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
 </div>
 
 </div>
@@ -2057,14 +2304,7 @@ In&nbsp;[8]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.7</span>
-<span class="c"># Spring</span>
-<span class="n">spring_equal_probability</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
-
-<span class="n">spring_equal_probability_options</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">spring_equal_probability</span><span class="p">)</span> 
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">spring_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">spring_equal_probability_options</span> <span class="p">])</span>
+<div class="highlight"><pre><span class="n">plot_pareto_slater</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2075,11 +2315,270 @@ In&nbsp;[8]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[8]:</div>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Source: 
 
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>2</th><th>3</th><th>4</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: ['Palto', 'Jeans']; Added price: 52.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 100.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td></tr></table>
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>7</td><td>2</td><td>5</td><td>3</td><td>2</td><td>5</td><td>6</td><td>4</td><td>7</td><td>7</td><td>6</td><td>1</td><td>0</td><td>0</td><td>5</td><td>3</td><td>0</td><td>5</td><td>2</td><td>0</td></tr><tr><td>Q2</td><td>2</td><td>2</td><td>4</td><td>5</td><td>1</td><td>7</td><td>5</td><td>7</td><td>1</td><td>6</td><td>9</td><td>8</td><td>1</td><td>3</td><td>3</td><td>3</td><td>7</td><td>9</td><td>8</td><td>6</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Pareto: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>7</td><td>6</td></tr><tr><td>Q2</td><td>6</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Slater: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>7</td><td>7</td><td>7</td><td>6</td><td>5</td></tr><tr><td>Q2</td><td>2</td><td>1</td><td>6</td><td>9</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+JiLSkf8POYcLjog/MNoAAAAASUVORK5CYII=
+"
+>
 </div>
 
 </div>
@@ -2095,276 +2594,7 @@ In&nbsp;[9]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.7</span>
-<span class="c"># Summer</span>
-<span class="n">summer_equal_probability</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span>
-
-<span class="n">summer_equal_probability_options</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">summer_equal_probability</span><span class="p">)</span> 
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">summer_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">summer_equal_probability_options</span> <span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[9]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>5</th><th>6</th><th>7</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[10]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.7</span>
-<span class="c"># Autumn</span>
-<span class="n">autumn_equal_probability</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]]</span>
-
-<span class="n">autumn_equal_probability_options</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">autumn_equal_probability</span><span class="p">)</span> 
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">autumn_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">autumn_equal_probability_options</span> <span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[10]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>8</th><th>9</th><th>10</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Palto', 'Jeans']; Added price: 52.0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 86.0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 100.0)</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[11]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.8</span>
-<span class="c"># Winter</span>
-<span class="n">best_strategies_winter_equal_probability</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">winter_equal_probability</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_winter_equal_probability</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_winter_equal_probability</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[11]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>1</th><th>6</th><th>2</th><th>4</th><th>5</th><th>3</th><tr><tr><td>Favor</td><td>-95.00</td><td>-144.00</td><td>-151.00</td><td>-154.00</td><td>-154.00</td><td>-174.00</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[12]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.8</span>
-<span class="c"># Spring</span>
-<span class="n">best_strategies_spring_equal_probability</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">spring_equal_probability</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_spring_equal_probability</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_spring_equal_probability</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[12]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>4</th><th>5</th><th>6</th><th>2</th><th>3</th><th>1</th><tr><tr><td>Favor</td><td>-58.67</td><td>-68.00</td><td>-81.33</td><td>-93.67</td><td>-97.33</td><td>-140.33</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[13]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.8</span>
-<span class="c"># Summer</span>
-<span class="n">best_strategies_summer_equal_probability</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">summer_equal_probability</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_summer_equal_probability</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_summer_equal_probability</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[13]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>5</th><th>4</th><th>6</th><th>3</th><th>2</th><th>1</th><tr><tr><td>Favor</td><td>-30.00</td><td>-46.00</td><td>-56.00</td><td>-80.00</td><td>-105.00</td><td>-139.00</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[14]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c"># 5.8</span>
-<span class="c"># Autumn</span>
-<span class="n">best_strategies_autumn_equal_probability</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">autumn_equal_probability</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_autumn_equal_probability</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_autumn_equal_probability</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[14]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>4</th><th>5</th><th>3</th><th>6</th><th>2</th><th>1</th><tr><tr><td>Favor</td><td>-76.67</td><td>-81.33</td><td>-88.00</td><td>-90.00</td><td>-102.33</td><td>-149.00</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[15]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.9 (4.4)</span>
-<span class="n">four_times_winter_probabilty_pow</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">four_times_winter_probabilty</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">four_times_winter_probabilty_pow</span><span class="p">)</span>
-					<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">four_times_winter_probabilty_pow</span><span class="p">)]]</span>
-
-<span class="n">best_strategies_four_times_winter_probabilty</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">four_times_winter_probabilty</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_four_times_winter_probabilty</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_four_times_winter_probabilty</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[15]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>5</th><th>4</th><th>6</th><th>2</th><th>3</th><th>1</th><tr><tr><td>Favor</td><td>-97.41</td><td>-97.76</td><td>-103.65</td><td>-110.76</td><td>-122.00</td><td>-129.47</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[16]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.9 (4.5)</span>
-<span class="kn">import</span> <span class="nn">calendar</span>
-<span class="n">mounthly_probabilty_pow</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">mdays</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Month days: </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mounthly_probabilty_pow</span><span class="p">)</span>
-<span class="n">mounthly_probabilty</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mounthly_probabilty_pow</span><span class="p">)</span>
-					<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">mounthly_probabilty_pow</span><span class="p">)]]</span>
-
-<span class="n">best_strategies_mounthly_probabilty</span> <span class="o">=</span> <span class="n">default_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">mounthly_probabilty</span><span class="p">)</span>
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_mounthly_probabilty</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_mounthly_probabilty</span> <span class="p">]])</span>
+<div class="highlight"><pre><span class="n">plot_pareto_slater</span><span class="p">(</span><span class="n">s3</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2378,161 +2608,249 @@ In&nbsp;[16]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Month days: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+Source: 
 
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[16]:</div>
+<div class="output_area"><div class="prompt"></div>
 
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>5</th><th>4</th><th>6</th><th>3</th><th>2</th><th>1</th><tr><tr><td>Favor</td><td>-83.02</td><td>-83.57</td><td>-92.61</td><td>-109.49</td><td>-112.87</td><td>-131.03</td></tr></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[17]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="n">all_clothes_price_reduced</span> <span class="o">=</span> <span class="p">[</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Blayzer&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Bushalt&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">48</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Vatni shtani&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Vyetnamki&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Jeans&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Kepcka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Krosivki&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Curtcka&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Palto&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">36</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Rukavichki&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Sventr&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Sorochka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Footbolka&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Cherviki&quot;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Choboti&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Shapka&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span>
-	<span class="n">ClothesItem</span><span class="p">(</span><span class="s">&quot;Shorti&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="p">]</span>
-<span class="n">price_reduced_solver</span> <span class="o">=</span> <span class="n">ClothesSolver</span><span class="p">(</span><span class="n">all_clothes_sets</span><span class="p">,</span> <span class="n">all_clothes_price_reduced</span><span class="p">,</span> <span class="n">temps</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[18]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.10</span>
-<span class="n">price_reduced_options</span> <span class="o">=</span> <span class="n">price_reduced_solver</span><span class="o">.</span><span class="n">calculate_options</span><span class="p">(</span><span class="n">all_monthes_equal_probability</span><span class="p">)</span> 
-
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">,</span> <span class="s">&quot;Price&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">all_monthes_equal_probability</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_price</span><span class="p">()]</span> <span class="o">+</span> <span class="n">calcs</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">calcs</span><span class="p">)</span> <span class="ow">in</span> <span class="n">price_reduced_options</span> <span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[18]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>Price</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><tr><tr><td>1</td><td>95.0</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Palto', 'Jeans']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Jeans', 'Krosivki']; Added price: 44.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Palto', 'Jeans']; Added price: 28.0)</td><td>(Diff: []; Added price: 0)</td></tr><tr><td>2</td><td>75.0</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 44.0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 44.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Bushalt', 'Vatni shtani']; Added price: 44.0)</td></tr><tr><td>3</td><td>50</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Blayzer', 'Sorochka', 'Krosivki']; Added price: 30.0)</td><td>(Diff: ['Sventr', 'Krosivki']; Added price: 28.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td></tr><tr><td>4</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: ['Blayzer', 'Sorochka']; Added price: 16.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td></tr><tr><td>5</td><td>30</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: []; Added price: 0)</td><td>(Diff: ['Sventr']; Added price: 14.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Cherviki']; Added price: 54.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Choboti']; Added price: 38.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td></tr><tr><td>6</td><td>20</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 52.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sorochka', 'Jeans', 'Krosivki']; Added price: 36.0)</td><td>(Diff: ['Sventr', 'Jeans', 'Krosivki']; Added price: 42.0)</td><td>(Diff: ['Kepcka', 'Curtcka', 'Jeans', 'Cherviki']; Added price: 68.0)</td><td>(Diff: ['Shapka', 'Palto', 'Rukavichki', 'Jeans', 'Choboti']; Added price: 52.0)</td><td>(Diff: ['Shapka', 'Bushalt', 'Rukavichki', 'Vatni shtani', 'Choboti']; Added price: 68.0)</td></tr></table>
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>2</td><td>8</td><td>0</td><td>3</td><td>9</td><td>9</td><td>7</td><td>9</td><td>1</td><td>5</td><td>7</td><td>8</td><td>5</td><td>0</td><td>1</td><td>1</td><td>2</td><td>0</td><td>3</td></tr><tr><td>Q2</td><td>7</td><td>0</td><td>4</td><td>8</td><td>4</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>1</td><td>9</td><td>9</td><td>6</td><td>0</td><td>6</td><td>4</td><td>9</td><td>9</td></tr></table>
 </div>
 
 </div>
 
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Pareto: 
+
+</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[19]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.11</span>
-<span class="n">best_strategies_price_reduced_monthes_equal_probabiltiy</span> <span class="o">=</span> <span class="n">price_reduced_solver</span><span class="o">.</span><span class="n">find_best_strategy</span><span class="p">(</span><span class="n">all_monthes_equal_probability</span><span class="p">)</span>
+<div class="output_area"><div class="prompt"></div>
 
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;Set&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">cs</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_price_reduced_monthes_equal_probabiltiy</span> <span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;Favor&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ef</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">ef</span><span class="p">)</span> <span class="ow">in</span> <span class="n">best_strategies_price_reduced_monthes_equal_probabiltiy</span> <span class="p">]])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">
-    Out[19]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>Set</th><th>5</th><th>4</th><th>6</th><th>3</th><th>2</th><th>1</th><tr><tr><td>Favor</td><td>-61.33</td><td>-61.83</td><td>-70.83</td><td>-87.83</td><td>-105.00</td><td>-126.83</td></tr></table>
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>9</td><td>8</td></tr><tr><td>Q2</td><td>8</td><td>8</td><td>9</td></tr></table>
 </div>
 
 </div>
 
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Slater: 
+
+</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[20]:
-</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="c">#5.12</span>
-<span class="n">Table</span><span class="p">([</span><span class="s">&quot;#&quot;</span><span class="p">,</span> <span class="s">&quot;Назва завдання&quot;</span><span class="p">,</span> <span class="s">&quot;Найкраща стратегія(-ї), xi&quot;</span><span class="p">,</span> <span class="s">&quot;Значення E[U(xi)]&quot;</span><span class="p">],</span> 
-         <span class="p">[[</span><span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="s">&quot;За 12-ть місяців&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_monthes_equal_probabiltiy</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;2&quot;</span><span class="p">,</span> <span class="s">&quot;Зима&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_winter_equal_probability</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;3&quot;</span><span class="p">,</span> <span class="s">&quot;Весна&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_spring_equal_probability</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;4&quot;</span><span class="p">,</span> <span class="s">&quot;Літо&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_summer_equal_probability</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;5&quot;</span><span class="p">,</span> <span class="s">&quot;Осінь&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_autumn_equal_probability</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;6&quot;</span><span class="p">,</span> <span class="s">&quot;Зима x3&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_four_times_winter_probabilty</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;7&quot;</span><span class="p">,</span> <span class="s">&quot;За 12-ть міс (днів)&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_mounthly_probabilty</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-          <span class="p">[</span><span class="s">&quot;8&quot;</span><span class="p">,</span> <span class="s">&quot;За 12-ть міс (зменш)&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">best_strategies_price_reduced_monthes_equal_probabiltiy</span><span class="p">[</span><span class="mi">0</span><span class="p">]),])</span>
-</pre></div>
+<div class="output_area"><div class="prompt"></div>
 
-</div>
-</div>
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>9</td><td>9</td><td>9</td><td>8</td><td>5</td><td>0</td><td>3</td></tr><tr><td>Q2</td><td>7</td><td>8</td><td>1</td><td>8</td><td>9</td><td>9</td><td>9</td><td>9</td></tr></table>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+
+<div class="output_area"><div class="prompt"></div>
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[20]:</div>
-
-<div class="output_html rendered_html output_subarea output_pyout">
-<table class='table table-striped'><tr><th>#</th><th>Назва завдання</th><th>Найкраща стратегія(-ї), xi</th><th>Значення E[U(xi)]</th><tr><tr><td>1</td><td>За 12-ть місяців</td><td>5: 20..30: Blayzer, Sorochka, Jeans, Krosivki</td><td>-83.33333333333331</td></tr><tr><td>2</td><td>Зима</td><td>1: -100..-10: Shapka, Bushalt, Rukavichki, Vatni shtani, Choboti</td><td>-95.0</td></tr><tr><td>3</td><td>Весна</td><td>4: 10..20: Sventr, Jeans, Krosivki</td><td>-58.666666666666664</td></tr><tr><td>4</td><td>Літо</td><td>5: 20..30: Blayzer, Sorochka, Jeans, Krosivki</td><td>-30.0</td></tr><tr><td>5</td><td>Осінь</td><td>4: 10..20: Sventr, Jeans, Krosivki</td><td>-76.66666666666666</td></tr><tr><td>6</td><td>Зима x3</td><td>5: 20..30: Blayzer, Sorochka, Jeans, Krosivki</td><td>-97.4117647059</td></tr><tr><td>7</td><td>За 12-ть міс (днів)</td><td>5: 20..30: Blayzer, Sorochka, Jeans, Krosivki</td><td>-83.0246575342</td></tr><tr><td>8</td><td>За 12-ть міс (зменш)</td><td>5: 20..30: Blayzer, Sorochka, Jeans, Krosivki</td><td>-61.33333333333333</td></tr></table>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
 </div>
 
 </div>
@@ -2546,8 +2864,408 @@ In&nbsp;[20]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="-">Висновки</h3>
-<p>Ознайомився з методами прийняття рішень в умовах, коли вибір деякої стратегії пов’язаний з певним набором станів середовища з визначеною ймовірністю.</p>
+<h4 id="4-2">4.2</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[10]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight"><pre><span class="n">plot_pareto_slater</span><span class="p">(</span><span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span> <span class="o">+</span> <span class="n">s3</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Source: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>4</td><td>2</td><td>8</td><td>3</td><td>3</td><td>0</td><td>5</td><td>4</td><td>9</td><td>8</td><td>4</td><td>7</td><td>5</td><td>6</td><td>6</td><td>8</td><td>4</td><td>4</td><td>2</td><td>2</td><td>7</td><td>2</td><td>5</td><td>3</td><td>2</td><td>5</td><td>6</td><td>4</td><td>7</td><td>7</td><td>6</td><td>1</td><td>0</td><td>0</td><td>5</td><td>3</td><td>0</td><td>5</td><td>2</td><td>0</td><td>9</td><td>2</td><td>8</td><td>0</td><td>3</td><td>9</td><td>9</td><td>7</td><td>9</td><td>1</td><td>5</td><td>7</td><td>8</td><td>5</td><td>0</td><td>1</td><td>1</td><td>2</td><td>0</td><td>3</td></tr><tr><td>Q2</td><td>7</td><td>4</td><td>2</td><td>5</td><td>2</td><td>4</td><td>4</td><td>3</td><td>8</td><td>6</td><td>0</td><td>8</td><td>9</td><td>2</td><td>2</td><td>3</td><td>1</td><td>8</td><td>3</td><td>4</td><td>2</td><td>2</td><td>4</td><td>5</td><td>1</td><td>7</td><td>5</td><td>7</td><td>1</td><td>6</td><td>9</td><td>8</td><td>1</td><td>3</td><td>3</td><td>3</td><td>7</td><td>9</td><td>8</td><td>6</td><td>7</td><td>0</td><td>4</td><td>8</td><td>4</td><td>8</td><td>1</td><td>6</td><td>8</td><td>5</td><td>2</td><td>1</td><td>9</td><td>9</td><td>6</td><td>0</td><td>6</td><td>4</td><td>9</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Pareto: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>9</td><td>9</td><td>8</td></tr><tr><td>Q2</td><td>8</td><td>8</td><td>8</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Slater: 
+
+</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table class='table table-striped'><tr><tr><tr><td>Q1</td><td>9</td><td>5</td><td>6</td><td>5</td><td>9</td><td>9</td><td>9</td><td>9</td><td>8</td><td>5</td><td>0</td><td>3</td></tr><tr><td>Q2</td><td>8</td><td>9</td><td>9</td><td>9</td><td>7</td><td>8</td><td>1</td><td>8</td><td>9</td><td>9</td><td>9</td><td>9</td></tr></table>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+1x0mAAAAAElFTkSuQmCC
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-">Висновк</h3>
+<p>Ознайомився з поняттями оптимальності за Парето та за Слейтером при багатокритеріальному виборі</p>
 </div>
 </div>
 </div>
