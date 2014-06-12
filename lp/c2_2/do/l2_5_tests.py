@@ -18,7 +18,7 @@ class TestL2_5(unittest.TestCase):
 
         O = vald(G1)
         
-        self.assertEqual(O, [('A2', 25)])
+        self.assertEqual(O, [('A3', 25)])
 
     def test_sevidge(self):
         
@@ -29,7 +29,7 @@ class TestL2_5(unittest.TestCase):
 
         O = sevidge(G2)
         
-        self.assertEqual(O, [('A1', 60), ('A2', 60)])
+        self.assertEqual(O, [('A2', 60), ('A3', 60)])
 
     def test_hurwitz(self):
         
@@ -39,7 +39,7 @@ class TestL2_5(unittest.TestCase):
 
         O = hurwitz(G3, 0.6)
         
-        self.assertEqual(O, [('A2', [11, 81, 39])])
+        self.assertEqual(O, [('A3', [11, 81, 39])])
     
 
 if __name__ == '__main__':
