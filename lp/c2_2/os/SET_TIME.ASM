@@ -20,8 +20,8 @@ main:
     mov     es, ax
     pop     PSP             ;Store PSP value into "PSP"
 
-
-    ; print first char
+    
+    ; Init reading command line
     mov es, PSP
     mov bx, 82h
 

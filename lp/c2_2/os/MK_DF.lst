@@ -1,0 +1,117 @@
+JWasm v2.11, Oct 20 2013
+MK_DF.ASM
+00000000                        sseg segment stack
+00000000  000000000000000000        db 256 dup(?)
+00000100                        sseg ends
+00000000                        dseg segment    
+00000000  454D54505900              file_name db 'EMTPY',0    
+00000006  433A5C00                  root_directory db 'C:\',0 
+0000000A  556E68616E646C6564        error_message db 'Unhandled error occured.$'
+00000023  0000                      PSP word ? ;Program segment prefix
+00000025                        dseg ends
+
+00000000                        cseg segment
+                                    assume ss:sseg, cs:cseg, ds:dseg 
+00000000                        start:
+00000000  EB00                      jmp main 
+00000002                        main:   
+
+00000002  1E                        push    ds              ;Save PSP value
+00000003  B80000                    mov     ax, seg DSEG    ;Point DS and ES at our data segment
+00000006  8ED8                      mov     ds, ax
+00000008  8EC0                      mov     es, ax
+0000000A  8F060000                  pop     PSP             ;Store PSP value into "PSP"
+
+                                    ; Init reading command line
+0000000E  8E060000                  mov es, PSP
+00000012  BB8200                    mov bx, 82h
+
+                                    ; Create new folder
+00000015  8BD3                      mov dx, bx
+00000017  B439                      mov ah,39h 
+00000019  CD21                      int 21h 
+0000001B  7221                      jc erop
+
+                                    ; Change directory
+0000001D  8BD3                      mov dx, bx
+0000001F  B43B                      mov ah,3bh
+00000021  CD21                      int 21h 
+00000023  7219                      jc erop
+                                 
+                                    ; Create new file
+00000025  BA0000                    mov dx,offset file_name                
+00000028  B90000                    mov cx,0 ; No attributes     
+0000002B  B45B                      mov ah,5bh ; Create and open
+0000002D  CD21                      int 21h 
+0000002F  720D                      jc erop 
+00000031  8BD8                      mov bx,ax ; Store file handle
+
+                                    ; Close file
+00000033  B43E                      mov ah,3eh
+00000035  CD21                      int 21h 
+00000037  7205                      jc erop     
+
+00000039                        exit:
+                                    ; Exit all good
+00000039  B8004C                    mov ax,4c00h
+0000003C  CD21                      int 21h
+
+0000003E                        erop: 
+                                    ; Show error message
+0000003E  BA0000                    mov dx,offset error_message
+00000041  B409                      mov ah,9
+00000043  CD21                      int 21h
+
+00000045  EBF2                      jmp exit 
+
+
+00000047                        cseg ends
+                                 end start
+
+
+Binary Map:
+
+Segment                  Pos(file)     RVA  Size(fil) Size(mem)
+---------------------------------------------------------------
+<header>                        0        0        30         0
+sseg                           30        0       100       100
+dseg                          130      100        25        25
+cseg                          160      130        47        47
+---------------------------------------------------------------
+                                                 1A7       177
+
+
+Macros:
+
+                N a m e                 Type
+
+@CatStr  . . . . . . . . . . . .        Func
+@Environ . . . . . . . . . . . .        Func
+@InStr . . . . . . . . . . . . .        Func
+@SizeStr . . . . . . . . . . . .        Func
+@SubStr  . . . . . . . . . . . .        Func
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+cseg . . . . . . . . . . . . . .        16 Bit   0047     Para    Private ''
+dseg . . . . . . . . . . . . . .        16 Bit   0025     Para    Private ''
+sseg . . . . . . . . . . . . . .        16 Bit   0100     Para    Stack   ''
+
+
+Symbols:
+
+                N a m e                 Type       Value     Attr
+
+PSP  . . . . . . . . . . . . . .        Word              23h dseg 
+erop . . . . . . . . . . . . . .        L Near            3Eh cseg 
+error_message  . . . . . . . . .        Byte[25]           Ah dseg 
+exit . . . . . . . . . . . . . .        L Near            39h cseg 
+file_name  . . . . . . . . . . .        Byte[6]            0h dseg 
+main . . . . . . . . . . . . . .        L Near             2h cseg 
+root_directory . . . . . . . . .        Byte[4]            6h dseg 
+start  . . . . . . . . . . . . .        L Near             0h cseg Public 
+
+MK_DF.ASM: 67 lines, 2 passes, 0 ms, 0 warnings, 0 errors
