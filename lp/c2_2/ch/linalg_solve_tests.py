@@ -4,7 +4,7 @@ import unittest
 
 import numpy
 
-from l4 import *
+from linalg_solve import *
 
 class TestL4(unittest.TestCase):
 
