@@ -64,12 +64,9 @@ def gaussseidel(A, b, x, e):
             
             xn = bb[i] - (sum_a + sum_b);
 
-            # print(i, bb[i], "L", Aa[i, :i].getA1(), xx[:i].getA1(), "*", Aa[i, :i].getA1() * xx[:i].getA1(),
-            #                 "R", Aa[i, i+1:].getA1(), xx[i+1:].getA1(), "*", Aa[i, i+1:].getA1() * xx[i+1:].getA1(), "=", xn)
             xx[i] = xn            
         if error(x_prev, xx) <= e:
-            return xx
-        # print("X", xx)
+            return xx        
     else:        
         raise Exception("Потрібно більше 10ти ітерацій, схоже система не сходиться.")
 

@@ -98,6 +98,7 @@ class BwMatrix(object):
 import pandas as pd
 pd.DataFrame._repr_html_ = lambda self: self.to_html(classes='table table-striped')
 
+# Fix fonts to support ukrainian labels
 import matplotlib as mpl
 mpl.rcParams['font.family'] = 'fantasy'
 mpl.rcParams['font.fantasy'] = 'Arial, Ubuntu'
