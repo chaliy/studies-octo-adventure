@@ -12,8 +12,8 @@ class TestLinAlgSolve(unittest.TestCase):
         pass
 
   
-    def test_iterative(self):  
-
+    def test_iterative(self): 
+        
         A = matrix([[4., 0.24, -0.08], 
                     [0.09, 3, -0.15], 
                     [0.04, -0.08, 4]])
