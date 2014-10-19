@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="455" Nullable="false" />
+          <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="455" Nullable="false" />
+          <Property Name="ISOCode" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="RestaurantID" />
+          </Key>
+          <Property Name="RestaurantID" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="455" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="455" Nullable="false" />
+          <Property Name="RestaurantNetworkID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CityID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantNetwork">
+          <Key>
+            <PropertyRef Name="RestaurantNetworkID" />
+          </Key>
+          <Property Name="RestaurantNetworkID" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="455" Nullable="false" />
+          <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurant_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurant_RestaurantNetwork">
+          <End Role="RestaurantNetwork" Type="Self.RestaurantNetwork" Multiplicity="1" />
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantNetwork">
+              <PropertyRef Name="RestaurantNetworkID" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="RestaurantNetworkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantNetwork_Country">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="RestaurantNetwork" Type="Self.RestaurantNetwork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="RestaurantNetwork">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RestaurantModelStoreContainer">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantNetwork" EntityType="Self.RestaurantNetwork" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_City_Country" Association="Self.FK_City_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_City" Association="Self.FK_Restaurant_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Restaurant" EntitySet="Restaurant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_RestaurantNetwork" Association="Self.FK_Restaurant_RestaurantNetwork">
+            <End Role="RestaurantNetwork" EntitySet="RestaurantNetwork" />
+            <End Role="Restaurant" EntitySet="Restaurant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantNetwork_Country" Association="Self.FK_RestaurantNetwork_Country">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="RestaurantNetwork" EntitySet="RestaurantNetwork" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="RestaurantModel.City" />
+          <EntitySet Name="Countries" EntityType="RestaurantModel.Country" />
+          <EntitySet Name="Restaurants" EntityType="RestaurantModel.Restaurant" />
+          <EntitySet Name="RestaurantNetworks" EntityType="RestaurantModel.RestaurantNetwork" />
+          <AssociationSet Name="FK_City_Country" Association="RestaurantModel.FK_City_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_City" Association="RestaurantModel.FK_Restaurant_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Restaurant" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_RestaurantNetwork" Association="RestaurantModel.FK_Restaurant_RestaurantNetwork">
+            <End Role="RestaurantNetwork" EntitySet="RestaurantNetworks" />
+            <End Role="Restaurant" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantNetwork_Country" Association="RestaurantModel.FK_RestaurantNetwork_Country">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="RestaurantNetwork" EntitySet="RestaurantNetworks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="455" FixedLength="false" Unicode="true" />
+          <Property Name="CountryID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="RestaurantModel.FK_City_Country" FromRole="City" ToRole="Country" />
+          <NavigationProperty Name="Restaurants" Relationship="RestaurantModel.FK_Restaurant_City" FromRole="City" ToRole="Restaurant" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="455" FixedLength="false" Unicode="true" />
+          <Property Name="ISOCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Cities" Relationship="RestaurantModel.FK_City_Country" FromRole="Country" ToRole="City" />
+          <NavigationProperty Name="RestaurantNetworks" Relationship="RestaurantModel.FK_RestaurantNetwork_Country" FromRole="Country" ToRole="RestaurantNetwork" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="RestaurantID" />
+          </Key>
+          <Property Name="RestaurantID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="455" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="455" FixedLength="false" Unicode="true" />
+          <Property Name="RestaurantNetworkID" Type="Guid" Nullable="false" />
+          <Property Name="CityID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="RestaurantModel.FK_Restaurant_City" FromRole="Restaurant" ToRole="City" />
+          <NavigationProperty Name="RestaurantNetwork" Relationship="RestaurantModel.FK_Restaurant_RestaurantNetwork" FromRole="Restaurant" ToRole="RestaurantNetwork" />
+        </EntityType>
+        <EntityType Name="RestaurantNetwork">
+          <Key>
+            <PropertyRef Name="RestaurantNetworkID" />
+          </Key>
+          <Property Name="RestaurantNetworkID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="455" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Restaurants" Relationship="RestaurantModel.FK_Restaurant_RestaurantNetwork" FromRole="RestaurantNetwork" ToRole="Restaurant" />
+          <Property Name="CountryID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="RestaurantModel.FK_RestaurantNetwork_Country" FromRole="RestaurantNetwork" ToRole="Country" />
+        </EntityType>
+        <Association Name="FK_City_Country">
+          <End Type="RestaurantModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="RestaurantModel.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurant_City">
+          <End Type="RestaurantModel.City" Role="City" Multiplicity="1" />
+          <End Type="RestaurantModel.Restaurant" Role="Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurant_RestaurantNetwork">
+          <End Type="RestaurantModel.RestaurantNetwork" Role="RestaurantNetwork" Multiplicity="1" />
+          <End Type="RestaurantModel.Restaurant" Role="Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestaurantNetwork">
+              <PropertyRef Name="RestaurantNetworkID" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="RestaurantNetworkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantNetwork_Country">
+          <End Type="RestaurantModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="RestaurantModel.RestaurantNetwork" Role="RestaurantNetwork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="RestaurantNetwork">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RestaurantModelStoreContainer" CdmEntityContainer="RestaurantEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="RestaurantModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="RestaurantModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="ISOCode" ColumnName="ISOCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurants">
+            <EntityTypeMapping TypeName="RestaurantModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurant">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="RestaurantNetworkID" ColumnName="RestaurantNetworkID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantNetworks">
+            <EntityTypeMapping TypeName="RestaurantModel.RestaurantNetwork">
+              <MappingFragment StoreEntitySet="RestaurantNetwork">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RestaurantNetworkID" ColumnName="RestaurantNetworkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
