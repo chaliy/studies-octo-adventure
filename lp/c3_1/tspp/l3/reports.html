@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Звіти - Система дослідження медпрепаратів</title>
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Система дослідження медпрепаратів</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav">
+              <li><a href="projects.html">Досліди</a></li>
+              <li class="active"><a href="reports.html">Звіти</a></li>
+              <li><a href="#">Аудит</a></li>
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" data-toggle="modal" data-target="#loginModal">Вийти</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Допомога <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Як розпочати</a></li>
+                  <li><a href="#">Медичному персоналу</a></li>
+                  <li><a href="#">Цілодобова підтримка</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Питання та відповіді</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-right" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Пошук">
+              </div>
+              <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+            </form>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
+      <div class="container">
+
+        <h3>Звіти</h3>
+
+
+        <div class="row">
+
+          <div class="col-md-3">
+              <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#">Панель</a></li>
+                <li><a href="#">Поточні досліди</a></li>
+                <li><a href="#">Вдалі досліди</a></li>
+                <li><a href="#">Невдалі досліди</a></li>
+                <li><a href="#">Вартість дослідів</a></li>
+                <li><a href="#">ресурси дослідів</a></li>
+                <li><a href="#">Квартальний звіт</a></li>
+                <li><a href="#">Аудит останній реєстрацій</a></li>
+              </ul>
+          </div>
+
+
+          <div class="col-md-9">
+            <ol class="breadcrumb">
+              <li><a href="#">Домашня сторінка</a></li>
+              <li><a href="#">Звіти</a></li>
+              <li class="active">Панель</li>
+            </ol>
+
+            <h4>Суб'єкти по активних дослідах</h4>
+            <canvas id="сhart1" width="800" height="400"></canvas>
+
+            <h4>Частка витрат по всіх дослідах</h4>
+            <canvas id="сhart2" width="800" height="400"></canvas>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+    <script src="components/holderjs/holder.js"></script>
+    <script src="components/jquery/dist/jquery.min.js"></script>
+    <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="components/chartjs/Chart.js"></script>
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+          var data1 = {
+            labels : ["Січень","Лютий","Березень","Квітень","Травень","Червень","Липень"],
+            datasets : [
+              {
+                label: "Копералгон",
+                fillColor : "rgba(220,220,220,0.5)",
+                strokeColor : "rgba(220,220,220,1)",
+                data : [65,59,90,81,56,55,40]
+              },
+              {
+                label: "Афірамін",
+                fillColor : "rgba(151,187,205,0.5)",
+                strokeColor : "rgba(151,187,205,1)",
+                data : [28,48,40,19,96,27,100]
+              }
+            ]
+
+          }
+          new Chart(document.getElementById("сhart1").getContext("2d")).Bar(data1);
+
+          var data2 = [
+            {
+                value: 300,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "Red"
+            },
+            {
+                value: 50,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Green"
+            },
+            {
+                value: 100,
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "Yellow"
+            },
+            {
+                value: 40,
+                color: "#949FB1",
+                highlight: "#A8B3C5",
+                label: "Grey"
+            },
+            {
+                value: 120,
+                color: "#4D5360",
+                highlight: "#616774",
+                label: "Dark Grey"
+            }
+
+        ];
+
+        new Chart(document.getElementById("сhart2").getContext("2d")).PolarArea(data2);
+
+
+
+      });
+
+    </script>
+  </body>
+</html>
