@@ -5,6 +5,8 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using Model;
+    using SolidDip.Services;
+    using SolidDip.Solid;
     using SolidDip.Views;
 
     public class DbDipViewModel : ViewModelBase
@@ -12,20 +14,15 @@
         public DbDipViewModel()
         {
             InProgress = Visibility.Hidden;
-            Corpuses = new ObservableCollection<DipCorpus>
+            Corpuses = new ObservableCollection<DipCorpus>();
+            foreach(var corpus in CorpusesStorage.AllCorpuses())
             {
-                new DipCorpus
-                {
-                    Name = "Yjdf",
-                    PinCount = 12,
-                    CorpusWidthMm = 12.5
-                }
-            };
+                Corpuses.Add(corpus);
+            }
             AddCommand = new RelayCommand(() =>
             {
                 StartProgress();
 
-                // Do generation
                 var item = new DipCorpus
                 {
                     Name = "Новий корпус",
@@ -36,6 +33,7 @@
                 editor.DataContext = new EditDipViewModel(item, () => {
                     Corpuses.Add(item);
                     editor.Close();
+                    SaveCorpuses();
                  });
                 editor.ShowDialog();
 
@@ -47,8 +45,31 @@
                 StartProgress();
 
                 var editor = new EditDip();
-                editor.DataContext = new EditDipViewModel(item, editor.Close);
+                editor.DataContext = new EditDipViewModel(item, () =>
+                {
+                    editor.Close();
+                    SaveCorpuses();
+                });
                 editor.ShowDialog();
+
+                CompleteProgress();
+            });
+
+            RemoveCommand = new RelayCommand<DipCorpus>(item =>
+            {
+                StartProgress();
+
+                Corpuses.Remove(item);
+                SaveCorpuses();
+
+                CompleteProgress();
+            });
+
+            GenerateCommand = new RelayCommand<DipCorpus>(item =>
+            {
+                StartProgress();
+
+                SwController.BuildDip(item);
 
                 CompleteProgress();
             });
@@ -66,12 +87,18 @@
             RaisePropertyChanged((() => InProgress));
         }
 
+        private void SaveCorpuses()
+        {
+            CorpusesStorage.Save(Corpuses);
+        }
+
         public ObservableCollection<DipCorpus> Corpuses { get; private set; }
 
         public Visibility InProgress { get; private set; }
         
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand<DipCorpus> EditCommand { get; private set; }
-
+        public RelayCommand<DipCorpus> RemoveCommand { get; private set; }
+        public RelayCommand<DipCorpus> GenerateCommand { get; private set; }
     }
 }

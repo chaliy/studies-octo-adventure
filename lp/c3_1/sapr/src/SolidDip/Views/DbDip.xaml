@@ -32,8 +32,21 @@
                 <DataGridTemplateColumn Header="Кількість виводів" Width="auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
-                                    CommandParameter="{Binding Path=.}">Редагувати</Button>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
+                                        CommandParameter="{Binding Path=.}" Width="25">
+                                    <Image Source="pack://application:,,,/Resources/Edit.png" />
+                                </Button>
+                                <Button Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
+                                        CommandParameter="{Binding Path=.}" Width="25">
+                                    <Image Source="pack://application:,,,/Resources/Remove.png" />
+                                </Button>
+                                <Button Command="{Binding DataContext.GenerateCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
+                                        CommandParameter="{Binding Path=.}" Width="25">
+                                    <Image Source="pack://application:,,,/Resources/Generate.png" />
+                                </Button>
+                            </StackPanel>
+                            
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
