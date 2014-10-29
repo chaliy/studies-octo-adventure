@@ -1,0 +1,47 @@
+﻿<Page x:Class="SolidDip.Views.DbDip"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:SolidDip.ViewModel"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DataContext="{d:DesignInstance Type=vm:DbDipViewModel}"
+      Title="DIP корпус з параметрами в базі данних" 
+      d:DesignHeight="600" d:DesignWidth="800">
+    <Page.DataContext>
+        <Binding Path="DbDip" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+    <Grid Margin="10">   
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <ToolBar Grid.Row="0" HorizontalAlignment="Right" Margin="10">
+            <Button Command="{Binding AddCommand}">Додати</Button>
+        </ToolBar>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Corpuses}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Назва" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
+                <DataGridTextColumn Header="Кількість виводів" Binding="{Binding PinCount}" Width="150" IsReadOnly="True"   />
+                <DataGridTextColumn Header="Ширина" Binding="{Binding CorpusWidthMm}" Width="150" IsReadOnly="True"  />
+           
+                <DataGridTemplateColumn Header="Кількість виводів" Width="auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
+                                    CommandParameter="{Binding Path=.}">Редагувати</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ProgressBar Grid.Row="2" Visibility="{Binding InProgress}" IsIndeterminate="True" Margin="5" />
+
+    </Grid>
+</Page>
