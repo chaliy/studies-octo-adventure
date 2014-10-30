@@ -26,12 +26,12 @@
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Column="0" Grid.Row="0">Кількість виводів:</TextBlock>
-        <Slider Grid.Column="1" Grid.Row="0" x:Name="PinCount" Value="{Binding PinCount}" Minimum="6" Maximum="24" Interval="2" IsSnapToTickEnabled="True" TickFrequency="2" />
+        <Slider Grid.Column="1" Grid.Row="0" x:Name="PinCount" Value="{Binding PinCount}" Minimum="6" Maximum="40" Interval="2" IsSnapToTickEnabled="True" TickFrequency="2" />
         <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Path=Value, ElementName=PinCount, StringFormat=\{0:0\} виводів}" />
         
         
         <TextBlock Grid.Column="0" Grid.Row="1">Ширина(Wb):</TextBlock>
-        <Slider Grid.Column="1" Grid.Row="1" x:Name="CorpusWidth" Value="{Binding CorpusWidthMm}" Minimum="6.0" Maximum="10.0" IsSnapToTickEnabled="True" TickFrequency="0.1" />
+        <Slider Grid.Column="1" Grid.Row="1" x:Name="CorpusWidth" Value="{Binding CorpusWidthMm}" Minimum="6.0" Maximum="20.0" IsSnapToTickEnabled="True" TickFrequency="0.1" />
         <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Path=Value, ElementName=CorpusWidth, StringFormat=\{0:0.00\} мм}" />
        
         <TextBlock Grid.Column="0" Grid.Row="2">Назва:</TextBlock>

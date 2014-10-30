@@ -70,7 +70,7 @@
             // Bevel
             doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
             doc.SketchManager.InsertSketch(true);
-
+            doc.SketchManager.AddToDB = true;
             var leftBevelSketchSegments = doc.SketchManager.CreateLinesByPoints(
                -halfWidth, +pinSurfHeight / 2.0, .0, // A
                -halfWidth + bevel, +halfHeight, .0, // B
@@ -83,6 +83,7 @@
                -halfWidth, +pinSurfHeight / 2.0, .0 // A
                );
 
+            doc.SketchManager.AddToDB = false;
             doc.SketchManager.InsertSketch(true);
 
             doc.SelectSegments(leftBevelSketchSegments);
