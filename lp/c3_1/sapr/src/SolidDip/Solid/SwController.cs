@@ -5,6 +5,7 @@
     using Helpers;
     using SolidDip.Model;
     using SolidWorks.Interop.sldworks;
+    using SolidWorks.Interop.swconst;
 
     public static class SwController
     {
@@ -19,13 +20,13 @@
 
             var firstPin = 0.00109;
             var width = corpus.CorpusWidthMm / 1000; // 0.00648;
-            var length = ((pinCount / 2) * pinDistance) + (firstPin * 2.0);
+            var length = (((pinCount / 2) - 1) * pinDistance) + (firstPin * 2.0);
             var height = 0.00368;
 
             var bevel = 0.0005;
-            var bottomBevel = 0.0003;
+            var bottomBevel = 0.0004;
 
-            var pinSurfHeight = .0004;
+            var pinSurfHeight = 0.0006;
 
             var halfHeight = height / 2.0;
             var halfWidth = width / 2.0;
@@ -70,14 +71,13 @@
             doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
             doc.SketchManager.InsertSketch(true);
 
-
             var leftBevelSketchSegments = doc.SketchManager.CreateLinesByPoints(
                -halfWidth, +pinSurfHeight / 2.0, .0, // A
-               -halfWidth + bevel, halfHeight, .0, // B
-               halfWidth - bevel, halfHeight, .0, // C
+               -halfWidth + bevel, +halfHeight, .0, // B
+               halfWidth - bevel, +halfHeight, .0, // C
                halfWidth, +pinSurfHeight / 2.0, .0, // D
-               halfWidth, -pinSurfHeight / 2.0, .0, // E Pin surface
-               halfWidth - bottomBevel, -halfWidth, .0, // F
+               halfWidth, -pinSurfHeight / 2.0, .0, // E
+               halfWidth - bottomBevel, -halfHeight, .0, // F
                -halfWidth + bottomBevel, -halfHeight, .0, // G
                -halfWidth, -pinSurfHeight / 2.0, .0, // H
                -halfWidth, +pinSurfHeight / 2.0, .0 // A
@@ -171,7 +171,7 @@
             // Create other pins
 
             var directionVertex = ((dynamic[])bodyFeature.GetFaces())
-                .SelectMany(f => (IEdge[])f.GetEdges())
+                .SelectMany(f => ((object[])f.GetEdges()).Cast<IEdge>())
                 .Select(e => new
                 {
                     Start = (double[])e.GetStartVertex().GetPoint(),
@@ -180,7 +180,7 @@
                 .Where(v =>
                 {
                     var edgeWidth = Math.Abs(v.Start[2] - v.End[2]);
-                    return (Math.Abs(edgeWidth - length) < 0.001);
+                    return (Math.Abs(edgeWidth - length) < 0.001 && v.Start[2] > v.End[2]);
                 })
                 .First();
             
