@@ -1,0 +1,30 @@
+﻿<Window x:Class="SolidDip.Views.GenericEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SolidDip.ViewModel"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Type=vm:GenericEditViewModel}"
+        Title="Редагування" 
+        d:DesignWidth="500" d:DesignHeight="500"
+        Width="500" Height="500">
+    <Grid Margin="10">
+        
+        <Grid.RowDefinitions>            
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <xctk:PropertyGrid Grid.Row="0"  Margin="10" SelectedObject="{Binding Object}" />
+
+        <ProgressBar Grid.Row="1" Visibility="{Binding InProgress}" IsIndeterminate="True" Margin="5" />
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="10">
+             <Button Command="{Binding SaveCommand}">Зберегти</Button>
+        </StackPanel>
+       
+    </Grid>
+</Window>

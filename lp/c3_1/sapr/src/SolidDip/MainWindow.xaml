@@ -20,6 +20,8 @@
                 <MenuItem Header="_Схема розмірів" Command="{Binding NavigateTo}" CommandParameter="Views/Schema.xaml" />
                 <MenuItem Header="_Корпус з довільними параметрами" Command="{Binding NavigateTo}" CommandParameter="Views/CustomDip.xaml" />
                 <MenuItem Header="_База данних корпусів" Command="{Binding NavigateTo}" CommandParameter="Views/DbDip.xaml"  />
+                <MenuItem Header="_Вставка елемента в сборку" Command="{Binding NavigateTo}" CommandParameter="Views/PlaceElement.xaml"  />
+                <MenuItem Header="База данних _компонент" Command="{Binding NavigateTo}" CommandParameter="Views/Components.xaml"  />
             </MenuItem>
             <MenuItem Header="_Допомога">
                 <MenuItem Header="_Про программу"/>

@@ -12,7 +12,7 @@ namespace SolidDip.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<CustomDipViewModel>();
             SimpleIoc.Default.Register<DbDipViewModel>();
-            //SimpleIoc.Default.Register<EditDipViewModel>();
+            SimpleIoc.Default.Register<PlaceElementViewModel>();
         }
 
         public MainViewModel Main
@@ -39,13 +39,13 @@ namespace SolidDip.ViewModel
             }
         }
 
-        //public EditDipViewModel EditDip
-        //{
-        //    get
-        //    {
-        //        return ServiceLocator.Current.GetInstance<EditDipViewModel>();
-        //    }
-        //}
+        public PlaceElementViewModel PlaceElement
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PlaceElementViewModel>();
+            }
+        }
 
         public static void Cleanup()
         {

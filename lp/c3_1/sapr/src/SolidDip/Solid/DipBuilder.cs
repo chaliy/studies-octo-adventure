@@ -2,24 +2,33 @@
 {
     using System;
     using System.Linq;
-    using Helpers;
-    using SolidDip.Model;
+    using Utils;
+    using Model;
     using SolidWorks.Interop.sldworks;
+    using System.IO;
     using SolidWorks.Interop.swconst;
 
-    public static class SwController
+    public class DipBuilder
     {
-        public static void BuildDip(DipCorpus corpus)
+        readonly SwContext ctx;
+        int error;
+        int warning;
+
+        public DipBuilder(SwContext ctx)
         {
-            var sw = new SldWorks();
-            sw.Visible = true;
+            this.ctx = ctx;
+        }
+
+        public ModelDoc2 Build(DipCorpus corpus)
+        {
+            var sw = ctx.Instance;
 
             var pinCount = corpus.PinCount;
             var pinDistance = 0.00254;
             var pinRadius = 0.0004;
 
             var firstPin = 0.00109;
-            var width = corpus.CorpusWidthMm / 1000; // 0.00648;
+            var width = corpus.CorpusWidthMm / 1000;
             var length = (((pinCount / 2) - 1) * pinDistance) + (firstPin * 2.0);
             var height = 0.00368;
 
@@ -32,7 +41,7 @@
             var halfWidth = width / 2.0;
             var halfLength = length / 2.0;
 
-            var widthWithPins = width + (pinRadius * 2); // 0.00762;
+            var widthWithPins = width + (pinRadius * 2);
             var pinThickness = 0.0003;
             var pinWidth = 0.0005;
             var pinWidthBase = 0.0015;
@@ -189,6 +198,37 @@
             doc.Extension.SelectByID2("Pin Profile Feature", "SOLIDBODY", 3.68237484639167E-03, -1.38341410382736E-03, -3.5620114174435E-03, true, 256, null, 0);
             var otherPinsFeature = doc.FeatureManager.FeatureLinearPattern3(pinCount / 2, pinDistance, 1, 0.01, true, false, "NULL", "NULL", false, false);
             otherPinsFeature.Name = "Other Pins Feature";
+
+            return doc;
+        }
+
+        public CircuitComponent BuildComponent(DipCorpus corpus)
+        {
+            var sw = ctx.Instance;
+            var doc = Build(corpus);
+
+            //var tmpFileName = Path.Combine(Path.ChangeExtension(Path.GetTempFileName(), "sd") + "\\", corpus.Name + ".sldprt");
+
+            var tmpFileName = @"C:\Users\Mike\Desktop\test.sldprt";
+
+            var ext = doc.Extension;
+            var res = ext.SaveAs(tmpFileName, (int)swSaveAsVersion_e.swSaveAsCurrentVersion, 
+                (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warning);
+
+            Console.WriteLine(res + " " + warning);
+            // doc.SaveAs3(tmpFileName, 0, 2);
+            //doc.Close();
+            sw.QuitDoc(doc.GetTitle());
+
+            return new CircuitComponent
+            {
+                PartName = corpus.Name,
+                Data = File.ReadAllBytes(tmpFileName),
+                ZeroXMm = 3.25,
+                ZeroYMm = 0.5,
+                ZeroZMm = 3.85,
+                ZeroAngle = 90
+            };
         }
     }
 }

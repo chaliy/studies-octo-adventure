@@ -9,6 +9,14 @@
 
     public static class Db
     {
+        public static void Reset()
+        {
+            var fileName = GetFileName();
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+        }
         private static DbConnection CreateDbConnection()
         {
             var connectionStringSettings = ConfigurationManager.ConnectionStrings["StatsConnection"];
@@ -22,11 +30,11 @@
 
         private static string GetFileName()
         {
-            var folder = Path.GetDirectoryName(
+            var folderPath = Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly().Location
             );
 
-            return Path.Combine(folder, "sd.db3");
+            return Path.Combine(folderPath, "sd.db3");
         }
 
         public static void Run(Action<DbConnection> action)

@@ -1,4 +1,4 @@
-﻿namespace SolidDip.Solid.Helpers
+﻿namespace SolidDip.Utils
 {
     using System.Linq;
     using System.Collections.Generic;

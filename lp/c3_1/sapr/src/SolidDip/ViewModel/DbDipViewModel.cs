@@ -13,7 +13,6 @@
     {
         public DbDipViewModel()
         {
-            InProgress = Visibility.Hidden;
             Corpuses = new ObservableCollection<DipCorpus>();
             foreach(var corpus in CorpusesStorage.AllCorpuses())
             {
@@ -29,12 +28,10 @@
                     PinCount = 8,
                     CorpusWidthMm = 6
                 };
-                var editor = new EditDip();
-                editor.DataContext = new EditDipViewModel(item, () => {
-                    Corpuses.Add(item);
-                    editor.Close();
+                var editor = new EditDip(item, () => {
+                    Corpuses.Add(item);                    
                     SaveCorpuses();
-                 });
+                });
                 editor.ShowDialog();
 
                 CompleteProgress();
@@ -44,10 +41,8 @@
             {
                 StartProgress();
 
-                var editor = new EditDip();
-                editor.DataContext = new EditDipViewModel(item, () =>
+                var editor = new EditDip(item, () =>
                 {
-                    editor.Close();
                     SaveCorpuses();
                 });
                 editor.ShowDialog();
@@ -69,22 +64,10 @@
             {
                 StartProgress();
 
-                SwController.BuildDip(item);
+                new DipBuilder(new SwContext()).Build(item);
 
                 CompleteProgress();
             });
-        }
-
-        private void CompleteProgress()
-        {
-            InProgress = Visibility.Hidden;
-            RaisePropertyChanged((() => InProgress));
-        }
-
-        private void StartProgress()
-        {
-            InProgress = Visibility.Visible;
-            RaisePropertyChanged((() => InProgress));
         }
 
         private void SaveCorpuses()
@@ -94,8 +77,6 @@
 
         public ObservableCollection<DipCorpus> Corpuses { get; private set; }
 
-        public Visibility InProgress { get; private set; }
-        
         public RelayCommand AddCommand { get; private set; }
         public RelayCommand<DipCorpus> EditCommand { get; private set; }
         public RelayCommand<DipCorpus> RemoveCommand { get; private set; }

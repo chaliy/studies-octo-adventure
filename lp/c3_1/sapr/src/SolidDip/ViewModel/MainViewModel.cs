@@ -5,7 +5,7 @@ namespace SolidDip.ViewModel
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
 
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : GalaSoft.MvvmLight.ViewModelBase
     {
 
         public MainViewModel()

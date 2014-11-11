@@ -1,18 +1,23 @@
 ﻿namespace SolidDip.Views
 {
+    using System;
     using System.Windows;
+    using SolidDip.Model;
     using SolidDip.ViewModel;
 
     public partial class EditDip : Window
     {
-        public EditDip()
+        public EditDip(DipCorpus item, Action success)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ((EditDipViewModel)DataContext).Save();
+            Loaded += (s, e) =>
+            {
+                DataContext = new EditDipViewModel(item, () =>
+                {
+                    Close();
+                    success();
+                });
+            };
         }
     }
 }

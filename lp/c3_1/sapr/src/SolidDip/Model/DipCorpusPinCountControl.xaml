@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SolidDip.Model.DipCorpusPinCountControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fx="clr-namespace:SolidDip.Fx"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SolidDip.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="75" />
+        </Grid.ColumnDefinitions>
+        
+        <Slider Grid.Column="0" x:Name="PinCount" Value="{Binding Value, Mode=TwoWay, Converter={StaticResource DoubleToIntegerConverter}}" Minimum="6" Maximum="40" Interval="2" IsSnapToTickEnabled="True" TickFrequency="2" />
+        <TextBlock Grid.Column="1" Text="{Binding Path=Value, ElementName=PinCount, StringFormat=\{0:0\} виводів}" />
+    </Grid>
+</UserControl>
