@@ -57,16 +57,16 @@
             // Activate main assembly
             sw.ActivateDoc3(doc.GetTitle(), true, (int)swRebuildOnActivation_e.swUserDecision, ref error);
 
-            // In context of top projection place goes X -> X, Y -> Z
-            var x = (part.ZeroXMm - place.XMm) / 1000;
-            var y = part.ZeroYMm / 1000;
-            var z = (part.ZeroZMm + place.YMm) / 1000;
+            // In context of top projection place goes X -> -Z, Y -> X, Z -> Y
+            var x = (part.ZeroXMm + place.YMm) / 1000;
+            var y = part.ZeroZMm / 1000;
+            var z = (part.ZeroYMm - place.XMm) / 1000; 
 
             var component = ((AssemblyDoc)doc).AddComponent5(Path.GetFileNameWithoutExtension(partPath),
                 (int)swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig,
                 "", false, "", x, y, z);
 
-            RotatePartY(component, new[] { -place.XMm / 1000, 0.0, -place.YMm / 1000 }, part.ZeroAngle + place.Angle);
+            RotatePartY(component, new[] { place.YMm / 1000, 0.0, -place.XMm / 1000 }, part.ZeroAngle + place.Angle);
         }
 
         private void RotatePartY(Component2 component, double[] origin, double angle)
@@ -91,38 +91,5 @@
                 drag.EndDrag();
             }            
         }
-
-        //private void MovePart(Component2 component, double x, double y)
-        //{
-        //    // In context of top projection X -> X, Y -> Z
-        //    var transform = new[] {
-        //        // Unit rotation matrix
-        //        1.0, 0.0, 0.0,
-        //        0.0, 1.0, 0.0,
-        //        0.0, 0.0, 1.0,
-        //        // Translation
-        //        x, 0,0, -y,
-        //        // Unit scaling
-        //        1.0,
-        //        // No used so pad with zeros
-        //        0.0, 0.0, 0.0,
-        //    };
-             
-        //    var form = (MathTransform)math.CreateTransform(transform);
-
-        //    drag.AddComponent(component, false);
-
-        //    drag.CollisionDetectionEnabled = false;
-        //    drag.DynamicClearanceEnabled = false;
-        //    // Axial rotation
-        //    drag.TransformType = 0;
-        //    // Solve by relaxation
-        //    drag.DragMode = 2;
-
-        //    drag.BeginDrag();
-        //    drag.Drag(form);
-        //    drag.EndDrag();
-
-        //}
     }
 }

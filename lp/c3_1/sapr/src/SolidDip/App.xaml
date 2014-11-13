@@ -7,8 +7,7 @@
              mc:Ignorable="d" 
              StartupUri="MainWindow.xaml" >
     <Application.Resources>
-        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:SolidDip.ViewModel" />
-
+        
         <Style TargetType="TextBox">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">

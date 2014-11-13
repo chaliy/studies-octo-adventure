@@ -4,11 +4,11 @@
     using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows;
-    using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.Command;
     using Model;
     using Utils;
     using Solid;
+    using SolidDip.Fx;
+    using System.Windows.Input;
 
     public class CustomDipViewModel : ViewModelBase
     {
@@ -16,13 +16,8 @@
         {
             PinCount = 8;
             CorpusWidthMm = 6.0;
-            GenerateCommand = new RelayCommand(async () =>
+            GenerateCommand = new ActionCommand(async () =>
             {
-                if (!this.IsDataValid())
-                {
-                    MessageBox.Show(this.GetDataValidationError());
-                    return;
-                }
                 StartProgress();
 
                 // Do generation
@@ -43,19 +38,6 @@
         public int PinCount { get; set; }
         public double CorpusWidthMm { get; set; }
         
-        public RelayCommand GenerateCommand { get; private set; }
-
-        protected override string GetError(string columnName)
-        {
-            //if (columnName == "Name")
-            //{
-            //    if (String.IsNullOrWhiteSpace(Name))
-            //    {
-            //        return "Введіть будь ласка назву корпусу";
-            //    }
-            //}
-
-            return null;            
-        }
+        public ICommand GenerateCommand { get; private set; }
     }
 }

@@ -7,6 +7,7 @@
     using Services;
     using Views;
     using SolidDip.Solid;
+    using System.Threading.Tasks;
 
     public class ComponentsViewModel : ViewModelBase
     {
@@ -36,10 +37,13 @@
             {
                 StartProgress();
 
-                var editor = GenericEdit.Create(new DipCorpus { PinCount = 8, CorpusWidthMm = 6.0 }, corpus =>
+                var editor = GenericEdit.Create(new DipCorpus { PinCount = 8, CorpusWidthMm = 6.0 }, async corpus =>
                 {
-                    var builder = new DipBuilder(new SwContext());
-                    var component = builder.BuildComponent(corpus);
+                    var component = await Task.Run(() =>
+                    {
+                        var builder = new DipBuilder(new SwContext());
+                        return builder.BuildComponent(corpus);
+                    });
                     Components.Add(component);
                     SaveCorpuses();
                 });
@@ -72,11 +76,23 @@
                 CompleteProgress();
             });
 
-            GenerateCommand = new ActionCommand<DipCorpus>(item =>
+            GenerateCommand = new ActionCommand<CircuitComponent>(item =>
             {
                 StartProgress();
 
-                //new DipBuilder(item).Build();
+                var editor = GenericEdit.Create(new PlaceSpec(), async place =>
+                {
+                    await Task.Run(() =>
+                    {
+                        var ctx = EnsureAssemblyContext();
+                        if (ctx != null)
+                        {
+                            ctx.Place(place, item);
+                        }
+                    });
+                });
+
+                editor.ShowDialog();
 
                 CompleteProgress();
             });
@@ -95,5 +111,26 @@
         public ICommand EditCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
         public ICommand GenerateCommand { get; private set; }
+
+
+        private AssemblyContext EnsureAssemblyContext()
+        {
+            //var assemblyFileName = @"C:\Users\Mike\Projects\studies-octo-adventure\lp\c3_1\sapr\parts\Example.SLDASM";
+            //return new AssemblyContext(assemblyFileName);
+
+            var open = new Microsoft.Win32.OpenFileDialog();
+            open.FileName = "";
+            open.DefaultExt = ".sldasm";
+            open.Filter = "SolidWorks сбірки (.sldasm)|*.sldasm";
+
+            if (open.ShowDialog() == true)
+            {
+                var assemblyFileName = open.FileName;
+
+                return new AssemblyContext(assemblyFileName);
+            }
+
+            return null;
+        }
     }
 }

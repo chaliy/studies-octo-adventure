@@ -10,6 +10,10 @@
 
     public class DipBuilder
     {
+        const double PinDistance = 0.00254;
+        const double PinRadius = 0.0005;
+        const double FirstPin = 0.00109;
+
         readonly SwContext ctx;
         int error;
         int warning;
@@ -24,13 +28,14 @@
             var sw = ctx.Instance;
 
             var pinCount = corpus.PinCount;
-            var pinDistance = 0.00254;
-            var pinRadius = 0.0004;
-
-            var firstPin = 0.00109;
+            
             var width = corpus.CorpusWidthMm / 1000;
-            var length = (((pinCount / 2) - 1) * pinDistance) + (firstPin * 2.0);
+            var length = (((pinCount / 2) - 1) * PinDistance) + (FirstPin * 2.0);
             var height = 0.00368;
+
+            var dx = (width / 2) + PinRadius;            
+            var dy = -FirstPin;
+            var dz = 0.005;
 
             var bevel = 0.0005;
             var bottomBevel = 0.0004;
@@ -41,7 +46,7 @@
             var halfWidth = width / 2.0;
             var halfLength = length / 2.0;
 
-            var widthWithPins = width + (pinRadius * 2);
+            var widthWithPins = width + (PinRadius * 2);
             var pinThickness = 0.0003;
             var pinWidth = 0.0005;
             var pinWidthBase = 0.0015;
@@ -55,7 +60,16 @@
 
             // Body
             doc.Extension.SelectByID2("Top Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
-            var bodySketchSegments = ((dynamic[])doc.SketchManager.CreateCenterRectangle(0, 0, 0, halfWidth, halfLength, 0)).Cast<SketchSegment>();
+
+            var bodyPlane = doc.FeatureManager.InsertRefPlane(8, dz, 0, 0, 0, 0);
+            bodyPlane.Name = "Body Plane";
+            
+            doc.Extension.SelectByID2("Body Plane", "PLANE", 0, 0, 0, true, 0, null, 0);            
+            
+            var bodySketchSegments = doc.SketchManager.CreateLinesRectangle(
+               -FirstPin, PinRadius, 0.0,                  
+               -FirstPin + length, PinRadius + width, 0.0
+               );
 
             doc.SketchManager.InsertSketch(true);
 
@@ -77,22 +91,20 @@
             doc.ClearSelection2(true);
 
             // Bevel
-            doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
-            doc.SketchManager.InsertSketch(true);
-            doc.SketchManager.AddToDB = true;
+            doc.Extension.SelectByID2("Right Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
+            
             var leftBevelSketchSegments = doc.SketchManager.CreateLinesByPoints(
-               -halfWidth, +pinSurfHeight / 2.0, .0, // A
-               -halfWidth + bevel, +halfHeight, .0, // B
-               halfWidth - bevel, +halfHeight, .0, // C
-               halfWidth, +pinSurfHeight / 2.0, .0, // D
-               halfWidth, -pinSurfHeight / 2.0, .0, // E
-               halfWidth - bottomBevel, -halfHeight, .0, // F
-               -halfWidth + bottomBevel, -halfHeight, .0, // G
-               -halfWidth, -pinSurfHeight / 2.0, .0, // H
-               -halfWidth, +pinSurfHeight / 2.0, .0 // A
+               dx - halfWidth, dz + (pinSurfHeight / 2.0), 0.0, // A
+               dx - halfWidth + bevel, dz + halfHeight, 0.0, // B
+               dx + halfWidth - bevel, dz + halfHeight, 0.0, // C
+               dx + halfWidth, dz + (pinSurfHeight / 2.0), 0.0, // D
+               dx + halfWidth, dz - (pinSurfHeight / 2.0), 0.0, // E
+               dx + halfWidth - bottomBevel, dz - halfHeight, 0.0, // F
+               dx - halfWidth + bottomBevel, dz - halfHeight, 0.0, // G
+               dx - halfWidth, dz - (pinSurfHeight / 2.0), 0.0, // H
+               dx - halfWidth, dz + (pinSurfHeight / 2.0), 0.0 // A
                );
 
-            doc.SketchManager.AddToDB = false;
             doc.SketchManager.InsertSketch(true);
 
             doc.SelectSegments(leftBevelSketchSegments);
@@ -106,12 +118,12 @@
             // Cover Plane
 
             doc.Extension.SelectByID2("Top Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            var coverPlane = doc.FeatureManager.InsertRefPlane(8, halfHeight, 0, 0, 0, 0);
+            var coverPlane = doc.FeatureManager.InsertRefPlane(8, dz + halfHeight, 0, 0, 0, 0);
             coverPlane.Name = "Cover Plane";
 
             // Sign
             doc.Extension.SelectByID2("Cover Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            var signSketchSegments = ((dynamic[])doc.SketchManager.CreateCenterRectangle(0, halfLength, .0, .0005, halfLength + .001, .0)).Cast<SketchSegment>();
+            var signSketchSegments = ((dynamic[])doc.SketchManager.CreateCenterRectangle(0.0, halfWidth + PinRadius, 0.0, .001, 0.0005, 0.0)).Cast<SketchSegment>();
 
             doc.RoundCorners(0.0002, signSketchSegments);
 
@@ -125,21 +137,21 @@
 
             doc.ClearSelection2(true);
 
+            return doc;
+
             // Pin Plane
 
             doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            var pinPlane = doc.FeatureManager.InsertRefPlane(264, (halfLength - firstPin), 0, 0, 0, 0);
+            var pinPlane = doc.FeatureManager.InsertRefPlane(264, (halfLength - FirstPin), 0, 0, 0, 0);
             pinPlane.Name = "Pin Plane";
 
             // First and Last Pin
             doc.Extension.SelectByID2("Pin Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
 
-            doc.SketchManager.InsertSketch(true);
-
             var pinSketchSegments = doc.SketchManager.CreateLinesByPoints(
               -widthWithPins / 2.0, -pinHeight, .0, // A
-              -(halfWidth + pinRadius), +pinSurfHeight / 2.0, .0, // B
-              +(halfWidth + pinRadius), +pinSurfHeight / 2.0, .0, // C
+              -(halfWidth + PinRadius), +pinSurfHeight / 2.0, .0, // B
+              +(halfWidth + PinRadius), +pinSurfHeight / 2.0, .0, // C
               +widthWithPins / 2.0, -pinHeight, .0 // D
             );
 
@@ -147,15 +159,14 @@
 
             var customBendAllowanceData = doc.FeatureManager.CreateCustomBendAllowance();
             customBendAllowanceData.KFactor = 0.5;
-            var pinFeature = doc.FeatureManager.InsertSheetMetalBaseFlange2(pinThickness, false, pinRadius, pinWidthBase / 2.0, pinWidthBase / 2.0, false, 0, 0, 0,
+            var pinFeature = doc.FeatureManager.InsertSheetMetalBaseFlange2(pinThickness, false, PinRadius, pinWidthBase / 2.0, pinWidthBase / 2.0, false, 0, 0, 0,
                 customBendAllowanceData, false, 0, 0.0001, 0.0001, 0.5, true, false, true, true);
             pinFeature.Name = "First and Last Pin Feature";
 
             // Pin profile
             doc.Extension.SelectByID2("Right Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            doc.SketchManager.InsertSketch(true);
-
-            var dPin = halfLength - firstPin;
+            
+            var dPin = halfLength - FirstPin;
 
             var pinProfileSketchSegments = doc.SketchManager.CreateLinesByPoints(
               -(pinWidth / 2.0) + dPin, -pinHeight, .0, // A
@@ -196,7 +207,7 @@
             
             doc.Extension.SelectByID2("", "EDGE", directionVertex.Start[0], directionVertex.Start[1], (directionVertex.Start[2] + directionVertex.End[2]) / 2.0, false, 1, null, 0);
             doc.Extension.SelectByID2("Pin Profile Feature", "SOLIDBODY", 3.68237484639167E-03, -1.38341410382736E-03, -3.5620114174435E-03, true, 256, null, 0);
-            var otherPinsFeature = doc.FeatureManager.FeatureLinearPattern3(pinCount / 2, pinDistance, 1, 0.01, true, false, "NULL", "NULL", false, false);
+            var otherPinsFeature = doc.FeatureManager.FeatureLinearPattern3(pinCount / 2, PinDistance, 1, 0.01, true, false, "NULL", "NULL", false, false);
             otherPinsFeature.Name = "Other Pins Feature";
 
             return doc;
@@ -207,26 +218,23 @@
             var sw = ctx.Instance;
             var doc = Build(corpus);
 
-            //var tmpFileName = Path.Combine(Path.ChangeExtension(Path.GetTempFileName(), "sd") + "\\", corpus.Name + ".sldprt");
+            var tmpFileName = Path.Combine(Path.ChangeExtension(Path.GetTempFileName(), "sd") + "\\", corpus.Name + ".sldprt");
 
-            var tmpFileName = @"C:\Users\Mike\Desktop\test.sldprt";
-
+            Directory.CreateDirectory(Path.GetDirectoryName(tmpFileName));
+            
             var ext = doc.Extension;
             var res = ext.SaveAs(tmpFileName, (int)swSaveAsVersion_e.swSaveAsCurrentVersion, 
                 (int)swSaveAsOptions_e.swSaveAsOptions_Silent, null, ref error, ref warning);
 
-            Console.WriteLine(res + " " + warning);
-            // doc.SaveAs3(tmpFileName, 0, 2);
-            //doc.Close();
             sw.QuitDoc(doc.GetTitle());
 
             return new CircuitComponent
             {
                 PartName = corpus.Name,
-                Data = File.ReadAllBytes(tmpFileName),
-                ZeroXMm = 3.25,
-                ZeroYMm = 0.5,
-                ZeroZMm = 3.85,
+                Data = File.ReadAllBytes(tmpFileName),                
+                ZeroXMm = (corpus.CorpusWidthMm / 2) + 0.25,
+                ZeroYMm = ((((corpus.PinCount / 2) - 1) * PinDistance) / 2) * 1000,
+                ZeroZMm = 0.5,
                 ZeroAngle = 90
             };
         }

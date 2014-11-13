@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using SolidDip.Fx;
@@ -25,6 +26,27 @@
                 StartProgress();
 
                 success(Object);
+
+                CompleteProgress();
+            });
+        }
+
+        public GenericEditViewModel(object initial, Func<object, Task> success)
+        {
+            Object = initial;
+            SaveCommand = new ActionCommand(async () =>
+            {
+                var err = Object as IDataErrorInfo;
+
+                if (err != null && !err.IsDataValid())
+                {
+                    MessageBox.Show(err.GetDataValidationError());
+                    return;
+                }
+
+                StartProgress();
+
+                await success(Object);
 
                 CompleteProgress();
             });

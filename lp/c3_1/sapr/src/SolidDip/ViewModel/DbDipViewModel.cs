@@ -1,10 +1,9 @@
 ﻿namespace SolidDip.ViewModel
 {
-    using System.Collections.ObjectModel;
-    using System.Windows;
-    using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.Command;
+    using System.Collections.ObjectModel;    
+    using System.Windows.Input;
     using Model;
+    using SolidDip.Fx;
     using SolidDip.Services;
     using SolidDip.Solid;
     using SolidDip.Views;
@@ -18,39 +17,41 @@
             {
                 Corpuses.Add(corpus);
             }
-            AddCommand = new RelayCommand(() =>
+            AddCommand = new ActionCommand(() =>
             {
                 StartProgress();
 
-                var item = new DipCorpus
+                var editor = GenericEdit.Create(new DipCorpus
                 {
                     Name = "Новий корпус",
                     PinCount = 8,
                     CorpusWidthMm = 6
-                };
-                var editor = new EditDip(item, () => {
-                    Corpuses.Add(item);                    
+                }, corpus =>
+                {
+                    Corpuses.Add(corpus);
                     SaveCorpuses();
                 });
+
                 editor.ShowDialog();
 
                 CompleteProgress();
             });
 
-            EditCommand = new RelayCommand<DipCorpus>(item =>
+            EditCommand = new ActionCommand<DipCorpus>(item =>
             {
                 StartProgress();
-
-                var editor = new EditDip(item, () =>
-                {
+                // TODO Should copy instead of modification
+                var editor = GenericEdit.Create(item, corpus =>
+                {                    
                     SaveCorpuses();
                 });
+
                 editor.ShowDialog();
 
                 CompleteProgress();
             });
 
-            RemoveCommand = new RelayCommand<DipCorpus>(item =>
+            RemoveCommand = new ActionCommand<DipCorpus>(item =>
             {
                 StartProgress();
 
@@ -60,7 +61,7 @@
                 CompleteProgress();
             });
 
-            GenerateCommand = new RelayCommand<DipCorpus>(item =>
+            GenerateCommand = new ActionCommand<DipCorpus>(item =>
             {
                 StartProgress();
 
@@ -77,9 +78,9 @@
 
         public ObservableCollection<DipCorpus> Corpuses { get; private set; }
 
-        public RelayCommand AddCommand { get; private set; }
-        public RelayCommand<DipCorpus> EditCommand { get; private set; }
-        public RelayCommand<DipCorpus> RemoveCommand { get; private set; }
-        public RelayCommand<DipCorpus> GenerateCommand { get; private set; }
+        public ICommand AddCommand { get; private set; }
+        public ICommand EditCommand { get; private set; }
+        public ICommand RemoveCommand { get; private set; }
+        public ICommand GenerateCommand { get; private set; }
     }
 }

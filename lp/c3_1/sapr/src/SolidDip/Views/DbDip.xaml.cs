@@ -1,15 +1,17 @@
 ﻿namespace SolidDip.Views
 {
-    using System.Windows.Controls;
+    using SolidDip.ViewModel;
 
-    /// <summary>
-    /// Interaction logic for CustomDip.xaml
-    /// </summary>
-    public partial class DbDip : Page
+    public partial class DbDip
     {
         public DbDip()
         {
             InitializeComponent();
+
+            Loaded += (s, e) =>
+            {
+                DataContext = new DbDipViewModel();
+            };
         }
     }
 }

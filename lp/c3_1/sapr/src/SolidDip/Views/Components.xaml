@@ -21,20 +21,22 @@
             <Button Command="{Binding AddExistingCommand}">Додати існуючий</Button>
         </ToolBar>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Components}" AutoGenerateColumns="True" CanUserAddRows="False">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Назва" Binding="{Binding Name}"  Width="*" IsReadOnly="True" />
-                <DataGridTextColumn Header="Кількість виводів" Binding="{Binding PinCount}" Width="150" IsReadOnly="True"   />
-                <DataGridTextColumn Header="Ширина" Binding="{Binding CorpusWidthMm}" Width="150" IsReadOnly="True"  />
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Назва" Binding="{Binding PartName}"  Width="*" IsReadOnly="True" />
+                <DataGridTextColumn Header="X" Binding="{Binding ZeroXMm}" Width="50" IsReadOnly="True"   />
+                <DataGridTextColumn Header="Y" Binding="{Binding ZeroYMm}" Width="50" IsReadOnly="True"   />
+                <DataGridTextColumn Header="Z" Binding="{Binding ZeroZMm}" Width="50" IsReadOnly="True"   />
+                <DataGridTextColumn Header="Кут" Binding="{Binding ZeroAngle}" Width="50" IsReadOnly="True"   />
            
-                <DataGridTemplateColumn Header="Кількість виводів" Width="auto" >
+                <DataGridTemplateColumn Header="" Width="auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
+                                <!--<Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
                                         CommandParameter="{Binding Path=.}" Width="25">
                                     <Image Source="pack://application:,,,/Resources/Edit.png" />
-                                </Button>
+                                </Button>-->
                                 <Button Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
                                         CommandParameter="{Binding Path=.}" Width="25">
                                     <Image Source="pack://application:,,,/Resources/Remove.png" />
@@ -49,7 +51,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-            </DataGrid.Columns>-->
+            </DataGrid.Columns>
         </DataGrid>
 
         <ProgressBar Grid.Row="2" Visibility="{Binding InProgress}" IsIndeterminate="True" Margin="5" />

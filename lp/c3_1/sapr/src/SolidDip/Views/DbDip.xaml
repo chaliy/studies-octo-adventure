@@ -8,9 +8,6 @@
       d:DataContext="{d:DesignInstance Type=vm:DbDipViewModel}"
       Title="DIP корпус з параметрами в базі данних" 
       d:DesignHeight="600" d:DesignWidth="800">
-    <Page.DataContext>
-        <Binding Path="DbDip" Source="{StaticResource Locator}" />
-    </Page.DataContext>
     <Grid Margin="10">   
         
         <Grid.RowDefinitions>
@@ -29,7 +26,7 @@
                 <DataGridTextColumn Header="Кількість виводів" Binding="{Binding PinCount}" Width="150" IsReadOnly="True"   />
                 <DataGridTextColumn Header="Ширина" Binding="{Binding CorpusWidthMm}" Width="150" IsReadOnly="True"  />
            
-                <DataGridTemplateColumn Header="Кількість виводів" Width="auto" >
+                <DataGridTemplateColumn Header="" Width="auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

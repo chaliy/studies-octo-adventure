@@ -34,12 +34,29 @@
 
         public static SketchSegment[] CreateLinesByPoints(this SketchManager manager, params double[] points)
         {
+            manager.InsertSketch(true);
+
+            manager.AddToDB = true;
             var segments = new List<SketchSegment>();
             for(var i = 0; i < points.Length - 3; i+=3)
             {
                 segments.Add(manager.CreateLine(points[i], points[i + 1], points[i + 2], points[i + 3], points[i + 4], points[i + 5]));
             }
+            manager.AddToDB = false;
             return segments.ToArray();
         }
+
+        public static SketchSegment[] CreateLinesRectangle(this SketchManager manager, double x1, double y1, double z1, double x2, double y2, double z2)
+        {
+            return manager.CreateLinesByPoints(
+                x1, y1, z1, // A               
+                x2, y1, z1, // B
+                x2, y2, z2, // C
+                x1, y2, z2, // D
+                x1, y1, z1 // A
+                );
+        }
+
+        
     }
 }
