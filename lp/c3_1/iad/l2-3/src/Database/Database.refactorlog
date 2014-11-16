@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="e7836b90-58ed-4c06-806c-6726c3a6ae1c" ChangeDateTime="11/16/2014 14:37:33">
+    <Property Name="ElementName" Value="[dbo].[Група].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Група]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Код" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e1657743-b3be-4aba-b7a3-4a2781d9a57f" ChangeDateTime="11/16/2014 15:33:42">
+    <Property Name="ElementName" Value="[dbo].[Товар].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Товар]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Код" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d3e69e74-f8b4-4cfe-a3fc-dc54adb9b351" ChangeDateTime="11/16/2014 15:35:01">
+    <Property Name="ElementName" Value="[dbo].[Відділ].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Відділ]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Код" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f9f993b4-e95f-49e6-b182-891980e4a6b4" ChangeDateTime="11/16/2014 16:37:22">
+    <Property Name="ElementName" Value="[dbo].[Продажи].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Продажи]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Дата" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2bd91e77-1c8f-4bca-9afe-64cc595bffed" ChangeDateTime="11/16/2014 18:29:19">
+    <Property Name="ElementName" Value="[dbo].[Продажи]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[Продаж]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="501783c3-7ce7-42c9-90e6-85abf85c3926" ChangeDateTime="11/16/2014 18:29:36">
+    <Property Name="ElementName" Value="[dbo].[FK_Продажи_Відділ]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Продаж]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Продаж_Відділ]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0ae29f5c-460d-40d8-92e9-2b3cd8266a30" ChangeDateTime="11/16/2014 18:29:38">
+    <Property Name="ElementName" Value="[dbo].[FK_Продажи_Товар]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Продаж]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Продаж_Товар]" />
+  </Operation>
+</Operations>
