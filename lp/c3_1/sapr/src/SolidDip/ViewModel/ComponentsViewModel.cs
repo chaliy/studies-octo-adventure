@@ -11,6 +11,8 @@
 
     public class ComponentsViewModel : ViewModelBase
     {
+        private AssemblyContext ctx;
+
         public ComponentsViewModel()
         {
             Components = new ObservableCollection<CircuitComponent>();
@@ -115,22 +117,22 @@
 
         private AssemblyContext EnsureAssemblyContext()
         {
-            //var assemblyFileName = @"C:\Users\Mike\Projects\studies-octo-adventure\lp\c3_1\sapr\parts\Example.SLDASM";
-            //return new AssemblyContext(assemblyFileName);
-
-            var open = new Microsoft.Win32.OpenFileDialog();
-            open.FileName = "";
-            open.DefaultExt = ".sldasm";
-            open.Filter = "SolidWorks сбірки (.sldasm)|*.sldasm";
-
-            if (open.ShowDialog() == true)
+            if (ctx == null)
             {
-                var assemblyFileName = open.FileName;
+                var open = new Microsoft.Win32.OpenFileDialog();
+                open.FileName = "";
+                open.DefaultExt = ".sldasm";
+                open.Filter = "SolidWorks сбірки (.sldasm)|*.sldasm";
 
-                return new AssemblyContext(assemblyFileName);
+                if (open.ShowDialog() == true)
+                {
+                    var assemblyFileName = open.FileName;
+
+                    ctx = new AssemblyContext(assemblyFileName);
+                }
             }
 
-            return null;
+            return ctx;
         }
     }
 }

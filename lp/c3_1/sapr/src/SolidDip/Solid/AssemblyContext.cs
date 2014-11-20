@@ -58,15 +58,15 @@
             sw.ActivateDoc3(doc.GetTitle(), true, (int)swRebuildOnActivation_e.swUserDecision, ref error);
 
             // In context of top projection place goes X -> -Z, Y -> X, Z -> Y
-            var x = (part.ZeroXMm + place.YMm) / 1000;
-            var y = part.ZeroZMm / 1000;
-            var z = (part.ZeroYMm - place.XMm) / 1000; 
+            var x = (place.YMm) / 1000;
+            var y = 0.0;
+            var z = (place.XMm) / 1000; 
 
             var component = ((AssemblyDoc)doc).AddComponent5(Path.GetFileNameWithoutExtension(partPath),
                 (int)swAddComponentConfigOptions_e.swAddComponentConfigOptions_CurrentSelectedConfig,
                 "", false, "", x, y, z);
 
-            RotatePartY(component, new[] { place.YMm / 1000, 0.0, -place.XMm / 1000 }, part.ZeroAngle + place.Angle);
+            RotatePartY(component, new[] { place.YMm / 1000, 0.0, -place.XMm / 1000 }, place.Angle);
         }
 
         private void RotatePartY(Component2 component, double[] origin, double angle)

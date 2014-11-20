@@ -33,9 +33,9 @@
             var length = (((pinCount / 2) - 1) * PinDistance) + (FirstPin * 2.0);
             var height = 0.00368;
 
-            var dx = (width / 2) + PinRadius;            
-            var dy = -FirstPin;
-            var dz = 0.005;
+            var dx = (width / 2.0) + PinRadius;            
+            var dy = - ((length / 2.0) - FirstPin);
+            var dz = 0.0025;
 
             var bevel = 0.0005;
             var bottomBevel = 0.0004;
@@ -123,7 +123,7 @@
 
             // Sign
             doc.Extension.SelectByID2("Cover Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            var signSketchSegments = ((dynamic[])doc.SketchManager.CreateCenterRectangle(0.0, halfWidth + PinRadius, 0.0, .001, 0.0005, 0.0)).Cast<SketchSegment>();
+            var signSketchSegments = ((dynamic[])doc.SketchManager.CreateCenterRectangle(-FirstPin / 2.0, halfWidth + PinRadius, 0.0, FirstPin / 2.0, halfWidth, 0.0)).Cast<SketchSegment>();
 
             doc.RoundCorners(0.0002, signSketchSegments);
 
@@ -137,22 +137,15 @@
 
             doc.ClearSelection2(true);
 
-            return doc;
-
-            // Pin Plane
-
-            doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
-            var pinPlane = doc.FeatureManager.InsertRefPlane(264, (halfLength - FirstPin), 0, 0, 0, 0);
-            pinPlane.Name = "Pin Plane";
-
             // First and Last Pin
-            doc.Extension.SelectByID2("Pin Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
 
+            doc.Extension.SelectByID2("Right Plane", "PLANE", 0, 0, 0, false, 0, null, 0);
+            
             var pinSketchSegments = doc.SketchManager.CreateLinesByPoints(
-              -widthWithPins / 2.0, -pinHeight, .0, // A
-              -(halfWidth + PinRadius), +pinSurfHeight / 2.0, .0, // B
-              +(halfWidth + PinRadius), +pinSurfHeight / 2.0, .0, // C
-              +widthWithPins / 2.0, -pinHeight, .0 // D
+              dx - (widthWithPins / 2.0), dz - pinHeight, .0, // A
+              dx - (halfWidth + PinRadius), dz + (pinSurfHeight / 2.0), .0, // B
+              dx + (halfWidth + PinRadius), dz + (pinSurfHeight / 2.0), .0, // C
+              dx + (widthWithPins / 2.0), dz - pinHeight, .0 // D
             );
 
             doc.SketchManager.InsertSketch(true);
@@ -164,20 +157,20 @@
             pinFeature.Name = "First and Last Pin Feature";
 
             // Pin profile
-            doc.Extension.SelectByID2("Right Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
+            doc.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, true, 0, null, 0);
             
             var dPin = halfLength - FirstPin;
 
             var pinProfileSketchSegments = doc.SketchManager.CreateLinesByPoints(
-              -(pinWidth / 2.0) + dPin, -pinHeight, .0, // A
-              -(pinWidth / 2.0) + dPin, -(halfHeight + bevelPinHeight), .0, // B
-              -(pinWidthBase / 2.0) + dPin, -halfHeight, .0, // C
-              -(pinWidthBase / 2.0) + dPin, -(pinHeight + 0.001), .0,
-              (pinWidthBase / 2.0) + dPin, -(pinHeight + 0.001), .0,
-              (pinWidthBase / 2.0) + dPin, -halfHeight, .0,
-              (pinWidth / 2.0) + dPin, -(halfHeight + bevelPinHeight), .0,
-              (pinWidth / 2.0) + dPin, -pinHeight, .0,
-              -(pinWidth / 2.0) + dPin, -pinHeight, .0 // A
+              dy -(pinWidth / 2.0) + dPin, dz - pinHeight, .0, // A
+              dy - (pinWidth / 2.0) + dPin, dz - (halfHeight + bevelPinHeight), .0, // B
+              dy - (pinWidthBase / 2.0) + dPin, dz - halfHeight, .0, // C
+              dy - (pinWidthBase / 2.0) + dPin, dz - (pinHeight + 0.001), .0,
+              dy + (pinWidthBase / 2.0) + dPin, dz - (pinHeight + 0.001), .0,
+              dy + (pinWidthBase / 2.0) + dPin, dz - halfHeight, .0,
+              dy + (pinWidth / 2.0) + dPin, dz - (halfHeight + bevelPinHeight), .0,
+              dy + (pinWidth / 2.0) + dPin, dz - pinHeight, .0,
+              dy - (pinWidth / 2.0) + dPin, dz - pinHeight, .0 // A
             );
 
             doc.SketchManager.InsertSketch(true);
@@ -200,12 +193,13 @@
                 })
                 .Where(v =>
                 {
-                    var edgeWidth = Math.Abs(v.Start[2] - v.End[2]);
-                    return (Math.Abs(edgeWidth - length) < 0.001 && v.Start[2] > v.End[2]);
+                    var edgeWidth = Math.Abs(v.Start[0] - v.End[0]);
+                    return (Math.Abs(edgeWidth - length) < 0.001 && v.Start[0] > v.End[0]);
                 })
                 .First();
-            
-            doc.Extension.SelectByID2("", "EDGE", directionVertex.Start[0], directionVertex.Start[1], (directionVertex.Start[2] + directionVertex.End[2]) / 2.0, false, 1, null, 0);
+
+            //doc.Extension.SelectByID2("", "EDGE", directionVertex.Start[0], directionVertex.Start[1], (directionVertex.Start[2] + directionVertex.End[2]) / 2.0, false, 1, null, 0);
+            doc.Extension.SelectByID2("", "EDGE", (directionVertex.Start[0] + directionVertex.End[0]) / 2.0, directionVertex.Start[1], directionVertex.Start[2], false, 1, null, 0);
             doc.Extension.SelectByID2("Pin Profile Feature", "SOLIDBODY", 3.68237484639167E-03, -1.38341410382736E-03, -3.5620114174435E-03, true, 256, null, 0);
             var otherPinsFeature = doc.FeatureManager.FeatureLinearPattern3(pinCount / 2, PinDistance, 1, 0.01, true, false, "NULL", "NULL", false, false);
             otherPinsFeature.Name = "Other Pins Feature";
@@ -231,11 +225,7 @@
             return new CircuitComponent
             {
                 PartName = corpus.Name,
-                Data = File.ReadAllBytes(tmpFileName),                
-                ZeroXMm = (corpus.CorpusWidthMm / 2) + 0.25,
-                ZeroYMm = ((((corpus.PinCount / 2) - 1) * PinDistance) / 2) * 1000,
-                ZeroZMm = 0.5,
-                ZeroAngle = 90
+                Data = File.ReadAllBytes(tmpFileName)
             };
         }
     }

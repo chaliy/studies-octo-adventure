@@ -24,10 +24,10 @@
         <DataGrid Grid.Row="1" ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Назва" Binding="{Binding PartName}"  Width="*" IsReadOnly="True" />
-                <DataGridTextColumn Header="X" Binding="{Binding ZeroXMm}" Width="50" IsReadOnly="True"   />
+                <!--<DataGridTextColumn Header="X" Binding="{Binding ZeroXMm}" Width="50" IsReadOnly="True"   />
                 <DataGridTextColumn Header="Y" Binding="{Binding ZeroYMm}" Width="50" IsReadOnly="True"   />
                 <DataGridTextColumn Header="Z" Binding="{Binding ZeroZMm}" Width="50" IsReadOnly="True"   />
-                <DataGridTextColumn Header="Кут" Binding="{Binding ZeroAngle}" Width="50" IsReadOnly="True"   />
+                <DataGridTextColumn Header="Кут" Binding="{Binding ZeroAngle}" Width="50" IsReadOnly="True"   />-->
            
                 <DataGridTemplateColumn Header="" Width="auto" >
                     <DataGridTemplateColumn.CellTemplate>

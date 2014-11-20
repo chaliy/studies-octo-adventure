@@ -20,20 +20,12 @@
                 new CircuitComponent
                 {
                     PartName = "DIP8",
-                    Data = File.ReadAllBytes(@"Data\DIP8.sldprt"),
-                    ZeroXMm = 3.25,
-                    ZeroYMm = 0.5,
-                    ZeroZMm = 3.85,
-                    ZeroAngle = 90
+                    Data = File.ReadAllBytes(@"Data\DIP8.sldprt")
                 },
                 new CircuitComponent
                 {
                     PartName = "Diode0_4",
-                    Data = File.ReadAllBytes(@"Data\Diode0_4.sldprt"),
-                    ZeroXMm = 0,
-                    ZeroYMm = 0,
-                    ZeroZMm = 0,
-                    ZeroAngle = 90
+                    Data = File.ReadAllBytes(@"Data\Diode0_4.sldprt")
                 }
             });
 
@@ -42,7 +34,6 @@
             components.Should().HaveCount(2);
             var dip8 = components.First(x => x.PartName == "DIP8");
             dip8.Data.Should().NotBeEmpty();
-            dip8.ZeroXMm.Should().Be(3.25);
         }
     }
 }
