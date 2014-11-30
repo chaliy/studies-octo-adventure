@@ -38,5 +38,7 @@ function gold_max(a, b, f)
 
   % Plot
   xx = linspace(a,b,20);
+  figure(1);
   plot (xx, f(xx), 'r');
+  hold on;
 end
