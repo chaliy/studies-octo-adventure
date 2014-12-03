@@ -1,4 +1,9 @@
 function [x] = koshi(x0, f, df)
+  %   x0: initial point
+  %   f: objective function
+  %   df: matrix with second deriviation coefficients
+  %     df = [16, 4, 0;
+  %           4, 10, 0];
   eps = 0.001;
 
   a = 0.0;
@@ -6,18 +11,22 @@ function [x] = koshi(x0, f, df)
   k = 0;
   x = x0;
 
+  fm = @(a, x) x - a * (df * [x;1]);
+
   while r > eps
 
-    a = fminsearch(@(a) f(x - a * (df * [x;1])), a);
+    % Mimimaze current alpha
+    a = fminsearch(@(a) f(fm(a, x)), a);
 
-    x = x - a * (df * [x;1]);
+    % Do next gradient move
+    x = fm(a, x);
 
     r=f(x);
     k=k+1;
   end
 
 
-  printf('Rezultat: %f\n', r);
-  printf('Kilkist iteracij: %d\n', k);
+  printf('Result: %f\n', r);
+  printf('Num of iterations: %d\n', k);
 
 end
