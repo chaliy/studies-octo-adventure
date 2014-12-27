@@ -1,5 +1,5 @@
 ~$*.docx
-~$*.~vsdx
+~$*.*
 *.tmp
 __pycache__
 *.pyc
