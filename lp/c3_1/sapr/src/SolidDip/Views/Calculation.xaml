@@ -1,0 +1,40 @@
+﻿<Page x:Class="SolidDip.Views.Calculation"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:SolidDip.ViewModel"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DataContext="{d:DesignInstance Type=vm:CalculationViewModel}"
+      Title="Компоеннти в базі данних" 
+      d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Margin="10">   
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+      
+        <TextBlock Grid.Row="0" TextWrapping="Wrap" Margin="10">
+            У одному з цехів фабрики електроприборів випускають три їх види; Arduino по ціні 2.5 у.о., Next - 4 у.о,, Rasperry PI - 10 у.о. 
+            Трудоємність виготовлення Arduino - 0,3, Next - 0,5 і Rasperry PI - 2 нормо-годин. 
+            Місячний трудовий ресурс цеху 2400 нормо-год. За місяць може бути реалізовано Arduino до L1 шт., Next - до L2 шт., Rasperry PI – до L3 шт. 
+            Визначити місячний план цеху, який забезпечує максимальну сумарну вартість реалізованої продукції.
+        </TextBlock>
+        
+        <xctk:PropertyGrid Grid.Row="1"  Margin="10" SelectedObject="{Binding Spec}" />
+        
+        <TextBlock Grid.Row="2" Margin="10" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=Result}" />
+        
+        <ProgressBar Grid.Row="3" Visibility="{Binding InProgress}" IsIndeterminate="True" Margin="5" />
+        
+        <StackPanel Grid.Row="4" HorizontalAlignment="Right" Margin="10">
+            <Button Command="{Binding CalculateCommand}">Розрахувати</Button>
+        </StackPanel>
+
+    </Grid>
+</Page>

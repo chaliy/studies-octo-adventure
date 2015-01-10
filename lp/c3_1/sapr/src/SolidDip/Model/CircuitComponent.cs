@@ -16,22 +16,6 @@
         [Editor(typeof(CircuitComponentDataControl), typeof(CircuitComponentDataControl))]
         public byte[] Data { get; set; }
 
-        //[Category("Початкова позиція")]
-        //[DisplayName("X (мм)")]
-        //public double ZeroXMm { get; set; }
-
-        //[Category("Початкова позиція")]
-        //[DisplayName("Y (мм)")]
-        //public double ZeroYMm { get; set; }
-
-        //[Category("Початкова позиція")]
-        //[DisplayName("Z (мм)")]
-        //public double ZeroZMm { get; set; }
-
-        //[Category("Початкова позиція")]
-        //[DisplayName("Кут")]
-        //public double ZeroAngle { get; set; }
-
         string IDataErrorInfo.Error
         {
             get

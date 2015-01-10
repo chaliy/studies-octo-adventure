@@ -3,15 +3,14 @@
     using System.IO;
     using System.Linq;
     using FluentAssertions;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using SolidDip.Infrastructure;
     using SolidDip.Model;
     using SolidDip.Services;
 
-    [TestClass]
     public class ComponentsStorageTests
     {
-        [TestMethod]
+        [Test]
         public void Should_save_query_components()
         {
             Db.Reset();

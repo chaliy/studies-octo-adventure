@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DataContext="{d:DesignInstance Type=vm:ComponentsViewModel}"
-      Title="Компоеннти в базі данних" 
+      Title="Компоненти в базі данних" 
       d:DesignHeight="600" d:DesignWidth="800">
     <Grid Margin="10">   
         
@@ -24,19 +24,11 @@
         <DataGrid Grid.Row="1" ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Назва" Binding="{Binding PartName}"  Width="*" IsReadOnly="True" />
-                <!--<DataGridTextColumn Header="X" Binding="{Binding ZeroXMm}" Width="50" IsReadOnly="True"   />
-                <DataGridTextColumn Header="Y" Binding="{Binding ZeroYMm}" Width="50" IsReadOnly="True"   />
-                <DataGridTextColumn Header="Z" Binding="{Binding ZeroZMm}" Width="50" IsReadOnly="True"   />
-                <DataGridTextColumn Header="Кут" Binding="{Binding ZeroAngle}" Width="50" IsReadOnly="True"   />-->
            
                 <DataGridTemplateColumn Header="" Width="auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <!--<Button Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
-                                        CommandParameter="{Binding Path=.}" Width="25">
-                                    <Image Source="pack://application:,,,/Resources/Edit.png" />
-                                </Button>-->
                                 <Button Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=Page}, Mode=Default}" 
                                         CommandParameter="{Binding Path=.}" Width="25">
                                     <Image Source="pack://application:,,,/Resources/Remove.png" />
@@ -53,7 +45,7 @@
                 
             </DataGrid.Columns>
         </DataGrid>
-
+        
         <ProgressBar Grid.Row="2" Visibility="{Binding InProgress}" IsIndeterminate="True" Margin="5" />
 
     </Grid>

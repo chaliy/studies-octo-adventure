@@ -18,6 +18,8 @@
                 <MenuItem Header="_Корпус з довільними параметрами" Command="{Binding NavigateTo}" CommandParameter="Views/CustomDip.xaml" />
                 <MenuItem Header="_База данних корпусів" Command="{Binding NavigateTo}" CommandParameter="Views/DbDip.xaml"  />
                 <MenuItem Header="База данних _компонент" Command="{Binding NavigateTo}" CommandParameter="Views/Components.xaml"  />
+                <Separator />
+                <MenuItem Header="_Розрахунок виробництва" Command="{Binding NavigateTo}" CommandParameter="Views/Calculation.xaml"  />
             </MenuItem>
             <MenuItem Header="_Допомога">
                 <MenuItem Header="_Про программу"/>

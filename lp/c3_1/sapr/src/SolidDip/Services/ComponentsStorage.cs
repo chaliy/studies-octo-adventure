@@ -12,7 +12,7 @@
         {
             Db.Run(c =>
             {
-                c.Execute(@"create table if not exists [Components]([PartName] text, [Data] blob, [ZeroXMm] real, [ZeroYMm] real, [ZeroZMm] real, [ZeroAngle] real);", new { });
+                c.Execute(@"create table if not exists [Components]([PartName] text, [Data] blob);", new { });
             });
         }
 
@@ -22,7 +22,7 @@
             Db.Run(c =>
             {
                 c.Execute(@"delete from Components");
-                c.Execute(@"insert into Components values (@PartName, @Data, @ZeroXMm, @ZeroYMm, @ZeroZMm, @ZeroAngle)", components);
+                c.Execute(@"insert into Components values (@PartName, @Data)", components);
             });
         }
 
