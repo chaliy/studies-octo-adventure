@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello World!</title>
+    <!--<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" href="node_modules/winjs/css/ui-dark.css" media="screen">
+
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="node_modules/winjs/js/winjs.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="splitView" data-win-control="WinJS.UI.SplitView">
+        <div>
+              <div class="header">
+                  <div tabindex="0" class="win-splitview-button" data-win-bind="onclick: togglePane"></div>
+                  <div class="title">SplitView Pane area</div>
+              </div>
+
+              <div class="nav-commands">
+                  <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{ label: 'Home', icon: 'home'}"></div>
+                  <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{ label: 'Favorite', icon: 'favorite'}"></div>
+                  <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{ label: 'Settings', icon: 'settings'}"></div>
+              </div>
+          </div>
+
+          <!-- Content area -->
+          <div class="content"><h2>SplitView Content area</h2> </div>
+        </div>
+
+      </div>
+    </div>
+    <!--<script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <script src="app/app.js"></script>
+  </body>
+</html>

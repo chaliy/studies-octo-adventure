@@ -1,0 +1,16 @@
+{
+  "name": "sec",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 1000,
+    "height": 600
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "es6-shim": "^0.27.1",
+    "winjs": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {}
+}
