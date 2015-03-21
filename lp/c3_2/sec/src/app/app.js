@@ -1,30 +1,27 @@
-// var gui = require('nw.gui');
-// var shell = require('nw.gui').Shell;
-//
-// var win = gui.Window.get();
-//
-//
-// var mainMenu = new gui.Menu({ type: 'menubar' });
-//
-// mainMenu.append(new gui.MenuItem({ label: 'File' }));
-// mainMenu.append(new gui.MenuItem({ label: 'View' }));
-// mainMenu.append(new gui.MenuItem({ label: 'Help' }));
-//
-// win.menu = mainMenu;
+global.document = window.document;
+global.navigator = window.navigator;
 
-WinJS.Namespace.define("Sample", {
-    splitView: null,
-    togglePane: WinJS.UI.eventHandler(function (ev) {
-        if (Sample.splitView) {
-            Sample.splitView.paneHidden = !Sample.splitView.paneHidden;
-        }
-    })
-});
+var gui = require('nw.gui');
+var shell = require('nw.gui').Shell;
+var React = require('react');
+//var Analysis = require("./analysis"); WTF???
 
-WinJS.Binding.processAll(null, Sample).then(function () {
-    WinJS.UI.processAll().done(function () {
-        Sample.splitView = document.querySelector(".splitView").winControl;
-        new WinJS.UI._WinKeyboard(Sample.splitView.paneElement);
-        // Temporary workaround: Draw keyboard focus visuals on NavBarCommands
-    });
-})
+var win = gui.Window.get();
+var main = document.getElementById('main');
+
+var mainMenu = new gui.Menu({ type: 'menubar' });
+
+mainMenu.append(new gui.MenuItem({ label: 'File' }));
+
+var viewMenu = new gui.Menu();
+viewMenu.append(new gui.MenuItem({ label: 'Analysis', click: function(){
+  React.render(<Analysis />, main);
+}}));
+
+var viewMenuItem = new gui.MenuItem({ label: 'View' });
+viewMenuItem.submenu = viewMenu;
+
+mainMenu.append(viewMenuItem);
+mainMenu.append(new gui.MenuItem({ label: 'Help' }));
+
+win.menu = mainMenu;
