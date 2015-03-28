@@ -2,12 +2,12 @@ var React = require('react');
 
 var StatsTable = React.createClass({
 
-  getInitialState: function() {
-    return this.props;
-    // return {
-    //   data: [{name: 't', val: 2},
-    //          {name: 's', val: 1}]
-    // }
+  _sortAndFilter: function(data){
+    data = data.slice(0);
+    data.sort(function(a,b){
+      return a.name.localeCompare(b.name);
+    });
+    return data.slice(0, 15);
   },
 
   render: function() {
@@ -19,9 +19,9 @@ var StatsTable = React.createClass({
       </tr>
     </thead>
     <tbody>
-    {this.state.data.map(function(row) {
+    {this._sortAndFilter(this.props.data).map(function(row) {
       return (
-        <tr>
+        <tr key={row.name}>
           <td>{row.name}</td>
           <td>{row.val}</td>
         </tr>);
@@ -30,3 +30,5 @@ var StatsTable = React.createClass({
   }
 
 });
+
+exports.StatsTable = StatsTable;
