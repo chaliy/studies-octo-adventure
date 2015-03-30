@@ -16,10 +16,17 @@
     "react": "^0.13.1",
     "react-chartjs": "^0.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-plumber": "^1.0.0",
+    "gulp-react": "^3.0.1",
+    "gulp-util": "^3.0.4",
+    "react-tools": "^0.13.1"
+  },
   "scripts": {
-    "build": "jsx lib/ js/",
-    "start": "jsx --watch lib/ js/",
-    "test": "jasmine-node spec/"
+    "build": "gulp build",
+    "start": "gulp start",
+    "test": "gulp test"
   }
 }
