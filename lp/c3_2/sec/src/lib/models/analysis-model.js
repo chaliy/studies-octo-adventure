@@ -31,14 +31,14 @@ function calculateStats(t){
     return Object.keys(hash).map(function (key) {
       return { name: key, val: hash[key] };
     });
-  }
+  };
 
   return {
     onegram: rows(onegram),
     bigram: rows(bigram),
     trigram: rows(trigram),
     fourgram: rows(fourgram)
-  }
+  };
 }
 
 

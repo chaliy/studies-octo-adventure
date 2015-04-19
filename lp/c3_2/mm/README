@@ -1,0 +1,11 @@
+# Tools
+
+WoPeD http://woped.dhbw-karlsruhe.de/woped/
+Arduino IDE
+Visual Studio CE 2013
+VisualMicro
+
+
+# Hardware
+
+  1. Pins 3, 9, 10, and 11 - is used for PWM Shield
