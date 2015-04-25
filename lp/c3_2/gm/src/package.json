@@ -1,0 +1,30 @@
+{
+  "name": "gm",
+  "main": "index.html",
+  "repository": "https://github.com/chaliy/studies-octo-adventure/tree/master/lp/c3_2",
+  "window": {
+    "toolbar": true,
+    "width": 1000,
+    "height": 600
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "es6-shim": "^0.27.1",
+    "object-assign": "^2.0.0",
+    "react": "^0.13.1",
+    "react-router": "^0.13.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-plumber": "^1.0.0",
+    "gulp-react": "^3.0.1",
+    "gulp-util": "^3.0.4",
+    "react-tools": "^0.13.1"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "start": "nw .",
+    "test": "gulp test"
+  }
+}
