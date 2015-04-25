@@ -4,15 +4,18 @@ var c1 = 'Y';
 var c2 = 'Y';
 var p1 = null;
 
+var L = 2000;
+var S = 1;
+
 var specs = [
-  { prec: {c1: 'Y', c2: 'Y', p1: 'r'}, action: {c1: 'R', c2: 'Y'} },
-  { prec: {c1: 'R', c2: 'Y', p1: 'r'}, action: {c1: 'R', c2: 'G'} },
-  { prec: {c1: 'R', c2: 'G', p1: 'r'}, action: {c1: 'R', c2: 'Y', p1: 'R'} },
-  { prec: {c1: 'R', c2: 'Y', p1: 'g'}, action: {c1: 'Y', c2: 'Y'} },
-  { prec: {c1: 'Y', c2: 'Y', p1: 'g'}, action: {c1: 'Y', c2: 'R'} },
-  { prec: {c1: 'Y', c2: 'R', p1: 'g'}, action: {c1: 'G', c2: 'R'} },
-  { prec: {c1: 'G', c2: 'R', p1: 'g'}, action: {c1: 'Y', c2: 'R', p1: 'G'} },
-  { prec: {c1: 'Y', c2: 'R', p1: 'r'}, action: {c1: 'Y', c2: 'Y'} }
+  { prec: {c1: 'Y', c2: 'Y', p1: 'r'}, action: {c1: 'R', c2: 'Y'}, delay: S },
+  { prec: {c1: 'R', c2: 'Y', p1: 'r'}, action: {c1: 'R', c2: 'G'}, delay: L },
+  { prec: {c1: 'R', c2: 'G', p1: 'r'}, action: {c1: 'R', c2: 'Y', p1: 'R'}, delay: S  },
+  { prec: {c1: 'R', c2: 'Y', p1: 'g'}, action: {c1: 'Y', c2: 'Y'}, delay: L },
+  { prec: {c1: 'Y', c2: 'Y', p1: 'g'}, action: {c1: 'Y', c2: 'R'}, delay: S  },
+  { prec: {c1: 'Y', c2: 'R', p1: 'g'}, action: {c1: 'G', c2: 'R'}, delay: L },
+  { prec: {c1: 'G', c2: 'R', p1: 'g'}, action: {c1: 'Y', c2: 'R', p1: 'G'}, delay: S  },
+  { prec: {c1: 'Y', c2: 'R', p1: 'r'}, action: {c1: 'Y', c2: 'Y'}, delay: L }
 ];
 
 var match = function(item){
@@ -47,12 +50,13 @@ for(var i = 0; i < 100; i++){
   console.log(c1, c2);
 }
 
-// // Print C specs
-// specs.forEach(function(x, i){
-//   var r = 'SPEC spec' + (i+1) + ' = SPEC{' + x.prec.c1 + ', '+ x.prec.c2;
-//   r += ', ' + ((x.prec.p1) ? x.prec.p1 : '_');
-//   r += ', ' + x.action.c1 + ', '+ x.action.c2;
-//   r += ', ' + ((x.action.p1) ? x.action.p1 : '_');
-//   r += '};';
-//   console.log(r);
-// });
+// Print C specs
+specs.forEach(function(x, i){
+  var r = 'SPEC spec' + (i+1) + ' = SPEC{' + x.prec.c1 + ', '+ x.prec.c2;
+  r += ', ' + ((x.prec.p1) ? x.prec.p1 : '_');
+  r += ', ' + x.action.c1 + ', '+ x.action.c2;
+  r += ', ' + ((x.action.p1) ? x.action.p1 : '_');
+  r += ', ' + x.delay;
+  r += '};';
+  console.log(r);
+});

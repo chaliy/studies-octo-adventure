@@ -23,7 +23,7 @@ struct SPEC {
 };
 
 const int LONG_DELAY = 2000;
-const int SHORT_DELAY = 2;
+const int SHORT_DELAY = 1;
 
 SPEC spec1 = SPEC{ Y, Y, r, R, Y, _, SHORT_DELAY };
 SPEC spec2 = SPEC{ R, Y, r, R, G, _, LONG_DELAY };
@@ -43,18 +43,17 @@ int p1 = _;
 
 void setup()
 {
-	Tlc.init();
+  Tlc.init();
 }
 
 void light(byte l, byte n){
-	byte channel = (n * 3) + (l - 1);
-	Tlc.set(channel, 0);
+  byte channel = (n * 3) + (l - 1);
+  Tlc.set(channel, 4095);
 }
 
 
 void loop()
 {
-  
   int i;
   
   // Find matching spec
@@ -64,11 +63,11 @@ void loop()
       if (specs[i]->pred_p1 != _){
         if ((specs[i]->pred_p1 == r && p1 != R) || (specs[i]->pred_p1 == g && p1 != G)){
           spec = specs[i];
-		  break;
+          break;
         }
       } else {
         spec = specs[i];
-		break;
+        break;
       }
     } 
   }
@@ -82,8 +81,7 @@ void loop()
 
   // Light!  
   Tlc.clear();  
-  Tlc.setAll(4095);
-
+  
   light(c1, 0);
   light(c2, 1);
   
