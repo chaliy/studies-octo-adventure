@@ -2,7 +2,10 @@
 global.document = window.document;
 global.navigator = window.navigator;
 global.CanvasRenderingContext2D = window.CanvasRenderingContext2D;
+global.Path2D = window.Path2D;
 global.requestAnimationFrame = window.requestAnimationFrame;
+global.setInterval = window.setInterval;
+global.clearInterval = window.clearInterval;
 
 'use strict';
 
@@ -17,6 +20,7 @@ var DefaultRoute = Router.DefaultRoute;
 
 var About = require('./js/components/about').About;
 var L1 = require('./js/components/l1').L1;
+var L2 = require('./js/components/l2').L2;
 
 
 var App = React.createClass({
@@ -31,6 +35,7 @@ var routes = (
   <Route handler={App} path='/'>
     <DefaultRoute handler={About}/>
     <Route name='l1' path='l1' handler={L1} />
+      <Route name='l2' path='l2' handler={L2} />
     <Route name='about' path='about' handler={About} />
   </Route>
 );
@@ -56,6 +61,9 @@ mainMenu.append(fileMenuItem);
 var viewMenu = new gui.Menu();
 viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #1', click: function(){
   router.transitionTo('l1');
+}}));
+viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #2', click: function(){
+  router.transitionTo('l2');
 }}));
 
 var viewMenuItem = new gui.MenuItem({ label: 'Вид' });

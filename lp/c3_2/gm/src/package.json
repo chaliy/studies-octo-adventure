@@ -3,7 +3,7 @@
   "main": "index.html",
   "repository": "https://github.com/chaliy/studies-octo-adventure/tree/master/lp/c3_2",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "width": 1000,
     "height": 600
   },

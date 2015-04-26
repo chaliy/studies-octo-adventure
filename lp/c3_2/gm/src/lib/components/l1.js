@@ -1,24 +1,9 @@
 /* jshint esnext: true */
 var React = require('react');
+var utils = require('../draw-utils');
 
 
 var VERTICLES_NUM = 6;
-
-var fix = function(p){
-  return {x: p.x - 0.5, y: p.y - 0.5 };
-};
-
-// TODO CanvasRenderingContext2D.prototype.drawLines = function(points) {
-var drawLines = function(ctx, points){
-  if (points.length > 1) {
-    var start = fix(points[0]);
-    ctx.moveTo(start.x, start.y);
-    for(var i = 1; i < points.length; i++){
-      var next = fix(points[i]);
-      ctx.lineTo(next.x, next.y);
-    }
-  }
-};
 
 var buildPoligone = function(start, size, type){
   var x = start.x;
@@ -75,10 +60,10 @@ var renderCanvas = function(canvas, type){
         ly += dy;
       }
       var points = buildPoligone({x: lx, y: ly}, size, type);
-      drawLines(ctx, points);
+      utils.drawLines(ctx, points);
     }
   }
-  
+
   ctx.strokeStyle = 'rgb(0,' + Math.floor(255-(255*animation)) + ',0)';
   ctx.stroke();
 
@@ -125,7 +110,7 @@ var L1 = React.createClass({
           </div>
         </form>
         <div>
-          <canvas ref='canvas' width={400} height={250} ></canvas>
+          <canvas ref='canvas' width={600} height={400} style={{borderColor: 'gray', borderThickness: '1', borderStyle: 'solid'}} ></canvas>
         </div>
       </div>;
   },
