@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var reactify = require('reactify');
+var es6ify = require('es6ify');
 
 gulp.task('default', ['build', 'test']);
 
@@ -36,7 +37,7 @@ gulp.task('site-dev', function () {
   .watch('lib/**/*.js', ['site-jsx']);
 });
 
-gulp.task('site-build', ['site-jsx', 'site-js', 'site-css']);
+gulp.task('site-build', ['site-jsx', 'site-js', 'site-css', 'site-assets']);
 
 var report = function(err){
   gutil.log(
@@ -50,7 +51,9 @@ var vendorLibs = [
   'es6-shim',
   'react',
   'react-router',
-  'react-bootstrap'
+  'react-bootstrap',
+  'react-router-bootstrap',
+  'gl-matrix'
 ];
 
 gulp.task('site-css', function () {
@@ -61,11 +64,19 @@ gulp.task('site-css', function () {
 
 });
 
+gulp.task('site-assets', function () {
+  return gulp
+        .src('assets/geom.png')
+        .pipe(gulp.dest('./site/assets/'));
+
+});
+
 gulp.task('site-jsx', function () {
 
   return browserify('./lib/site.js')
     .external(vendorLibs)
     .transform(reactify)
+    .transform(es6ify)
     .bundle()
     .on('error', report)
     .pipe(source('app.js'))
@@ -76,7 +87,7 @@ gulp.task('site-jsx', function () {
 
 gulp.task('site-js', function () {
 
-  return browserify({
+  return browserify(es6ify.runtime, {
       require: vendorLibs,
       expose: vendorLibs
     })

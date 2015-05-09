@@ -1,8 +1,16 @@
-## Tools
+# Tools
 
     npm install react-tools -g
     npm install gulp -g
 
-## Start
+# Development
 
-    gulp start
+    gulp dev
+
+
+# Development Site
+
+Livereload - https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
+
+    http-server
+    gulp site-dev
