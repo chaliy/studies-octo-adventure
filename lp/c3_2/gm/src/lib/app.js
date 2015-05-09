@@ -21,6 +21,7 @@ var DefaultRoute = Router.DefaultRoute;
 var About = require('./js/components/about').About;
 var L1 = require('./js/components/l1').L1;
 var L2 = require('./js/components/l2').L2;
+var L4 = require('./js/components/l4').L4;
 
 
 var App = React.createClass({
@@ -35,7 +36,8 @@ var routes = (
   <Route handler={App} path='/'>
     <DefaultRoute handler={About}/>
     <Route name='l1' path='l1' handler={L1} />
-      <Route name='l2' path='l2' handler={L2} />
+    <Route name='l2' path='l2' handler={L2} />
+    <Route name='l4' path='l4' handler={L4} />
     <Route name='about' path='about' handler={About} />
   </Route>
 );
@@ -65,6 +67,9 @@ viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #1', click: fu
 viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #2', click: function(){
   router.transitionTo('l2');
 }}));
+viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #4', click: function(){
+  router.transitionTo('l4');
+}}));
 
 var viewMenuItem = new gui.MenuItem({ label: 'Вид' });
 viewMenuItem.submenu = viewMenu;
@@ -75,3 +80,11 @@ mainMenu.append(new gui.MenuItem({ label: 'Про программу', click: fu
 }}));
 
 win.menu = mainMenu;
+
+// Auto reload
+// var gulp = require('gulp');
+// gulp.task('reload', function () {
+//   window.location.reload();
+// });
+//
+// gulp.watch('js/**/*', ['reload']);

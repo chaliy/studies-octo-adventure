@@ -1,9 +1,6 @@
 /* jshint esnext: true */
 var React = require('react');
-var utils = require('../draw-utils');
 
-//var rects = [];
-var animation = 0;
 var renderCanvas = function(canvas, rects){
   var ctx = canvas.getContext('2d');
   ctx.resetTransform();
@@ -125,7 +122,6 @@ var L2 = React.createClass({
     if (this.refs.canvas){
       var canvas = this.refs.canvas.getDOMNode();
       var rects = this.rects;
-      animation = 0;
       requestAnimationFrame(function(){
         renderCanvas(canvas, rects);
       });
@@ -137,8 +133,6 @@ var L2 = React.createClass({
     var canvas = this.refs.canvas.getDOMNode();
     this.width = canvas.width;
     this.height = canvas.height;
-
-    console.log(this.height);
 
     canvas.addEventListener("mousedown", this.handleMouseClick, false);
 

@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 var React = require('react');
-var utils = require('../draw-utils');
+var draw = require('../draw-utils');
 
 
 var VERTICLES_NUM = 6;
@@ -60,7 +60,7 @@ var renderCanvas = function(canvas, type){
         ly += dy;
       }
       var points = buildPoligone({x: lx, y: ly}, size, type);
-      utils.drawLines(ctx, points);
+      draw.drawLines(ctx, points);
     }
   }
 
