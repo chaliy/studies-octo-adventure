@@ -49,7 +49,7 @@ var buildPoligoneVertices = function(min, max, num){
   return vertices;
 };
 
-var L4_0 = React.createClass({
+var L4 = React.createClass({
 
   getInitialState: function(){
     return {
@@ -234,4 +234,4 @@ var L4_0 = React.createClass({
   }
 });
 
-exports.L4_0 = L4_0;
+exports.L4 = L4;

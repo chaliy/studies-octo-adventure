@@ -31,6 +31,7 @@ gulp.task('dev', function () {
 // Site
 
 gulp.task('site-dev', function () {
+  livereload.listen();
   gulp
   .watch('lib/**/*.js', ['site-jsx']);
 });
@@ -68,7 +69,8 @@ gulp.task('site-jsx', function () {
     .bundle()
     .on('error', report)
     .pipe(source('app.js'))
-    .pipe(gulp.dest('./site/javascripts/'));
+    .pipe(gulp.dest('./site/javascripts/'))
+    .pipe(livereload());
 
 });
 

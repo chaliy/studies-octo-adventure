@@ -419,7 +419,7 @@ var buildPoligoneVertices = function(min, max, num){
   return vertices;
 };
 
-var L4_0 = React.createClass({displayName: "L4_0",
+var L4 = React.createClass({displayName: "L4",
 
   getInitialState: function(){
     return {
@@ -604,7 +604,7 @@ var L4_0 = React.createClass({displayName: "L4_0",
   }
 });
 
-exports.L4_0 = L4_0;
+exports.L4 = L4;
 
 
 },{"assert":7,"gl-matrix":12,"react":"react"}],6:[function(require,module,exports){
