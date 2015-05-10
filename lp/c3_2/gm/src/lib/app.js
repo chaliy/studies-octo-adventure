@@ -51,6 +51,12 @@ var router = Router.run(routes, function (Handler) {
 
 
 // Define Menu
+var transitionToMenuItem = function(menu, label, path){
+  menu.append(new gui.MenuItem({ label: label, click: function(){
+    router.transitionTo(path);
+  }}));
+}
+
 var win = gui.Window.get();
 
 var mainMenu = new gui.Menu({ type: 'menubar' });
@@ -64,30 +70,14 @@ fileMenuItem.submenu = fileMenu;
 mainMenu.append(fileMenuItem);
 
 var viewMenu = new gui.Menu();
-viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #1', click: function(){
-  router.transitionTo('l1');
-}}));
-viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #2', click: function(){
-  router.transitionTo('l2');
-}}));
-viewMenu.append(new gui.MenuItem({ label: 'Лабораторна #4', click: function(){
-  router.transitionTo('l4');
-}}));
+transitionToMenuItem(viewMenu, 'Лабораторна #1', 'l1');
+transitionToMenuItem(viewMenu, 'Лабораторна #2', 'l2');
+transitionToMenuItem(viewMenu, 'Лабораторна #4', 'l4');
 
 var viewMenuItem = new gui.MenuItem({ label: 'Вид' });
 viewMenuItem.submenu = viewMenu;
 mainMenu.append(viewMenuItem);
 
-mainMenu.append(new gui.MenuItem({ label: 'Про программу', click: function(){
-  router.transitionTo('about');
-}}));
+transitionToMenuItem(mainMenu, 'Про программу', 'about');
 
 win.menu = mainMenu;
-
-// Auto reload
-// var gulp = require('gulp');
-// gulp.task('reload', function () {
-//   window.location.reload();
-// });
-//
-// gulp.watch('js/**/*', ['reload']);
