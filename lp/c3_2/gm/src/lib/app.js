@@ -6,8 +6,11 @@ global.Path2D = window.Path2D;
 global.requestAnimationFrame = window.requestAnimationFrame;
 global.setInterval = window.setInterval;
 global.clearInterval = window.clearInterval;
+global.Image = window.Image;
 
 'use strict';
+
+require('traceur-runtime');
 
 var gui = require('nw.gui');
 var shell = require('nw.gui').Shell;

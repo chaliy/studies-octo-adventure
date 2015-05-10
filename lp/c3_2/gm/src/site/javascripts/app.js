@@ -309,6 +309,7 @@ exports.L2 = L2;
 var React = require('react');
 var assert = require('assert');
 var mat4 = require('gl-matrix').mat4;
+require('es6-shim');
 var ReactBootstrap = require('react-bootstrap');
 var Input = ReactBootstrap.Input;
 function rand(min, max) {
@@ -373,7 +374,7 @@ function prepareColorTexture(gl, color) {
   return texture;
 }
 function buildCorneredFigure(gl) {
-  var centerZ = 0.2;
+  var centerZ = 0.1;
   var arrisZ = 0.1;
   var lowerZ = 0.1;
   var num = rand(1, 4) * 4;
@@ -552,14 +553,14 @@ var L4 = React.createClass({
     })))));
   },
   _handleChange: function(e) {
-    this.setState({angle: (45 * 100) / Math.max(5, event.target.value)});
+    this.setState({angle: (45 * 100) / Math.max(5, e.target.value)});
   }
 });
 exports.L4 = L4;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/l4.js
-},{"assert":7,"gl-matrix":"gl-matrix","react":"react","react-bootstrap":"react-bootstrap"}],6:[function(require,module,exports){
+},{"assert":7,"es6-shim":"es6-shim","gl-matrix":"gl-matrix","react":"react","react-bootstrap":"react-bootstrap"}],6:[function(require,module,exports){
 "use strict";
 var fix = function(p) {
   return {

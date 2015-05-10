@@ -3,6 +3,7 @@ var jasmine = require('gulp-jasmine');
 var react = require('gulp-react');
 var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
+var traceur = require('gulp-traceur');
 var livereload = require('gulp-livereload');
 var concat = require('gulp-concat');
 var source = require('vinyl-source-stream');
@@ -16,6 +17,7 @@ gulp.task('build', function () {
   gulp.src('lib/**/*.js')
           .pipe(plumber())
           .pipe(react())
+          .pipe(traceur())
           .pipe(gulp.dest('js'));
 });
 
