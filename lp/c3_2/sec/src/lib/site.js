@@ -23,9 +23,9 @@ var App = React.createClass({
       <div>
         <Navbar brand='SEC'>
           <Nav>
-            <NavItemLink to="analysis" >Analysis</NavItemLink>
-            <NavItemLink to="caesar" >Caesar</NavItemLink>
-            <NavItemLink to="vigenere" >Vigenere</NavItemLink>
+            <NavItemLink to="analysis" >Аналітика</NavItemLink>
+            <NavItemLink to="caesar" >Шифр Цезаря</NavItemLink>
+            <NavItemLink to="vigenere" >Шифр Віженера</NavItemLink>
             <NavItemLink to="about">Про программу...</NavItemLink>
           </Nav>
         </Navbar>

@@ -15,7 +15,7 @@ var Routes = require('./routes');
 var App = React.createClass({
   displayName: "App",
   render: function() {
-    return (React.createElement("div", null, React.createElement(Navbar, {brand: "DM"}, React.createElement(Nav, null, React.createElement(NavItemLink, {to: "analysis"}, "Analysis"), React.createElement(NavItemLink, {to: "caesar"}, "Caesar"), React.createElement(NavItemLink, {to: "vigenere"}, "Vigenere"), React.createElement(NavItemLink, {to: "about"}, "Про программу..."))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
+    return (React.createElement("div", null, React.createElement(Navbar, {brand: "SEC"}, React.createElement(Nav, null, React.createElement(NavItemLink, {to: "analysis"}, "Аналітика"), React.createElement(NavItemLink, {to: "caesar"}, "Шифр Цезаря"), React.createElement(NavItemLink, {to: "vigenere"}, "Шифр Віженера"), React.createElement(NavItemLink, {to: "about"}, "Про программу..."))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
   }
 });
 var router = Routes.create(App);
@@ -127,12 +127,20 @@ var React = require('react');
 var BarChart = require("react-chartjs").Bar;
 var StatsHist = React.createClass({
   displayName: "StatsHist",
+  propTypes: {mode: React.PropTypes.oneOf(['Abc', 'Top']).isRequired},
   prepareData: function(data) {
     data = data.slice(0);
-    data.sort(function(a, b) {
-      return b.val - a.val;
-    });
-    data = data.slice(0, 15);
+    if (this.props.mode === 'Abc') {
+      data.sort(function(a, b) {
+        return b.name > a.name;
+      });
+      data = data.slice(0, 30);
+    } else {
+      data.sort(function(a, b) {
+        return b.val - a.val;
+      });
+      data = data.slice(0, 15);
+    }
     var abc = data.map(function(x) {
       return x.name;
     });
@@ -195,7 +203,13 @@ var StatsHist = require('./stats-hist').StatsHist;
 var Stats = React.createClass({
   displayName: "Stats",
   render: function() {
-    return React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6"}, React.createElement(StatsTable, {data: this.props.data})), React.createElement("div", {className: "col-md-6"}, React.createElement(StatsHist, {data: this.props.data})));
+    return React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-6"}, React.createElement(StatsTable, {data: this.props.data})), React.createElement("div", {className: "col-md-6"}, React.createElement(StatsHist, {
+      data: this.props.data,
+      mode: "Abc"
+    }), React.createElement(StatsHist, {
+      data: this.props.data,
+      mode: "Top"
+    })));
   }
 });
 exports.Stats = Stats;
@@ -408,7 +422,6 @@ exports.decodeText = decodeText;
 "use strict";
 var React = require('react');
 var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
 var Route = Router.Route;
 var Analysis = require("./components/analysis").Analysis;
 var Caesar = require("./components/caesar").Caesar;

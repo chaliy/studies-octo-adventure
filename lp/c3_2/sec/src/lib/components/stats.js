@@ -10,7 +10,8 @@ var Stats = React.createClass({
         <StatsTable data={this.props.data} />
       </div>
       <div className="col-md-6">
-        <StatsHist data={this.props.data} />
+        <StatsHist data={this.props.data} mode='Abc' />
+        <StatsHist data={this.props.data} mode='Top' />
       </div>
     </div>;
   }

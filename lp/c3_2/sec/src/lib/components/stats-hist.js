@@ -3,13 +3,24 @@ var BarChart = require("react-chartjs").Bar;
 
 var StatsHist = React.createClass({
 
+  propTypes: {
+    mode: React.PropTypes.oneOf(['Abc', 'Top']).isRequired
+  },
+
   prepareData: function(data){
 
     data = data.slice(0);
-    data.sort(function(a,b){
-      return b.val - a.val;
-    });
-    data = data.slice(0, 15);
+    if (this.props.mode === 'Abc'){
+      data.sort(function(a,b){
+        return b.name > a.name;
+      });
+      data = data.slice(0, 30);
+    } else {
+      data.sort(function(a,b){
+        return b.val - a.val;
+      });
+      data = data.slice(0, 15);
+    }
 
     var abc = data.map(function (x) {
       return x.name;
