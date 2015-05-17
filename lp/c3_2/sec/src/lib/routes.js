@@ -4,6 +4,7 @@ var Route = Router.Route;
 
 var Analysis = require("./components/analysis").Analysis;
 var Caesar = require("./components/caesar").Caesar;
+var Substitute = require("./components/substitute").Substitute;
 var Vigenere = require("./components/vigenere").Vigenere;
 var About = require("./components/about").About;
 
@@ -11,6 +12,7 @@ module.exports.create = function(App){
   var routes = (
     <Route handler={App} path="/">
       <Route name="analysis" path="analysis" handler={Analysis} />
+      <Route name="substitute" path="substitute" handler={Substitute} />
       <Route name="caesar" path="caesar" handler={Caesar} />
       <Route name="vigenere" path="vigenere" handler={Vigenere} />
       <Route name="about" path="about" handler={About} />

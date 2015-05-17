@@ -25,6 +25,7 @@ var App = React.createClass({
           <Nav>
             <NavItemLink to="analysis" >Аналітика</NavItemLink>
             <NavItemLink to="caesar" >Шифр Цезаря</NavItemLink>
+            <NavItemLink to="substitute" >Шифр Підстановка</NavItemLink>
             <NavItemLink to="vigenere" >Шифр Віженера</NavItemLink>
             <NavItemLink to="about">Про программу...</NavItemLink>
           </Nav>

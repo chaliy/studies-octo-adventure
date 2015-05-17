@@ -14,12 +14,7 @@ var ReactRouterBootstrap = require('react-router-bootstrap');
 var NavItemLink = ReactRouterBootstrap.NavItemLink;
 var ButtonLink = ReactRouterBootstrap.ButtonLink;
 
-
-var About = require('./components/about').About;
-var L1 = require('./components/l1').L1;
-var L2 = require('./components/l2').L2;
-var L4 = require('./components/l4').L4;
-
+var Routes = require('./routes');
 
 var App = React.createClass({
 
@@ -28,10 +23,9 @@ var App = React.createClass({
       <div>
         <Navbar brand='DM'>
           <Nav>
-            <NavItemLink to="l1" >L1</NavItemLink>
-            <NavItemLink to="l2" >L2</NavItemLink>
-            <NavItemLink to="l4" >L4</NavItemLink>
-            <NavItemLink to="about">Про программу...</NavItemLink>
+            {Routes.routes.map(function(r){
+              return <NavItemLink key={r.name} to={r.name} >{r.title}</NavItemLink>
+            })}
           </Nav>
         </Navbar>
         <div className='container'>
@@ -42,15 +36,4 @@ var App = React.createClass({
   }
 });
 
-var routes = (
-  <Route handler={App} path="/">
-    <Route name="l1" path="l1" handler={L1} />
-    <Route name="l2" path="l2" handler={L2} />
-    <Route name="l4" path="l4" handler={L4} />
-    <Route name="about" path="about" handler={About} />
-  </Route>
-);
-
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.body);
-});
+var router = Routes.create(App);

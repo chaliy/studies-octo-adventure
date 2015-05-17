@@ -15,14 +15,14 @@ var Routes = require('./routes');
 var App = React.createClass({
   displayName: "App",
   render: function() {
-    return (React.createElement("div", null, React.createElement(Navbar, {brand: "SEC"}, React.createElement(Nav, null, React.createElement(NavItemLink, {to: "analysis"}, "Аналітика"), React.createElement(NavItemLink, {to: "caesar"}, "Шифр Цезаря"), React.createElement(NavItemLink, {to: "vigenere"}, "Шифр Віженера"), React.createElement(NavItemLink, {to: "about"}, "Про программу..."))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
+    return (React.createElement("div", null, React.createElement(Navbar, {brand: "SEC"}, React.createElement(Nav, null, React.createElement(NavItemLink, {to: "analysis"}, "Аналітика"), React.createElement(NavItemLink, {to: "caesar"}, "Шифр Цезаря"), React.createElement(NavItemLink, {to: "substitute"}, "Шифр Підстановка"), React.createElement(NavItemLink, {to: "vigenere"}, "Шифр Віженера"), React.createElement(NavItemLink, {to: "about"}, "Про программу..."))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
   }
 });
 var router = Routes.create(App);
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/site.js
-},{"./routes":12,"es6-shim":"es6-shim","react":"react","react-bootstrap":"react-bootstrap","react-router":"react-router","react-router-bootstrap":"react-router-bootstrap"}],2:[function(require,module,exports){
+},{"./routes":14,"es6-shim":"es6-shim","react":"react","react-bootstrap":"react-bootstrap","react-router":"react-router","react-router-bootstrap":"react-router-bootstrap"}],2:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var About = React.createClass({
@@ -71,7 +71,7 @@ exports.Analysis = Analysis;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/components/analysis.js
-},{"../models/analysis-model":9,"./stats":7,"react":"react"}],4:[function(require,module,exports){
+},{"../models/analysis-model":10,"./stats":7,"react":"react"}],4:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var CaesarModel = require('../models/caesar-model');
@@ -121,7 +121,7 @@ exports.Caesar = Caesar;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/components/caesar.js
-},{"../models/caesar-model":10,"react":"react"}],5:[function(require,module,exports){
+},{"../models/caesar-model":11,"react":"react"}],5:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var BarChart = require("react-chartjs").Bar;
@@ -173,7 +173,7 @@ exports.StatsHist = StatsHist;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/components/stats-hist.js
-},{"react":"react","react-chartjs":16}],6:[function(require,module,exports){
+},{"react":"react","react-chartjs":18}],6:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var StatsTable = React.createClass({
@@ -219,6 +219,113 @@ exports.Stats = Stats;
 },{"./stats-hist":5,"./stats-table":6,"react":"react"}],8:[function(require,module,exports){
 "use strict";
 var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var Input = ReactBootstrap.Input;
+require('es6-shim');
+var SubstituteModel = require('../models/substitute-model');
+var decodeText = function(text, abc, key) {
+  return SubstituteModel.decodeText(text, abc || '', key || '');
+};
+var Substitute = React.createClass({
+  displayName: "Substitute",
+  getInitialState: function() {
+    return {
+      abcText: SubstituteModel.ABC,
+      keyText: SubstituteModel.CAESAR_CODE,
+      encodedText: this.props.text,
+      decodedText: decodeText(this.props.text, SubstituteModel.ABC, SubstituteModel.CAESAR_CODE)
+    };
+  },
+  render: function() {
+    var abcText = this.state.abcText;
+    var keyText = this.state.keyText;
+    var abcInput = Array.from(abcText).map(function(x, i) {
+      return React.createElement("input", {
+        key: i,
+        type: "text",
+        defaultValue: x,
+        style: {width: '25px'}
+      });
+    });
+    abcInput.push(React.createElement("input", {
+      key: "n",
+      type: "text",
+      style: {width: '25px'}
+    }));
+    var keyInput = Array.from(abcText).map(function(x, i) {
+      var k = keyText[i];
+      return React.createElement("input", {
+        key: i,
+        type: "text",
+        defaultValue: k,
+        style: {width: '25px'}
+      });
+    });
+    keyInput.push(React.createElement("input", {
+      key: "n",
+      type: "text",
+      style: {width: '25px'}
+    }));
+    return React.createElement("form", null, React.createElement(Input, {
+      name: "abcText",
+      type: "text",
+      label: "Абетка",
+      placeholder: "Введіть абетку",
+      defaultValue: this.state.abcText,
+      onChange: this._handleAbcTextChange
+    }), React.createElement(Input, {
+      name: "keyText",
+      type: "text",
+      label: "Ключ",
+      placeholder: "Введіть ключ",
+      defaultValue: this.state.keyText,
+      onChange: this._handleKeyTextChange
+    }), React.createElement("div", null, abcInput), React.createElement("div", null, keyInput), React.createElement(Input, {
+      name: "inputText",
+      type: "textarea",
+      rows: "10",
+      label: "Шифрований текст",
+      placeholder: "Введіть шифрований текст",
+      defaultValue: this.state.encodedText,
+      onChange: this._handleEncodedTextChange
+    }), React.createElement(Input, {
+      name: "inputText",
+      type: "textarea",
+      rows: "10",
+      label: "Дешифрований текст",
+      readOnly: true,
+      placeholder: "Дешифрований текст",
+      value: this.state.decodedText
+    }));
+  },
+  _handleEncodedTextChange: function(event) {
+    this.setState({
+      encodedText: event.target.value,
+      decodedText: decodeText(event.target.value, this.state.abcText, this.state.keyText)
+    });
+  },
+  _handleKeyTextChange: function(event) {
+    this.setState({
+      keyText: event.target.value,
+      decodedText: decodeText(this.state.encodedText, this.state.abcText, event.target.value)
+    });
+  },
+  _handleAbcTextChange: function(event) {
+    this.setState({
+      abcText: event.target.value,
+      decodedText: decodeText(this.state.encodedText, event.target.value, this.state.keyText)
+    });
+  }
+});
+exports.Substitute = Substitute;
+
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/components/substitute.js
+},{"../models/substitute-model":12,"es6-shim":"es6-shim","react":"react","react-bootstrap":"react-bootstrap"}],9:[function(require,module,exports){
+"use strict";
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var Input = ReactBootstrap.Input;
 var VigenereModel = require('../models/vigenere-model');
 var decodeText = function(text, key) {
   return VigenereModel.decodeText(text, key, true, VigenereModel.ABC);
@@ -236,13 +343,14 @@ var Vigenere = React.createClass({
     };
   },
   render: function() {
-    return React.createElement("form", null, React.createElement("div", {className: "form-group"}, React.createElement("label", {htmlFor: "keyText"}, "Ключ"), React.createElement("input", {
-      id: "keyText",
-      className: "form-control",
-      value: this.state.keyText,
-      ref: "keyText",
+    return React.createElement("form", null, React.createElement(Input, {
+      name: "keyText",
+      type: "text",
+      label: "Ключ",
+      placeholder: "Введіть Ключ",
+      defaultValue: this.state.keyText,
       onChange: this._handleKeyTextChange
-    })), React.createElement("div", {className: "form-group"}, React.createElement("label", {htmlFor: "encodedText"}, "Шифрований текст"), React.createElement("textarea", {
+    }), React.createElement("div", {className: "form-group"}, React.createElement("label", {htmlFor: "encodedText"}, "Шифрований текст"), React.createElement("textarea", {
       id: "encodedText",
       className: "form-control",
       rows: "10",
@@ -276,7 +384,7 @@ exports.Vigenere = Vigenere;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/components/vigenere.js
-},{"../models/vigenere-model":11,"react":"react"}],9:[function(require,module,exports){
+},{"../models/vigenere-model":13,"react":"react","react-bootstrap":"react-bootstrap"}],10:[function(require,module,exports){
 "use strict";
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -344,7 +452,7 @@ exports.AnalysisModel = AnalysisModel;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/models/analysis-model.js
-},{"events":13,"object-assign":15}],10:[function(require,module,exports){
+},{"events":15,"object-assign":17}],11:[function(require,module,exports){
 "use strict";
 var ABC = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var decodeTextDictionary = function(text, abc, code) {
@@ -382,7 +490,27 @@ exports.decodeText = decodeText;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/models/caesar-model.js
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
+"use strict";
+var ABC = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var CAESAR_CODE = 'VZHLANQRCWDXFOUSPBTIELGM KY';
+var decodeText = function(text, abc, code) {
+  text = text || '';
+  var decoded = '';
+  for (var i = 0; i < text.length; i++) {
+    var char = text.charAt(i);
+    var index = code.indexOf(char);
+    decoded += abc.charAt(index);
+  }
+  return decoded;
+};
+exports.ABC = ABC;
+exports.CAESAR_CODE = CAESAR_CODE;
+exports.decodeText = decodeText;
+
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/models/substitute-model.js
+},{}],13:[function(require,module,exports){
 "use strict";
 var ABC = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var decodeText = function(text, key, decode, abc) {
@@ -418,13 +546,14 @@ exports.decodeText = decodeText;
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/models/vigenere-model.js
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var Router = require('react-router');
 var Route = Router.Route;
 var Analysis = require("./components/analysis").Analysis;
 var Caesar = require("./components/caesar").Caesar;
+var Substitute = require("./components/substitute").Substitute;
 var Vigenere = require("./components/vigenere").Vigenere;
 var About = require("./components/about").About;
 module.exports.create = function(App) {
@@ -435,6 +564,10 @@ module.exports.create = function(App) {
     name: "analysis",
     path: "analysis",
     handler: Analysis
+  }), React.createElement(Route, {
+    name: "substitute",
+    path: "substitute",
+    handler: Substitute
   }), React.createElement(Route, {
     name: "caesar",
     path: "caesar",
@@ -455,7 +588,7 @@ module.exports.create = function(App) {
 
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/sec/src/lib/routes.js
-},{"./components/about":2,"./components/analysis":3,"./components/caesar":4,"./components/vigenere":8,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
+},{"./components/about":2,"./components/analysis":3,"./components/caesar":4,"./components/substitute":8,"./components/vigenere":9,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -758,7 +891,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*!
  * Chart.js
  * http://chartjs.org/
@@ -4236,7 +4369,7 @@ function isUndefined(arg) {
 
 
 }).call(this);
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 function ToObject(val) {
@@ -4264,7 +4397,7 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = {
   Bar: require('./lib/bar'),
   Doughnut: require('./lib/doughnut'),
@@ -4275,12 +4408,12 @@ module.exports = {
   createClass: require('./lib/core').createClass
 };
 
-},{"./lib/bar":17,"./lib/core":18,"./lib/doughnut":19,"./lib/line":20,"./lib/pie":21,"./lib/polar-area":22,"./lib/radar":23}],17:[function(require,module,exports){
+},{"./lib/bar":19,"./lib/core":20,"./lib/doughnut":21,"./lib/line":22,"./lib/pie":23,"./lib/polar-area":24,"./lib/radar":25}],19:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('Bar', ['getBarsAtEvent']);
 
-},{"./core":18}],18:[function(require,module,exports){
+},{"./core":20}],20:[function(require,module,exports){
 module.exports = {
   createClass: function(chartType, methodNames, dataKey) {
     var classData = {
@@ -4386,29 +4519,29 @@ var updatePoints = function(nextProps, chart, dataKey) {
 
 
 
-},{"chart.js":14,"react":"react"}],19:[function(require,module,exports){
+},{"chart.js":16,"react":"react"}],21:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
 
-},{"./core":18}],20:[function(require,module,exports){
+},{"./core":20}],22:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('Line', ['getPointsAtEvent']);
 
-},{"./core":18}],21:[function(require,module,exports){
+},{"./core":20}],23:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
 
-},{"./core":18}],22:[function(require,module,exports){
+},{"./core":20}],24:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
 
-},{"./core":18}],23:[function(require,module,exports){
+},{"./core":20}],25:[function(require,module,exports){
 var vars = require('./core');
 
 module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
 
-},{"./core":18}]},{},[1]);
+},{"./core":20}]},{},[1]);

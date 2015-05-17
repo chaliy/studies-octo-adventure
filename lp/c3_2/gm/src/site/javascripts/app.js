@@ -12,43 +12,22 @@ var Navbar = ReactBootstrap.Navbar;
 var ReactRouterBootstrap = require('react-router-bootstrap');
 var NavItemLink = ReactRouterBootstrap.NavItemLink;
 var ButtonLink = ReactRouterBootstrap.ButtonLink;
-var About = require('./components/about').About;
-var L1 = require('./components/l1').L1;
-var L2 = require('./components/l2').L2;
-var L4 = require('./components/l4').L4;
+var Routes = require('./routes');
 var App = React.createClass({
   displayName: "App",
   render: function() {
-    return (React.createElement("div", null, React.createElement(Navbar, {brand: "DM"}, React.createElement(Nav, null, React.createElement(NavItemLink, {to: "l1"}, "L1"), React.createElement(NavItemLink, {to: "l2"}, "L2"), React.createElement(NavItemLink, {to: "l4"}, "L4"), React.createElement(NavItemLink, {to: "about"}, "Про программу..."))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
+    return (React.createElement("div", null, React.createElement(Navbar, {brand: "DM"}, React.createElement(Nav, null, Routes.routes.map(function(r) {
+      return React.createElement(NavItemLink, {
+        key: r.name,
+        to: r.name
+      }, r.title);
+    }))), React.createElement("div", {className: "container"}, React.createElement(RouteHandler, null))));
   }
 });
-var routes = (React.createElement(Route, {
-  handler: App,
-  path: "/"
-}, React.createElement(Route, {
-  name: "l1",
-  path: "l1",
-  handler: L1
-}), React.createElement(Route, {
-  name: "l2",
-  path: "l2",
-  handler: L2
-}), React.createElement(Route, {
-  name: "l4",
-  path: "l4",
-  handler: L4
-}), React.createElement(Route, {
-  name: "about",
-  path: "about",
-  handler: About
-})));
-Router.run(routes, function(Handler) {
-  React.render(React.createElement(Handler, null), document.body);
-});
-
+var router = Routes.create(App);
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/site.js
-},{"./components/about":2,"./components/l1":3,"./components/l2":4,"./components/l4":5,"es6-shim":"es6-shim","react":"react","react-bootstrap":"react-bootstrap","react-router":"react-router","react-router-bootstrap":"react-router-bootstrap"}],2:[function(require,module,exports){
+},{"./routes":9,"es6-shim":"es6-shim","react":"react","react-bootstrap":"react-bootstrap","react-router":"react-router","react-router-bootstrap":"react-router-bootstrap"}],2:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var About = React.createClass({
@@ -58,7 +37,6 @@ var About = React.createClass({
   }
 });
 exports.About = About;
-
 
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/about.js
 },{"react":"react"}],3:[function(require,module,exports){
@@ -161,9 +139,8 @@ var L1 = React.createClass({
 });
 exports.L1 = L1;
 
-
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/l1.js
-},{"../draw-utils":6,"react":"react"}],4:[function(require,module,exports){
+},{"../draw-utils":8,"react":"react"}],4:[function(require,module,exports){
 "use strict";
 var React = require('react');
 var renderCanvas = function(canvas, rects) {
@@ -302,14 +279,411 @@ var L2 = React.createClass({
 });
 exports.L2 = L2;
 
-
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/l2.js
 },{"react":"react"}],5:[function(require,module,exports){
 "use strict";
 var React = require('react');
+var u = require('../u');
+var cm = require('../coord-map');
+var assign = Object.assign || require('object-assign');
+var ReactBootstrap = require('react-bootstrap');
+var Input = ReactBootstrap.Input;
+var L3 = React.createClass({
+  displayName: "L3",
+  getInitialState: function() {
+    return {
+      xv1: -1.5,
+      xv2: 1.5,
+      yv1: -1,
+      yv2: 1,
+      f1: '(x*x - 1)/(x*x*x*x + 1)',
+      f2: '-(x*x*x*x*x) + 2*x*x*x - 1'
+    };
+  },
+  componentDidMount: function() {},
+  componentWillUnmount: function() {},
+  getWorld: function() {
+    return assign(cm.CoordSys(), {
+      top: parseFloat(this.state.yv2),
+      bottom: parseFloat(this.state.yv1),
+      left: parseFloat(this.state.xv1),
+      right: parseFloat(this.state.xv2)
+    });
+  },
+  getScreen: function() {
+    return assign(cm.CoordSys(), {
+      top: 0,
+      bottom: this.height,
+      left: 0,
+      right: this.width
+    });
+  },
+  worldToScreen: function(x, y) {
+    var world = this.getWorld();
+    var screen = this.getScreen();
+    return cm.worldToScreen(x, y, world, screen);
+  },
+  coordNet: function() {
+    var width = this.width;
+    var height = this.height;
+    var self = this;
+    var world = this.getWorld();
+    var screen = this.getScreen();
+    var vertStep = (world.getWidth() / screen.getWidth()) * 50;
+    var horisStep = (world.getHeight() / screen.getHeight()) * 50;
+    var vert = [];
+    for (var x = 0; x < world.right; x += vertStep) {
+      vert.push(x);
+    }
+    for (var x$__4 = 0; x$__4 > world.left; x$__4 -= vertStep) {
+      vert.push(x$__4);
+    }
+    var horis = [];
+    for (var y = 0; y < world.top; y += horisStep) {
+      horis.push(y);
+    }
+    for (var y$__5 = 0; y$__5 > world.bottom; y$__5 -= horisStep) {
+      horis.push(y$__5);
+    }
+    var net = $traceurRuntime.initGeneratorFunction(function $__6() {
+      var $__0,
+          $__1,
+          x,
+          vc,
+          $__2,
+          $__3,
+          y,
+          hc;
+      return $traceurRuntime.createGeneratorInstance(function($ctx) {
+        while (true)
+          switch ($ctx.state) {
+            case 0:
+              $__0 = vert[$traceurRuntime.toProperty(Symbol.iterator)]();
+              $ctx.state = 8;
+              break;
+            case 8:
+              $ctx.state = (!($__1 = $__0.next()).done) ? 11 : 13;
+              break;
+            case 11:
+              x = $__1.value;
+              $ctx.state = 12;
+              break;
+            case 12:
+              vc = self.worldToScreen(x, 0);
+              $ctx.state = 10;
+              break;
+            case 10:
+              $ctx.state = 2;
+              return 'M ' + vc.x + ',' + screen.top;
+            case 2:
+              $ctx.maybeThrow();
+              $ctx.state = 4;
+              break;
+            case 4:
+              $ctx.state = 6;
+              return 'L ' + vc.x + ',' + screen.bottom;
+            case 6:
+              $ctx.maybeThrow();
+              $ctx.state = 8;
+              break;
+            case 13:
+              $__2 = horis[$traceurRuntime.toProperty(Symbol.iterator)]();
+              $ctx.state = 22;
+              break;
+            case 22:
+              $ctx.state = (!($__3 = $__2.next()).done) ? 25 : -2;
+              break;
+            case 25:
+              y = $__3.value;
+              $ctx.state = 26;
+              break;
+            case 26:
+              hc = self.worldToScreen(0, y);
+              $ctx.state = 24;
+              break;
+            case 24:
+              $ctx.state = 16;
+              return 'M ' + screen.left + ',' + hc.y;
+            case 16:
+              $ctx.maybeThrow();
+              $ctx.state = 18;
+              break;
+            case 18:
+              $ctx.state = 20;
+              return 'L ' + screen.right + ',' + hc.y;
+            case 20:
+              $ctx.maybeThrow();
+              $ctx.state = 22;
+              break;
+            default:
+              return $ctx.end();
+          }
+      }, $__6, this);
+    });
+    var labels = $traceurRuntime.initGeneratorFunction(function $__7() {
+      var i,
+          $__0,
+          $__1,
+          x,
+          vc,
+          label,
+          $__2,
+          $__3,
+          y,
+          hc;
+      return $traceurRuntime.createGeneratorInstance(function($ctx) {
+        while (true)
+          switch ($ctx.state) {
+            case 0:
+              i = 0;
+              $ctx.state = 22;
+              break;
+            case 22:
+              $__0 = vert[$traceurRuntime.toProperty(Symbol.iterator)]();
+              $ctx.state = 4;
+              break;
+            case 4:
+              $ctx.state = (!($__1 = $__0.next()).done) ? 7 : 9;
+              break;
+            case 7:
+              x = $__1.value;
+              $ctx.state = 8;
+              break;
+            case 8:
+              vc = self.worldToScreen(x, 0).move(2, 20);
+              label = Math.round(x * 10) / 10;
+              $ctx.state = 6;
+              break;
+            case 6:
+              $ctx.state = 2;
+              return React.createElement("text", {
+                key: i++,
+                x: vc.x,
+                y: vc.y
+              }, label);
+            case 2:
+              $ctx.maybeThrow();
+              $ctx.state = 4;
+              break;
+            case 9:
+              $__2 = horis[$traceurRuntime.toProperty(Symbol.iterator)]();
+              $ctx.state = 14;
+              break;
+            case 14:
+              $ctx.state = (!($__3 = $__2.next()).done) ? 17 : -2;
+              break;
+            case 17:
+              y = $__3.value;
+              $ctx.state = 18;
+              break;
+            case 18:
+              hc = self.worldToScreen(0, y).move(-30, -2);
+              label = Math.round(y * 10) / 10;
+              $ctx.state = 16;
+              break;
+            case 16:
+              $ctx.state = 12;
+              return React.createElement("text", {
+                key: i++,
+                x: hc.x,
+                y: hc.y
+              }, label);
+            case 12:
+              $ctx.maybeThrow();
+              $ctx.state = 14;
+              break;
+            default:
+              return $ctx.end();
+          }
+      }, $__7, this);
+    });
+    var zero = this.worldToScreen(0, 0);
+    var axis = $traceurRuntime.initGeneratorFunction(function $__8() {
+      return $traceurRuntime.createGeneratorInstance(function($ctx) {
+        while (true)
+          switch ($ctx.state) {
+            case 0:
+              $ctx.state = 2;
+              return 'M ' + 0 + ',' + zero.y;
+            case 2:
+              $ctx.maybeThrow();
+              $ctx.state = 4;
+              break;
+            case 4:
+              $ctx.state = 6;
+              return 'L ' + width + ',' + zero.y;
+            case 6:
+              $ctx.maybeThrow();
+              $ctx.state = 8;
+              break;
+            case 8:
+              $ctx.state = 10;
+              return 'M ' + zero.x + ',' + 0;
+            case 10:
+              $ctx.maybeThrow();
+              $ctx.state = 12;
+              break;
+            case 12:
+              $ctx.state = 14;
+              return 'L ' + zero.x + ',' + height;
+            case 14:
+              $ctx.maybeThrow();
+              $ctx.state = -2;
+              break;
+            default:
+              return $ctx.end();
+          }
+      }, $__8, this);
+    });
+    return React.createElement("g", null, React.createElement("path", {
+      d: u.concate(net, ' '),
+      style: {stroke: 'gray'}
+    }), React.createElement("path", {
+      d: u.concate(axis, ' '),
+      style: {stroke: 'black'}
+    }), React.createElement("g", null, $traceurRuntime.spread(labels())));
+  },
+  func: function(f, color) {
+    var self = this;
+    var world = this.getWorld();
+    var screen = this.getScreen();
+    var xv1 = world.left;
+    var xv2 = world.right;
+    var step = (world.getWidth() / screen.getWidth());
+    console.log(step, world.left, world.right, world.getWidth(), screen.getWidth());
+    var gr = $traceurRuntime.initGeneratorFunction(function $__6() {
+      var c,
+          xv;
+      return $traceurRuntime.createGeneratorInstance(function($ctx) {
+        while (true)
+          switch ($ctx.state) {
+            case 0:
+              c = self.worldToScreen(xv1, f(xv1));
+              $ctx.state = 19;
+              break;
+            case 19:
+              $ctx.state = 2;
+              return 'M ' + c.x + ',' + c.y;
+            case 2:
+              $ctx.maybeThrow();
+              $ctx.state = 4;
+              break;
+            case 4:
+              $ctx.state = 6;
+              return 'L';
+            case 6:
+              $ctx.maybeThrow();
+              $ctx.state = 8;
+              break;
+            case 8:
+              xv = xv1;
+              $ctx.state = 17;
+              break;
+            case 17:
+              $ctx.state = (xv <= xv2) ? 13 : -2;
+              break;
+            case 12:
+              xv += step;
+              $ctx.state = 17;
+              break;
+            case 13:
+              c = self.worldToScreen(xv, f(xv));
+              $ctx.state = 14;
+              break;
+            case 14:
+              $ctx.state = 10;
+              return c.x + ',' + c.y;
+            case 10:
+              $ctx.maybeThrow();
+              $ctx.state = 12;
+              break;
+            default:
+              return $ctx.end();
+          }
+      }, $__6, this);
+    });
+    return React.createElement("path", {
+      d: u.concate(gr, ' '),
+      style: {
+        stroke: color,
+        fill: 'none'
+      }
+    });
+  },
+  render: function() {
+    this.width = 600;
+    this.height = 400;
+    var self = this;
+    return (React.createElement("div", {className: "container"}, React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-8"}, React.createElement("svg", {
+      width: this.width,
+      height: this.height
+    }, React.createElement("rect", {
+      width: this.width,
+      height: this.height,
+      style: {
+        stroke: 'green',
+        fill: 'none'
+      }
+    }), this.coordNet(), this.func((function(x) {
+      return eval(self.state.f1);
+    }), 'red'), this.func((function(x) {
+      return eval(self.state.f2);
+    }), 'blue'))), React.createElement("div", {className: "col-md-4"}, React.createElement("form", null, React.createElement(Input, {
+      name: "xv1",
+      type: "number",
+      step: "any",
+      label: "Від X",
+      defaultValue: this.state.xv1,
+      onChange: this._handleChange
+    }), React.createElement(Input, {
+      name: "xv2",
+      type: "number",
+      step: "any",
+      label: "До X",
+      defaultValue: this.state.xv2,
+      onChange: this._handleChange
+    }), React.createElement(Input, {
+      name: "yv1",
+      type: "number",
+      step: "any",
+      label: "Від Y",
+      defaultValue: this.state.yv1,
+      onChange: this._handleChange
+    }), React.createElement(Input, {
+      name: "yv2",
+      type: "number",
+      step: "any",
+      label: "До Y",
+      defaultValue: this.state.yv2,
+      onChange: this._handleChange
+    }), React.createElement(Input, {
+      name: "f1",
+      type: "text",
+      label: "Формула #1",
+      defaultValue: this.state.f1,
+      onChange: this._handleChange
+    }), React.createElement(Input, {
+      name: "f2",
+      type: "text",
+      label: "Формула #2",
+      defaultValue: this.state.f2,
+      onChange: this._handleChange
+    }))))));
+  },
+  _handleChange: function(e) {
+    var patch = {};
+    patch[e.target.name] = e.target.value;
+    this.setState(patch);
+  }
+});
+exports.L3 = L3;
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/l3.js
+},{"../coord-map":7,"../u":10,"object-assign":16,"react":"react","react-bootstrap":"react-bootstrap"}],6:[function(require,module,exports){
+"use strict";
+var React = require('react');
 var assert = require('assert');
 var mat4 = require('gl-matrix').mat4;
-require('es6-shim');
 var ReactBootstrap = require('react-bootstrap');
 var Input = ReactBootstrap.Input;
 function rand(min, max) {
@@ -529,18 +903,9 @@ var L4 = React.createClass({
     var canvas = this.refs.canvas.getDOMNode();
     this.width = canvas.width;
     this.height = canvas.height;
-    canvas.addEventListener("mousedown", this.handleMouseClick, false);
     this.initCanvas();
     this.renderCanvas();
-    var self = this;
     window.setTimeout(this.queueRenderCanvas, 500);
-  },
-  handleMouseClick: function(e) {
-    var x = e.x;
-    var y = e.y;
-    var canvas = this.refs.canvas.getDOMNode();
-    x -= canvas.offsetLeft;
-    y -= canvas.offsetTop;
   },
   componentWillUpdate: function(nextProps, nextState) {
     this.queueRenderCanvas();
@@ -581,9 +946,41 @@ var L4 = React.createClass({
 });
 exports.L4 = L4;
 
-
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/components/l4.js
-},{"assert":7,"es6-shim":"es6-shim","gl-matrix":"gl-matrix","react":"react","react-bootstrap":"react-bootstrap"}],6:[function(require,module,exports){
+},{"assert":11,"gl-matrix":"gl-matrix","react":"react","react-bootstrap":"react-bootstrap"}],7:[function(require,module,exports){
+"use strict";
+var CoordSys = function() {
+  return {
+    getWidth: function() {
+      return Math.abs(this.right - this.left);
+    },
+    getHeight: function() {
+      return Math.abs(this.top - this.bottom);
+    }
+  };
+};
+var Point = function(x, y) {
+  return {
+    move: function(dx, dy) {
+      return new Point(this.x + dx, this.y + dy);
+    },
+    x: x,
+    y: y
+  };
+};
+var worldToScreen = function(x, y, world, screen) {
+  var worldWidth = world.getWidth();
+  var worldHeight = world.getHeight();
+  var screenWidth = screen.getWidth();
+  var screenHeight = screen.getHeight();
+  return new Point((x * (screenWidth) / (worldWidth) - world.left * (screenWidth) / (worldWidth) + screen.left), (y * (screenHeight) / (worldHeight) - world.bottom * (screenHeight) / (worldHeight) + screen.bottom) - screenHeight);
+};
+module.exports.worldToScreen = worldToScreen;
+module.exports.Point = Point;
+module.exports.CoordSys = CoordSys;
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/coord-map.js
+},{}],8:[function(require,module,exports){
 "use strict";
 var fix = function(p) {
   return {
@@ -603,9 +1000,76 @@ var drawLines = function(ctx, points) {
 };
 module.exports.drawLines = drawLines;
 
-
 //# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/draw-utils.js
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+"use strict";
+var React = require('react');
+var Router = require('react-router');
+var Route = Router.Route;
+var About = require('./components/about').About;
+var L1 = require('./components/l1').L1;
+var L2 = require('./components/l2').L2;
+var L3 = require('./components/l3').L3;
+var L4 = require('./components/l4').L4;
+module.exports.routes = [{
+  title: 'Лабораторна #1',
+  name: 'l1',
+  path: 'l1',
+  handler: L1
+}, {
+  title: 'Лабораторна #2',
+  name: 'l2',
+  path: 'l2',
+  handler: L2
+}, {
+  title: 'Лабораторна #3',
+  name: 'l3',
+  path: 'l3',
+  handler: L3
+}, {
+  title: 'Лабораторна #4',
+  name: 'l4',
+  path: 'l4',
+  handler: L4
+}, {
+  title: 'Про программу...',
+  name: 'about',
+  path: 'about',
+  handler: About
+}];
+module.exports.create = function(App) {
+  var routes = (React.createElement(Route, {
+    handler: App,
+    path: "/"
+  }, module.exports.routes.map(function(r) {
+    return React.createElement(Route, React.__spread({key: r.name}, r));
+  })));
+  return Router.run(routes, function(Handler) {
+    React.render(React.createElement(Handler, null), document.body);
+  });
+};
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/routes.js
+},{"./components/about":2,"./components/l1":3,"./components/l2":4,"./components/l3":5,"./components/l4":6,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+"use strict";
+module.exports.rand = function(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+module.exports.randf = function(min, max) {
+  return Math.random() * (max - min) + min;
+};
+module.exports.rad = function(degrees) {
+  return degrees * Math.PI / 180;
+};
+module.exports.concate = function(xx, s) {
+  if (xx.constructor && xx.constructor.name === 'GeneratorFunction') {
+    return $traceurRuntime.spread(xx()).join(s);
+  }
+  return xx.join(s);
+};
+
+//# sourceURL=C:/Users/Mike/Projects/studies-octo-adventure/lp/c3_2/gm/src/lib/u.js
+},{}],11:[function(require,module,exports){
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -966,7 +1430,7 @@ var objectKeys = Object.keys || function (obj) {
   return keys;
 };
 
-},{"util/":11}],8:[function(require,module,exports){
+},{"util/":15}],12:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -991,7 +1455,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1083,14 +1547,14 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],10:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -1680,4 +2144,32 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":10,"_process":9,"inherits":8}]},{},[1]);
+},{"./support/isBuffer":14,"_process":13,"inherits":12}],16:[function(require,module,exports){
+'use strict';
+
+function ToObject(val) {
+	if (val == null) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+module.exports = Object.assign || function (target, source) {
+	var from;
+	var keys;
+	var to = ToObject(target);
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = arguments[s];
+		keys = Object.keys(Object(from));
+
+		for (var i = 0; i < keys.length; i++) {
+			to[keys[i]] = from[keys[i]];
+		}
+	}
+
+	return to;
+};
+
+},{}]},{},[1]);

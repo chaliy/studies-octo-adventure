@@ -2,8 +2,6 @@
 var React = require('react');
 var assert = require('assert');
 var mat4 = require('gl-matrix').mat4;
-require('es6-shim');
-
 var ReactBootstrap = require('react-bootstrap');
 var Input = ReactBootstrap.Input;
 
@@ -339,26 +337,11 @@ var L4 = React.createClass({
     this.width = canvas.width;
     this.height = canvas.height;
 
-    canvas.addEventListener("mousedown", this.handleMouseClick, false);
-
     this.initCanvas();
     this.renderCanvas();
-
-    var self = this;
-
+    
     // Hack to ensure textures loaded
     window.setTimeout(this.queueRenderCanvas, 500);
-  },
-
-  handleMouseClick: function(e){
-    var x = e.x;
-    var y = e.y;
-    var canvas = this.refs.canvas.getDOMNode();
-
-    x -= canvas.offsetLeft;
-    y -= canvas.offsetTop;
-
-    // Do something when click
   },
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -378,7 +361,7 @@ var L4 = React.createClass({
       </div>
     </div>;
   },
-  _handleChange: function(e){    
+  _handleChange: function(e){
     var patch = {};
     patch[e.target.name] = e.target.value;
     this.setState(patch);

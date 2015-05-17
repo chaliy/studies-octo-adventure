@@ -28,7 +28,7 @@ gulp.task('test', function () {
 
 gulp.task('dev', function () {
   gulp
-  .watch('lib/**/*.js', ['build', 'test']);
+  .watch(['lib/**/*.js', 'spec/**/*-spec.js'], ['build', 'test']);
 });
 
 // Site
@@ -52,6 +52,7 @@ var report = function(err){
 var vendorLibs = [
   'es6-shim',
   'react',
+  'react-art',
   'react-router',
   'react-bootstrap',
   'react-router-bootstrap',
@@ -59,8 +60,13 @@ var vendorLibs = [
 ];
 
 gulp.task('site-css', function () {
+
+  gulp
+      .src('css/*.*')
+      .pipe(gulp.dest('./site/stylesheets/'));
+
   return gulp
-        .src('node_modules/bootstrap/dist/css/bootstrap.min.css')
+        .src(['node_modules/bootstrap/dist/css/bootstrap.min.css'])
         .pipe(concat('fx.css'))
         .pipe(gulp.dest('./site/stylesheets/'));
 
@@ -68,7 +74,7 @@ gulp.task('site-css', function () {
 
 gulp.task('site-assets', function () {
   return gulp
-        .src('assets/geom.png')
+        .src('assets/*.*')
         .pipe(gulp.dest('./site/assets/'));
 
 });

@@ -3,11 +3,11 @@ var CaesarModel = require('../models/caesar-model');
 
 var decodeText = function(text){
   return CaesarModel.decodeText(text, true, CaesarModel.ABC);
-}
+};
 
 var encodeText = function(text){
   return CaesarModel.decodeText(text, false, CaesarModel.ABC);
-}
+};
 
 var Caesar = React.createClass({
 

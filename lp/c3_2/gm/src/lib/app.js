@@ -14,18 +14,14 @@ require('traceur-runtime');
 
 var gui = require('nw.gui');
 var shell = require('nw.gui').Shell;
+
 var React = require('react');
 var Router = require('react-router');
-
 var RouteHandler = Router.RouteHandler;
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
 
-var About = require('./js/components/about').About;
-var L1 = require('./js/components/l1').L1;
-var L2 = require('./js/components/l2').L2;
-var L4 = require('./js/components/l4').L4;
+console.log('test');
 
+var Routes = require('./js/routes');
 
 var App = React.createClass({
   render: function() {
@@ -35,20 +31,7 @@ var App = React.createClass({
   }
 });
 
-var routes = (
-  <Route handler={App} path='/'>
-    <DefaultRoute handler={About}/>
-    <Route name='l1' path='l1' handler={L1} />
-    <Route name='l2' path='l2' handler={L2} />
-    <Route name='l4' path='l4' handler={L4} />
-    <Route name='about' path='about' handler={About} />
-  </Route>
-);
-
-var router = Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.body);
-});
-
+var router = Routes.create(App);
 
 // Define Menu
 var transitionToMenuItem = function(menu, label, path){
@@ -70,9 +53,12 @@ fileMenuItem.submenu = fileMenu;
 mainMenu.append(fileMenuItem);
 
 var viewMenu = new gui.Menu();
-transitionToMenuItem(viewMenu, 'Лабораторна #1', 'l1');
-transitionToMenuItem(viewMenu, 'Лабораторна #2', 'l2');
-transitionToMenuItem(viewMenu, 'Лабораторна #4', 'l4');
+
+Routes.routes.forEach(function(r){
+  if (r.name !== 'about'){
+    transitionToMenuItem(viewMenu, r.title, r.name);
+  }
+});
 
 var viewMenuItem = new gui.MenuItem({ label: 'Вид' });
 viewMenuItem.submenu = viewMenu;

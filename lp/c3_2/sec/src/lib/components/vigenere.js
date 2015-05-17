@@ -1,13 +1,16 @@
 var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var Input = ReactBootstrap.Input;
+
 var VigenereModel = require('../models/vigenere-model');
 
 var decodeText = function(text, key){
   return VigenereModel.decodeText(text, key, true, VigenereModel.ABC);
-}
+};
 
 var encodeText = function(text, key){
   return VigenereModel.decodeText(text, key, false, VigenereModel.ABC);
-}
+};
 
 var Vigenere = React.createClass({
 
@@ -21,14 +24,7 @@ var Vigenere = React.createClass({
 
   render: function() {
     return <form>
-    <div className='form-group'>
-      <label htmlFor='keyText'>Ключ</label>
-      <input id='keyText'
-        className='form-control'
-        value={this.state.keyText}
-        ref="keyText"
-        onChange={this._handleKeyTextChange} />
-    </div>
+      <Input name='keyText' type='text' label='Ключ' placeholder='Введіть Ключ' defaultValue={this.state.keyText} onChange={this._handleKeyTextChange} />
       <div className='form-group'>
         <label htmlFor='encodedText'>Шифрований текст</label>
         <textarea id='encodedText'
