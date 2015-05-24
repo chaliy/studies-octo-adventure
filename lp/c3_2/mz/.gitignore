@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+js
+public/javascripts/app.js
+public/javascripts/fx.js
+
+public/stylesheets/fx.css
