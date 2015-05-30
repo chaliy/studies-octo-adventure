@@ -1,5 +1,13 @@
 {
   "name": "mz",
   "main": "",
-  "repository": "https://github.com/chaliy/studies-octo-adventure/tree/master/lp/c3_2/mz"
+  "repository": "https://github.com/chaliy/studies-octo-adventure/tree/master/lp/c3_2/mz",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-util": "^3.0.4"
+  },
+  "scripts": {        
+    "test": "gulp test"
+  }
 }
