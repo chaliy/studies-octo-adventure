@@ -339,7 +339,7 @@ var L4 = React.createClass({
 
     this.initCanvas();
     this.renderCanvas();
-    
+
     // Hack to ensure textures loaded
     window.setTimeout(this.queueRenderCanvas, 500);
   },
@@ -349,7 +349,7 @@ var L4 = React.createClass({
   },
 
   render: function() {
-    return <div className='container'>
+    return <div className='container'>            
       <div className='row'>
         <div className='col-md-8'><canvas ref='canvas' width={600} height={400} style={{borderColor: 'gray', borderThickness: '1', borderStyle: 'solid'}} ></canvas></div>
         <div className='col-md-4'>

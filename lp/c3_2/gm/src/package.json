@@ -11,6 +11,7 @@
     "bootstrap": "latest",
     "es6-shim": "latest",
     "gl-matrix": "^2.2.1",
+    "mathjs": "^1.7.0",
     "object-assign": "latest",
     "react": "^0.13.3",
     "react-art": "latest",

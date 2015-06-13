@@ -7,12 +7,14 @@ var L1 = require('./components/l1').L1;
 var L2 = require('./components/l2').L2;
 var L3 = require('./components/l3').L3;
 var L4 = require('./components/l4').L4;
+var K1 = require('./components/k1').K1;
 
 module.exports.routes = [
   {title: 'Лабораторна #1', name: 'l1', path: 'l1', handler: L1 },
   {title: 'Лабораторна #2', name: 'l2', path: 'l2', handler: L2 },
   {title: 'Лабораторна #3', name: 'l3', path: 'l3', handler: L3 },
   {title: 'Лабораторна #4', name: 'l4', path: 'l4', handler: L4 },
+  {title: 'Контрольна #1', name: 'k1', path: 'k1', handler: K1 },
   {title: 'Про программу...', name: 'about', path: 'about', handler: About },
 ];
 
