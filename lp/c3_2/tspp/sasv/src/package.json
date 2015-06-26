@@ -1,0 +1,49 @@
+{
+  "name": "sasv",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "gulp build",
+    "start": "node ./bin/www",
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "body-parser": "~1.12.0",
+    "bootstrap": "^3.3.4",
+    "debug": "~2.2.0",
+    "es6-shim": "^0.27.1",
+    "express": "~4.12.2",
+    "finalhandler": "^0.3.6",
+    "griddle-react": "^0.2.12",
+    "hjs": "~0.0.6",
+    "merge-descriptors": "^1.0.0",
+    "moment": "^2.10.2",
+    "mongodb": "^2.0.25",
+    "mustache": "^2.0.0",
+    "object-assign": "^2.0.0",
+    "promise": "^6.1.0",
+    "react": "^0.13.1",
+    "react-bootstrap": "^0.21.2",
+    "react-form-data": "^0.2.2",
+    "react-router": "^0.13.2",
+    "react-router-bootstrap": "^0.13.4",
+    "superagent": "^1.1.0",
+    "superagent-promise": "^0.2.0",
+    "underscore": "^1.8.3",
+    "uuid": "^2.0.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "es6ify": "^1.6.0",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jasmine": "^2.0.1",
+    "gulp-livereload": "^3.8.0",
+    "gulp-react": "^3.0.1",
+    "gulp-util": "^3.0.4",
+    "react-tools": "^0.13.1",
+    "reactify": "^1.1.0",
+    "robocopy": "^0.1.14",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}

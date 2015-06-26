@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title>Студія Візажу: {{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/fx.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <div id='nav'></div>
+
+    <div id='main' class='container'></div>
+
+    <script src='/javascripts/fx.js'></script>
+    <script src='/javascripts/client.js'></script>
+  </body>
+</html>
