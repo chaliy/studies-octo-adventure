@@ -78,6 +78,19 @@ function decode(input){
   };
 }
 
+
+function fix(decoded, errors){
+  if (errors.length > 0){
+    var e = 0;
+    for(var i = 0; i < errors.length; i++){
+        e += Math.pow(2, errors[i]-1);        
+    }
+    decoded[e-1] = (decoded[e-1] === 0) ? 1 : 0;
+  }
+  return decoded;
+}
+
 module.exports.isParityBit = isParityBit;
 module.exports.encode = encode;
 module.exports.decode = decode;
+module.exports.fix = fix;
