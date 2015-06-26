@@ -11,6 +11,8 @@ function harmonic(values, n){
       return acc + (a * Math.sin((2 * Math.PI * n * k) / N));
     }, 0.0) / N;
 
+    console.log(cc, cs);
+
   return {
     c: Math.sqrt(Math.pow(cc, 2) + Math.pow(cs, 2)),
     phi: Math.atan2(cs, cc)
