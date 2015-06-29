@@ -61,7 +61,7 @@ var Analysis = React.createClass({
       rows: "10",
       value: this.state.text,
       onChange: this._handleTextChange
-    })), React.createElement(Stats, {data: this.state.onegram}), React.createElement(Stats, {data: this.state.bigram}), React.createElement(Stats, {data: this.state.trigram}), React.createElement(Stats, {data: this.state.fourgram}));
+    })), React.createElement("h2", null, "Аналіз одного символа"), React.createElement(Stats, {data: this.state.onegram}), React.createElement("h2", null, "Аналіз біграм"), React.createElement(Stats, {data: this.state.bigram}), React.createElement("h2", null, "Аналіз триграм"), React.createElement(Stats, {data: this.state.trigram}), React.createElement("h2", null, "Аналіз чотирьох символів"), React.createElement(Stats, {data: this.state.fourgram}));
   },
   _handleTextChange: function(event) {
     AnalysisModel.pushTextChanges(event.target.value);
@@ -181,12 +181,12 @@ var StatsTable = React.createClass({
   _sortAndFilter: function(data) {
     data = data.slice(0);
     data.sort(function(a, b) {
-      return a.name.localeCompare(b.name);
+      return b.val - a.val;
     });
     return data.slice(0, 15);
   },
   render: function() {
-    return React.createElement("table", {className: "table table-hover table-striped"}, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "Символ"), React.createElement("th", null, "Кількість"))), React.createElement("tbody", null, this._sortAndFilter(this.props.data).map(function(row) {
+    return React.createElement("table", {className: "table table-hover table-striped"}, React.createElement("caption", null, "15 найчастіше повторюваних"), React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", null, "Символ"), React.createElement("th", null, "Кількість"))), React.createElement("tbody", null, this._sortAndFilter(this.props.data).map(function(row) {
       return (React.createElement("tr", {key: row.name}, React.createElement("td", null, row.name), React.createElement("td", null, row.val)));
     })));
   }
@@ -399,13 +399,19 @@ function calculateStats(t) {
     onegram[char] = (onegram[char] || 0) + 1;
     if (i < t.length - 1) {
       var char2 = char + t.charAt(i + 1);
-      bigram[char2] = (bigram[char2] || 0) + 1;
+      if (char2.trim().length == 2) {
+        bigram[char2] = (bigram[char2] || 0) + 1;
+      }
       if (i < t.length - 2) {
         var char3 = char2 + t.charAt(i + 2);
-        trigram[char3] = (trigram[char3] || 0) + 1;
+        if (char3.trim().length == 3) {
+          trigram[char3] = (trigram[char3] || 0) + 1;
+        }
         if (i < t.length - 3) {
           var char4 = char3 + t.charAt(i + 3);
-          fourgram[char4] = (fourgram[char4] || 0) + 1;
+          if (char4.trim().length == 4) {
+            fourgram[char4] = (fourgram[char4] || 0) + 1;
+          }
         }
       }
     }

@@ -30,9 +30,13 @@ var Analysis = React.createClass({
           value={this.state.text}
           onChange={this._handleTextChange}></textarea>
       </div>
+      <h2>Аналіз одного символа</h2>
       <Stats data={this.state.onegram} />
+      <h2>Аналіз біграм</h2>
       <Stats data={this.state.bigram} />
+      <h2>Аналіз триграм</h2>
       <Stats data={this.state.trigram} />
+      <h2>Аналіз чотирьох символів</h2>
       <Stats data={this.state.fourgram} />
     </form>;
   },
