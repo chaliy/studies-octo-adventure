@@ -74,7 +74,7 @@ gulp.task('site-css', function () {
 
 gulp.task('site-assets', function () {
   return gulp
-        .src('assets/*.*')
+        .src('assets/**/*.*')
         .pipe(gulp.dest('./site/assets/'));
 
 });
