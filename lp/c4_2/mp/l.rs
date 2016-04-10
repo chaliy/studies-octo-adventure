@@ -51,24 +51,6 @@ fn insert(node: &mut Node, key: i32) {
     }
 }
 
-fn walk_mut(node: &mut Node, cb: &Fn(&Node, &Node) -> Option<Box<Node>>){
-    
-    match node.left {
-        Some(ref mut left) => {
-            node.left = cb(node, &*left);
-            walk_mut(&mut *left, cb);
-        },
-        None => ()
-    }
-	
-    match node.right {
-        Some(ref mut right) => {
-            node.right = cb(node, &*right);
-            walk_mut(&mut *right, cb);
-        },
-        None => ()
-    }
-}
 
 fn drop(root: &mut Node, key: i32) {
     // walk_mut(root, &|parent: &Node, node: &Node| -> Option<Box<Node>> {
@@ -86,23 +68,7 @@ fn drop(root: &mut Node, key: i32) {
     //     } else {
     //         return Some(Box::new(*node));
     //     }
-    // });
-    
-    match node.left {
-        Some(ref mut left) => {
-            node.left = cb(node, &*left);
-            walk_mut(&mut *left, cb);
-        },
-        None => ()
-    }
-	
-    match node.right {
-        Some(ref mut right) => {
-            node.right = cb(node, &*right);
-            walk_mut(&mut *right, cb);
-        },
-        None => ()
-    }
+    // });    
 }
 
 fn main() {
